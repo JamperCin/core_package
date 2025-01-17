@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    CoreModule().init(context);
+    CoreModule().init(
+      context,
+      envPath: 'assets/data/env.json',
+    );
 
     return GetMaterialApp(
       title: 'Flutter Demo',
@@ -41,9 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    PlacesPickerWidget.searchPlaces(onSearch: (onSearch) {
-      print("Place: $onSearch");
-    }, context: context,);
+    PlacesPickerWidget.searchPlaces(
+      onSearch: (onSearch) {
+        print("Place: $onSearch");
+      },
+      context: context,
+    );
 
     setState(() {
       _counter++;
@@ -83,9 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            ButtonWidget(text: 'Click Here',onTap: (){
-              debugPrint("Clicked here");
-            },)
+            ButtonWidget(
+              text: 'Click Here',
+              onTap: () {
+                debugPrint("Clicked here");
+              },
+            )
           ],
         ),
       ),

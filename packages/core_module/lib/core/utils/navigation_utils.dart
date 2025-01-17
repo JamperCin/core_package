@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/model/local/base_object.dart';
@@ -6,22 +8,28 @@ import 'package:core_module/core_ui/base_screen/base_screen_impl.dart';
 
 class NavUtils {
   static NavUtils? _navUtils;
-  final BaseScreenImpl _loginScreen;
-  final BaseScreenImpl _homePage;
+  late BaseScreenImpl _loginScreen;
+  late BaseScreenImpl _homePage;
 
-  NavUtils._(this._loginScreen, this._homePage);
+  NavUtils._();
 
-  factory NavUtils(BaseScreenImpl login, BaseScreenImpl home) {
-    return _navUtils ??= NavUtils._(login, home);
+  factory NavUtils() {
+    return _navUtils ??= NavUtils._();
+  }
+
+  void setBaseScreens({
+    required BaseScreenImpl login,
+    required BaseScreenImpl home,
+  }) {
+    _homePage = home;
+    _loginScreen = login;
   }
 
   void fireEvent(Event event) {
     //iterate through the event action
     switch (event.action ?? EventAction.NAV_TO) {
       case EventAction.LOG_OUT:
-        Get.offAll(
-          () => _loginScreen
-        );
+        Get.offAll(() => _loginScreen);
         break;
       case EventAction.NAV_TO:
         if (event.target != null) {

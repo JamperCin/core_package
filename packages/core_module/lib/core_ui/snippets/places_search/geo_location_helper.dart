@@ -9,13 +9,16 @@ class GeoLocationHelper {
   static GeoLocationHelper? _instance;
   bool isLocationEnabled = false;
   bool isPermissionAccepted = false;
+  final bool shouldAskPermission;
 
-  GeoLocationHelper._() {
-    _checkPermissionStatus();
+  GeoLocationHelper._(this.shouldAskPermission) {
+    if(shouldAskPermission) {
+      _checkPermissionStatus();
+    }
   }
 
-  factory GeoLocationHelper() {
-    return _instance ??= GeoLocationHelper._();
+  factory GeoLocationHelper({bool askPermission = false}) {
+    return _instance ??= GeoLocationHelper._(askPermission);
   }
 
   ///Check if Location services are Disabled or Enabled on the current user's device
