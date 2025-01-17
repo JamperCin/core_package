@@ -101,10 +101,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/core_module"
-      ref: HEAD
-      resolved-ref: "0cb5c11bbc6e48ed00d95179fc856292ad27d662"
-      url: "https://github.com/JamperCin/core_module.git"
-    source: git
+      relative: true
+    source: path
     version: "0.0.1"
   crypto:
     dependency: transitive

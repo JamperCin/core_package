@@ -4,7 +4,7 @@ import 'package:core_module/core/utils/file_utils.dart';
 class Configuration {
   static Configuration? _config;
   late FileUtils _fileUtils;
-  final String _envPath = 'assets/data/env.json';
+  final String _envPath;
 
   ///Configuration fields
   String _userType = "";
@@ -15,13 +15,13 @@ class Configuration {
   int _networkTimeOut = 0;
   int _smsTimer = 0;
 
-  Configuration._() {
+  Configuration._(this._envPath) {
     _fileUtils = FileUtils();
     _init();
   }
 
-  factory Configuration() {
-    return _config ??= Configuration._();
+  factory Configuration({required String envPath}) {
+    return _config ??= Configuration._(envPath);
   }
 
   Future<void> _init() async {
