@@ -1,0 +1,203 @@
+{
+  "success": true,
+  "products": [
+    {
+      "id": "dhbk3683",
+      "name": "Stylish Comfortable Sports Sneakers",
+      "description": "Exclusive Range of Stylish Comfortable Sports Sneakers Running Shoes Running Shoes For Men  (Blue , 8)",
+      "color": [
+        "Blue",
+        "Green",
+        "Orange",
+        "Gold"
+      ],
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "amount": 300.00,
+      "discount": 20,
+      "images": [
+        "https://www.pawprintsby.com/cdn/shop/products/Pawprints-Artworks-GiftCards-BLU-APAY_grande.png?v=1587184875",
+        "https://wp-blog-assets.coingate.com/2020/07/dccf6bb7-giftcard-blog-main1.jpg",
+        "https://www.postmarkedco.com/cdn/shop/products/PMCO-GiftCard-001.png?v=1672609353&width=750"
+      ]
+    },
+    {
+      "id": "gkjds803",
+      "name": "Curvy Sneakers Lite",
+      "description": "Buy Lambard Lightweight Sneakers Shoes for Men's Blue -6 |854 at Amazon.in",
+      "amount": 7500,
+      "color": [
+        "Blue",
+        "Green",
+        "Orange",
+        "Gold"
+      ],
+      "size": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "discount": 0,
+      "images": [
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg"
+      ]
+    },
+    {
+      "id": "nbbjdc99",
+      "name": "Lambard Lightweight Sneakers",
+      "description": "Buy Lambard Lightweight Sneakers Shoes for Men's Blue -6 |854 at Amazon.in",
+      "amount": 300,
+      "color": [
+        "Blue",
+        "Green",
+        "Orange",
+        "Gold"
+      ],
+      "size": [
+        "42",
+        "40",
+        "32",
+        "38",
+        "50"
+      ],
+      "quantity": 1,
+      "discount": 10,
+      "images": [
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg"
+      ]
+    },
+    {
+      "id": "hj232",
+      "images": [
+        "https://ca-times.brightspotcdn.com/dims4/default/15a30ea/2147483647/strip/true/crop/6122x4081+0+1/resize/1440x960!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fb3%2F10%2F10c245034893adf233fc1cf3071a%2F1351750-fi-sneaker-buyer-coolkicks-jlc-16185-021.jpg",
+        ""
+      ],
+      "name": "Cambodian Seaker Lite",
+      "description": "Can you guess what these collectible Nike sneakers cost? - Los Angeles Times",
+      "amount": 320,
+      "color": ["Blue"],
+      "size": ["50"]
+    },
+    {
+      "id": "fh3g23",
+      "images": [
+        "https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/88/2685341/1.jpg?9432",
+        "https://gh.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/07/4534271/1.jpg?5702",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG1-_6tAmNYhQT_VEwLpI5cbBVCtfSgNcNRA&s"
+      ],
+      "name": "Custom T Shirt, Hoodies",
+      "description": "Custom T Shirt, Hoodies, Long-Sleeve Shirts, Tank Tops, Shirt Maker samedaytees",
+      "amount": 320,
+      "color": ["Blue","Yellow","White"],
+      "size": ["S", "M", "L"]
+    },
+    {
+      "id": "nbm3268",
+      "name": "Round Plain Slim Fit",
+      "description": "Round Plain Slim Fit Cotton T Shirt For Men and Women at Rs 110/piece in Mumbai",
+      "amount": 1400,
+      "color": ["Blue","Yellow","White"],
+      "size": ["S", "M", "L"],
+      "discount": 0,
+      "images": [
+        "https://decathlon.com.gh/cdn/shop/files/139d4402769744f87aeb849954290c6c_675x.progressive.jpg?v=1717270405",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRszEjSErhCEoyCaPCzuJBpxZYq3xhgdXDPng&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5I3sHCBQAWvsFmJLyvgkhdwrLR7RCj0FjU288zsBa7hkMm53A5CCIc-ouzpnCLuezXtc&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5xGlIIxr4VCiLli3uYLD40z6cdz0SGbyD8qbMt1GViRRUl8Sk_DoYfbL765kAah52Ip8&usqp=CAU"
+      ]
+    },
+    {
+      "id": "323jhk2",
+      "name": "Pace Combed Cotton T-shirts Midnight Blue – XYXX Apparels",
+      "description": "Solid organic cotton slim-fit T-shirt Muscle fit | Le 31 | | Simons",
+      "amount": 1200,
+      "color": ["Green"],
+      "size": ["34"],
+      "quantity": 1,
+      "discount": 30,
+      "images": [
+        "https://decathlon.com.gh/cdn/shop/files/206cd21bedcfc28eb6cc94dbef136b03_ebb47883-75bd-451f-b062-7962b6ccf760_675x.progressive.jpg?v=1725697145",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQOfi0GEHWmv7iS3Ti4-QOWZrobpt0koJzpVzOH7m-K0At-lWXbZVVf6qhnqlDeD1fB7Q&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvesnh6Y9Hi1lrSvCmnFh0OTzXP0FCgBe2rRD-JdxpFuF1LLvPZlhVkTUvrkqLltYsS1Q&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcDnP_QOsdXh9abTXfFN2JMGqrYPUysgXE6rOz-_nMUMOlJs51rdmMhcc1OdW_Wo1a_18&usqp=CAU"
+      ]
+    },
+    {
+      "id": "opubb803",
+      "name": "Shozie Stylish Walking Partywear Sneakers",
+      "description": "Shozie Stylish Walking Partywear Sneakers Casual Shoes Sneakers For Women",
+      "amount": 740,
+      "color": ["Blue", "White"],
+      "size": [],
+      "quantity": 1,
+      "discount": 30,
+      "images": [
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg"
+      ]
+    },
+    {
+      "id": "avnmn252",
+      "name": "Appliances Products",
+      "description": "Home Appliances Products at best price in Pune by Ujjwal Bharat Group | ID: 3078029312",
+      "amount": 3000,
+      "color": ["Blue", "Red"],
+      "size": [],
+      "quantity": 1,
+      "discount": 25,
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTArXRh7UEo-9CuJpgDsmUBJ0KCwZ5jOGW-OA&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3UOCJaesqvxFyAhLDl18VNtpiYe8TZsU5l0VVcVQs0BfImM3kl287YwSH9qQEXp1aiI&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZckDDNKNLQRFJ2pixgACdsLSrQpAYoPIxg&s",
+        "https://3.imimg.com/data3/TB/KQ/MY-238885/videocon-ha-500x500.jpg"
+      ]
+    },
+    {
+      "id": "pnvb9763",
+      "name": "ELECTRIC IRON",
+      "description": "BIS CERTIFICATION (ISI) FOR ELECTRIC IRON IS 302 (Part 2/Sec 3):2007",
+      "amount": 1600,
+      "color": ["Magenta"],
+      "size": [],
+      "quantity": 1,
+      "discount": 35,
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHkURM0KSNVx6NdCTQK-EdqPavJkbhXo4d8Q&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXV-DqjTyqfzHK0F5TR9rEmuxX8o99E6ibFXcrlctSD7kOGORQE6IVk2FAy7zYaDz52xU&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBeoYWDxoqhX-gWVXzQZ4u2I8FBwqyumjyjRgaSft3aQ_4EiqQz2BOtkEynkztrg6KBCg&usqp=CAU",
+        "https://alephindia.in/images/isi/electric-iron-is-302-part-2-sec-3-2007.webp"
+      ]
+    },
+    {
+      "id": "vvcavs233",
+      "name": "Cast Iron Cookware",
+      "description": "Cast Iron Cookware Buying Guide - Shop Now | Lodge Cast Iron",
+      "amount": 3500,
+      "color": ["Black", "Red", "Magenta", "Yellow"],
+      "size": [],
+      "quantity": 1,
+      "discount": 15,
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKWvBh9yoZ5whqUUQOiVCOVuFP4PCw_gf7vA&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScT9b_UDdMnAAjKjId6XtCTpWEF7U7KuCv9Y3Mkq0Bmj5tLjt_yMa2eh2St7TSo_zyugA&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOcGxJ7JotKehK3uIJ5zyRMf5r-9XJEAp1aDXIpSePUlPXUFEnkqVVOMSb9ehgtq0YjOU&usqp=CAU",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoaF3frLzjEmPVoEw6DjHbkg4tSC8xnCiGGyQ4I0maJQM1kcqeZAbX84e-tRkFe0_7WbY&usqp=CAU"
+      ]
+    }
+  ]
+}

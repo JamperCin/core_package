@@ -1,0 +1,167 @@
+{
+  "success" : true,
+  "cart" : [
+    {
+      "id" : "dhbk3683",
+      "url" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21rXy1q9hIs5Iwa76VJt0kF-3A83M-KxGFg&s",
+      "productName" : "Stylish Comfortable Sports Sneakers",
+      "description" : "Exclusive Range of Stylish Comfortable Sports Sneakers Running Shoes Running Shoes For Men  (Blue , 8)",
+      "color" : "Blue",
+      "size" : "32",
+      "amount" : 300.00,
+      "discount" : 20,
+      "images" : [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21rXy1q9hIs5Iwa76VJt0kF-3A83M-KxGFg&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21rXy1q9hIs5Iwa76VJt0kF-3A83M-KxGFg&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21rXy1q9hIs5Iwa76VJt0kF-3A83M-KxGFg&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21rXy1q9hIs5Iwa76VJt0kF-3A83M-KxGFg&s"
+      ],
+      "quantity" : 1
+    },
+    {
+      "id": "gkjds803",
+      "url": "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+      "productName": "Curvy Sneakers Lite",
+      "description": "Buy Lambard Lightweight Sneakers Shoes for Men's Blue -6 |854 at Amazon.in",
+      "amount": 7500,
+      "discount" : 0,
+      "color": "Blue",
+      "quantity" : 1,
+      "size": "50",
+      "images" : [
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg",
+        "https://m.media-amazon.com/images/I/614aiM56siL._AC_UY1000_.jpg"
+      ]
+    },
+    {
+      "id": "nbbjdc99",
+      "url": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+      "productName": "Lambard Lightweight Sneakers",
+      "description": "Buy Lambard Lightweight Sneakers Shoes for Men's Blue -6 |854 at Amazon.in",
+      "amount": 300,
+      "color": "Blue",
+      "size": "50",
+      "quantity" : 1,
+      "discount" : 10,
+      "images": [
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg"
+      ]
+    },
+    {
+      "id": "hj232",
+      "url": "https://ca-times.brightspotcdn.com/dims4/default/15a30ea/2147483647/strip/true/crop/6122x4081+0+1/resize/1440x960!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fb3%2F10%2F10c245034893adf233fc1cf3071a%2F1351750-fi-sneaker-buyer-coolkicks-jlc-16185-021.jpg",
+      "productName": "Cambodian Seaker Lite",
+      "description": "Can you guess what these collectible Nike sneakers cost? - Los Angeles Times",
+      "amount": 320,
+      "color": "Blue",
+      "size": "50"
+    },
+    {
+      "id": "nbm3268",
+      "url": "https://hips.hearstapps.com/hmg-prod/images/sneakers-66a1483fbfe6a.jpg",
+      "productName": "Nike Seaker Lite",
+      "description": "23 Best White Sneakers For Men in 2024: Leather, Canvas, and More",
+      "amount": 1400,
+      "color": "Yellow",
+      "size": "30",
+      "quantity" : 1,
+      "discount" : 10,
+      "images": [
+        "https://hips.hearstapps.com/hmg-prod/images/sneakers-66a1483fbfe6a.jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg",
+        "https://hips.hearstapps.com/hmg-prod/images/sneakers-66a1483fbfe6a.jpg",
+        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-1253763-2529148.jpg&fm=jpg"
+      ]
+    },
+    {
+      "id": "323jhk2",
+      "url": "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+      "productName": "Ghana Seaker Lite",
+      "description": "Sneakers for women Ghana Fabamall",
+      "amount": 1200,
+      "color": "Green",
+      "size": "34",
+      "quantity" : 1,
+      "discount" : 30,
+      "images": [
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg"
+      ]
+    },
+    {
+      "id": "opubb803",
+      "url": "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+      "productName": "Shozie Stylish Walking Partywear Sneakers",
+      "description": "Shozie Stylish Walking Partywear Sneakers Casual Shoes Sneakers For Women",
+      "amount": 740,
+      "color": "Blue",
+      "size": "50",
+      "quantity" : 1,
+      "discount" : 30,
+      "images": [
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg",
+        "https://fabamall.com/media/product/image/2023/08/image_picker5186850438540445773.jpg"
+      ]
+    },
+    {
+      "id": "avnmn252",
+      "url": "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+      "productName": "Shozie Stylish Walking Partywear Sneakers",
+      "description": "Shozie Stylish Walking Partywear Sneakers Casual Shoes Sneakers For Women",
+      "amount": 2500,
+      "color": "Blue",
+      "size": "50",
+      "quantity" : 1,
+      "discount" : 25,
+      "images": [
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false",
+        "https://rukminim2.flixcart.com/image/850/1000/xif0q/shoe/j/u/w/7-1522-multi-shozie-multicolor-original-imagegdaad9g8mvs-bb.jpeg?q=90&crop=false"
+      ]
+    },
+    {
+      "id": "pnvb9763",
+      "url": "https://images-wp.stockx.com/news/wp-content/uploads/2022/08/blog-hero-twitter-square-1-1200x1200.jpg",
+      "productName": "Shozie Stylish Walking Partywear Sneakers",
+      "description": "Shozie Stylish Walking Partywear Sneakers Casual Shoes Sneakers For Women",
+      "amount": 1600,
+      "color": "Magenta",
+      "size": "32",
+      "quantity" : 1,
+      "discount" : 35,
+      "images": [
+        "https://images-wp.stockx.com/news/wp-content/uploads/2022/08/blog-hero-twitter-square-1-1200x1200.jpg",
+        "https://images-wp.stockx.com/news/wp-content/uploads/2022/08/blog-hero-twitter-square-1-1200x1200.jpg",
+        "https://images-wp.stockx.com/news/wp-content/uploads/2022/08/blog-hero-twitter-square-1-1200x1200.jpg",
+        "https://images-wp.stockx.com/news/wp-content/uploads/2022/08/blog-hero-twitter-square-1-1200x1200.jpg"
+      ]
+    },
+    {
+      "id": "vvcavs233",
+      "url": "https://facts.net/wp-content/uploads/2023/12/19-sneaker-facts-1701796924.jpg",
+      "productName": "Shozie Stylish Walking Partywear Sneakers",
+      "description": "Shozie Stylish Walking Partywear Sneakers Casual Shoes Sneakers For Women",
+      "amount": 3500,
+      "color": "Black",
+      "size": "30",
+      "quantity" : 1,
+      "discount" : 15,
+      "images": [
+        "https://facts.net/wp-content/uploads/2023/12/19-sneaker-facts-1701796924.jpg",
+        "https://facts.net/wp-content/uploads/2023/12/19-sneaker-facts-1701796924.jpg",
+        "https://facts.net/wp-content/uploads/2023/12/19-sneaker-facts-1701796924.jpg",
+        "https://facts.net/wp-content/uploads/2023/12/19-sneaker-facts-1701796924.jpg"
+      ]
+    }
+  ]
+}
