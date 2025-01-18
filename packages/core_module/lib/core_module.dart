@@ -21,19 +21,21 @@ class CoreModule {
 
   CoreModule._();
 
-  factory CoreModule(){
+  factory CoreModule() {
     return _instance ??= CoreModule._();
   }
 
   ///Initialise the necessarily utilities and services
-  Future<void> init(
-    BuildContext context, {
+  Future<void> init({
+    BuildContext? context,
     String? envPath,
     bool askLocationPermission = false,
     BaseScreenImpl? loginScreen,
     BaseScreenImpl? homePageScreen,
   }) async {
-    appDimen = AppDimens(context);
+    if (context != null) {
+      appDimen = AppDimens(context);
+    }
     appPreference = AppPreference();
     await appPreference.initPreference();
     //set up configuration file
