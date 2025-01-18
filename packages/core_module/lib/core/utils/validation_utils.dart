@@ -78,16 +78,16 @@ class ValidationUtils {
   bool validateEntryEmail(TextEditingController entry,
       {String err = "Please enter a valid email address.",
       FocusNode? focusNode}) {
-    if (_getStringData(entry).isNotEmpty) {
-      if (!isValidEmailAddress(_getStringData(entry))) {
-        _showErrorSnack(err);
-        if (focusNode != null) {
-          focusNode.requestFocus();
-        }
-        return false;
-      }
+    bool val = isValidEmailAddress(_getStringData(entry));
+    if (val) {
+      return val;
     }
-    return true;
+
+    _showErrorSnack(err);
+    if (focusNode != null) {
+      focusNode.requestFocus();
+    }
+    return false;
   }
 
   bool validatePasswords(
