@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CoreModule().init(
-      context,
+      context: context,
       envPath: 'assets/data/env.json',
     );
 
