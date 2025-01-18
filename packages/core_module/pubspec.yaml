@@ -1,6 +1,6 @@
 name: core_module
 description: "A new Flutter package for setting up projects."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/JamperCin/core_package
 
 environment:

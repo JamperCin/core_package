@@ -18,9 +18,6 @@ class ProminentDisclosureScreen extends BaseScreenStandard {
 
   @override
   Widget body(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         vertical: appDimen.dimen(20),

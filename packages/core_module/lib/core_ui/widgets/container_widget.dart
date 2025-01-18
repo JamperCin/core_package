@@ -1,10 +1,11 @@
+import 'package:core_module/core/def/global_definitions.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_definitions.dart';
 
 class ContainerWidget extends StatelessWidget {
   final Widget? child;
   final bool isCircular;
+  final bool isCircularNotch;
   final double? borderRadius;
   final double? height;
   final BorderRadiusGeometry? border;
@@ -33,7 +34,7 @@ class ContainerWidget extends StatelessWidget {
     this.borderWidth,
     this.borderColor,
     this.borderSide,
-  })  : isCircular = false,
+  })  : isCircular = false, isCircularNotch = false,
         dottedBorder = false,
         radius = null;
 
@@ -51,6 +52,7 @@ class ContainerWidget extends StatelessWidget {
     this.borderColor,
   })  : isCircular = false,
         dottedBorder = true,
+        isCircularNotch = false,
         border = null,
         borderSide = null,
         radius = null;
@@ -68,10 +70,31 @@ class ContainerWidget extends StatelessWidget {
   })  : isCircular = true,
         borderRadius = null,
         dottedBorder = false,
+        isCircularNotch = false,
         height = null,
         borderSide = null,
         border = null,
         width = null;
+
+
+  const ContainerWidget.withCircularNotch({
+    super.key,
+    this.child,
+    this.color,
+    this.height,
+    this.width,
+    this.padding,
+    this.margin,
+  })  : isCircular = false,
+        borderRadius = null,
+        borderColor = null,
+        onTap = null,
+        borderWidth = null,
+        dottedBorder = false,
+        isCircularNotch = true,
+        radius = null,
+        borderSide = null,
+        border = null;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +141,22 @@ class ContainerWidget extends StatelessWidget {
       );
     }
 
+    if (isCircularNotch) {
+      return ClipPath(
+        clipper: NotchClipper(),
+        child: Container(
+          color: color,
+          height: height,
+          width: width,
+          margin: margin,
+          padding: padding,
+          child: child,
+        ),
+      );
+    }
+
+
+
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -139,5 +178,51 @@ class ContainerWidget extends StatelessWidget {
         child: child,
       ),
     );
+  }
+}
+
+class NotchClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final double notchRadius = appDimen.dimen(100);
+    final double notchWidth = appDimen.dimen(150);
+    const double notchEdgeRadius = 10.0; // Radius for the rounded inner edges
+    final double notchCenterX = size.width / 2;
+
+    Path path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(notchCenterX - notchWidth / 2 - notchEdgeRadius, 0)
+      ..quadraticBezierTo(
+        notchCenterX - notchWidth / 2,
+        0,
+        notchCenterX - notchWidth / 2 + notchEdgeRadius,
+        notchEdgeRadius,
+      )
+      ..arcToPoint(
+        Offset(
+          notchCenterX + notchWidth / 2 - notchEdgeRadius,
+          notchEdgeRadius,
+        ),
+        radius: Radius.circular(notchRadius),
+        clockwise: false,
+      )
+      ..quadraticBezierTo(
+        notchCenterX + notchWidth / 2,
+        0,
+        notchCenterX + notchWidth / 2 + notchEdgeRadius,
+        0,
+      )
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

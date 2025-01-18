@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
       envPath: 'assets/data/env.json',
     );
 
+
+
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

@@ -103,7 +103,7 @@ packages:
       path: "packages/core_module"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.1"
   crypto:
     dependency: transitive
     description:
