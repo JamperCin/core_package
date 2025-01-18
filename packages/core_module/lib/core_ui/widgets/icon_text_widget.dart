@@ -42,7 +42,7 @@ class IconTextWidget extends StatelessWidget {
         children: [
           asset != null
               ? AssetImageWidget(
-                  asset: asset ?? icKaydGrey,
+                  asset: asset ?? icProfile,
                   height: iconSize ?? appDimen.dimen(10),
                   width: iconSize ?? appDimen.dimen(10),
                   assetColor: iconColor,

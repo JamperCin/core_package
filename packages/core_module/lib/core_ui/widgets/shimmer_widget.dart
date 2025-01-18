@@ -32,7 +32,7 @@ class ShimmerWidget extends StatelessWidget {
             length!,
             (int index) => ListTile(
               leading: AssetImageWidget(
-                asset: icKaydGrey,
+                asset: icProfile,
                 height: appDimen.dimen(120),
                 width: appDimen.dimen(110),
               ),

@@ -65,7 +65,7 @@ class NetworkImageWidget extends StatelessWidget {
       return GestureDetector(
         onTap: onTap,
         child: AssetImageWidget(
-          asset: isCircular ?  icProfileCircle : (placeholder ?? icKaydGrey),
+          asset: isCircular ?  icProfileCircle : (placeholder ?? icProfile),
           height: newHeight,
           width: newWidth,
         ),
@@ -115,7 +115,7 @@ class NetworkImageWidget extends StatelessWidget {
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
         child: AssetImageWidget(
-          asset: placeholder ?? icKaydGrey,
+          asset: placeholder ?? icProfile,
           height: newHeight,
           width: newWidth,
         ),

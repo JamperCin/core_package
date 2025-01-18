@@ -148,7 +148,7 @@ class IconButtonWidget extends StatelessWidget {
 
   Widget _assetImage(ColorScheme colorScheme) {
     return AssetImageWidget(
-      asset: asset ?? icKaydGrey,
+      asset: asset ?? icProfile,
       height: appDimen.dimen(iconSize ?? 16),
       width: appDimen.dimen(iconSize ?? 16),
       assetColor: iconColor,
