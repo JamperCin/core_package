@@ -25,7 +25,7 @@ class AssetImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    asset = asset.isEmpty ? icKaydGrey : asset;
+    asset = asset.isEmpty ? icProfile : asset;
 
     return GestureDetector(
       onTap: onTap,
