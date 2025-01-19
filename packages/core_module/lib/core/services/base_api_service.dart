@@ -116,6 +116,7 @@ class BaseApiService {
   Future<T?> _serialiseResponse<T>({
     dynamic response,
     bool print = true,
+    bool showToast = false,
     T Function(dynamic)? parser,
   }) async {
     try {
@@ -139,7 +140,9 @@ class BaseApiService {
         String error = getObject('error', json) ??
             getObject('error_msg', json) ??
             "An error occurred";
-        snackBarSnippet.snackBarError(error);
+        if (showToast) {
+          snackBarSnippet.snackBarError(error);
+        }
 
         return null;
       }
@@ -155,11 +158,11 @@ class BaseApiService {
     return json.containsKey(key) ? json[key] : null;
   }
 
-  String getToken(){
+  String getToken() {
     return appPreference.getToken();
   }
 
-  String guestUserHeader(){
+  String guestUserHeader() {
     return 'X-Guest-Token';
   }
 
@@ -168,12 +171,14 @@ class BaseApiService {
   Future<List<T>> getListRequest<T>({
     required String api,
     required String key,
+    bool showToast = false,
     required T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic>? param,
   }) async {
     final results = await getRequest<List<T>>(
             api: api,
             param: param,
+            showToast: showToast,
             parser: (json) {
               final listMap = json['data'][key] as List;
               return [...listMap.map((e) => fromJson(e))];
@@ -186,18 +191,24 @@ class BaseApiService {
     required String api,
     Map<String, dynamic>? param,
     bool tokenHeader = true,
+    bool showToast = false,
     String? host,
     T Function(dynamic)? parser,
   }) async {
     final uri = await _buildUrl(api, body: param, host: host);
     var response = await _get(uri, tokenHeader: tokenHeader);
-    return _serialiseResponse<T>(response: response, parser: parser);
+    return _serialiseResponse<T>(
+      response: response,
+      parser: parser,
+      showToast: showToast,
+    );
   }
 
   Future<T?> postRequest<T>({
     required String api,
     Map<String, dynamic>? param,
     bool tokenHeader = true,
+    bool showToast = false,
     String? host,
     T Function(dynamic)? parser,
   }) async {
@@ -207,6 +218,10 @@ class BaseApiService {
       tokenHeader: tokenHeader,
       param: param != null ? jsonEncode(param) : param,
     );
-    return _serialiseResponse<T>(response: response, parser: parser);
+    return _serialiseResponse<T>(
+      response: response,
+      parser: parser,
+      showToast: showToast,
+    );
   }
 }
