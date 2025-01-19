@@ -7,12 +7,14 @@ class ProfileMenuWidget extends StatelessWidget {
   final VoidCallback onTap;
   final String text;
   final String asset;
+  final Color? assetColor;
 
   const ProfileMenuWidget({
     super.key,
     required this.onTap,
     required this.text,
     required this.asset,
+    this.assetColor,
   });
 
   @override
@@ -32,7 +34,7 @@ class ProfileMenuWidget extends StatelessWidget {
                   asset: asset,
                   height: appDimen.dimen(15),
                   width: appDimen.dimen(15),
-                  assetColor: colorScheme.onSecondary,
+                  assetColor: assetColor?? colorScheme.onSecondary,
                 ),
               if (asset.isNotEmpty) SizedBox(width: appDimen.dimen(1)),
               Text(
