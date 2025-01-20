@@ -73,8 +73,8 @@ class TextFieldWidget extends StatelessWidget {
         isPhoneNumber = true,
         prefixIcon = AssetImageWidget(
           asset: icMobile,
-          width: appDimen.dimen(20),
-          height: appDimen.dimen(20),
+          width: appDimen.dimen(14),
+          height: appDimen.dimen(14),
         ),
         inputFormatters = [FilteringTextInputFormatter.digitsOnly],
         obscuringCharacter = "*";
@@ -100,8 +100,8 @@ class TextFieldWidget extends StatelessWidget {
         isPhoneNumber = false,
         prefixIcon = AssetImageWidget(
           asset:icPassword,
-          width: appDimen.dimen(20),
-          height: appDimen.dimen(20),
+          width: appDimen.dimen(14),
+          height: appDimen.dimen(14),
         ),
         inputFormatters = null,
         obscureText = true.obs;
@@ -154,13 +154,13 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: prefixIcon != null
               ? Padding(
-                  padding: EdgeInsets.all(appDimen.dimen(2)),
+                  padding: EdgeInsets.all(appDimen.dimen(8)),
                   child: prefixIcon,
                 )
               : prefixIcon,
           suffixIcon: obscureText != null
               ? Padding(
-                  padding: EdgeInsets.all(appDimen.dimen(1)),
+                  padding: EdgeInsets.all(appDimen.dimen(8)),
                   child: AssetImageWidget(
                     height: appDimen.dimen(6),
                     width: appDimen.dimen(6),

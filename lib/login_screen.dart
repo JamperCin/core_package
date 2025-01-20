@@ -43,7 +43,7 @@ class LoginScreen extends BaseScreenDecorated {
             prefixIcon: Icon(
               Icons.email_outlined,
               color: colorScheme.onPrimary,
-              size: appDimen.dimen(7),
+              size: appDimen.dimen(18),
             ),
             keyboardType: TextInputType.emailAddress,
             // controller: _controller.emailTxtCtrl,

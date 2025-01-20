@@ -32,11 +32,11 @@ class ProfileMenuWidget extends StatelessWidget {
               if (asset.isNotEmpty)
                 AssetImageWidget(
                   asset: asset,
-                  height: appDimen.dimen(15),
-                  width: appDimen.dimen(15),
+                  height: appDimen.dimen(24),
+                  width: appDimen.dimen(24),
                   assetColor: assetColor?? colorScheme.onSecondary,
                 ),
-              if (asset.isNotEmpty) SizedBox(width: appDimen.dimen(1)),
+              if (asset.isNotEmpty) SizedBox(width: appDimen.dimen(5)),
               Text(
                 text,
                 style: textTheme.bodyMedium
@@ -47,7 +47,7 @@ class ProfileMenuWidget extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios_rounded,
             color: colorScheme.onSecondary,
-            size: appDimen.dimen(10),
+            size: appDimen.dimen(20),
           )
         ],
       ),

@@ -35,7 +35,7 @@ class CardContainerWidget extends StatelessWidget {
       child: SingleChildScrollView(
         padding: padding ??
             EdgeInsets.symmetric(
-                horizontal: appDimen.dimen(2), vertical: appDimen.dimen(10)),
+                horizontal: appDimen.dimen(6), vertical: appDimen.dimen(10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

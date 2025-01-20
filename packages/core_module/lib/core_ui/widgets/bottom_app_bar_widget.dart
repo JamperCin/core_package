@@ -18,7 +18,7 @@ class BottomAppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    const double defaultSize = 5;
+    const double defaultSize = 20;
 
     return InkWell(
       splashColor: Colors.transparent, //colorScheme.secondaryFixed,
@@ -71,8 +71,7 @@ class BottomAppBarWidget extends StatelessWidget {
                     style: textTheme.labelMedium?.copyWith(
                         color: model.isSelected
                             ? colorScheme.primary
-                            : (model.iconColor ?? colorScheme.inverseSurface),
-                        fontSize: appDimen.dimen(0.4)),
+                            : (model.iconColor ?? colorScheme.inverseSurface),),
                   )
                 : const SizedBox()
           ],
