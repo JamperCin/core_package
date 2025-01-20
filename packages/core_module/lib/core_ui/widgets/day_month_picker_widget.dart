@@ -31,7 +31,7 @@ class DayMonthPickerWidget extends StatelessWidget {
                   .textTheme
                   .labelMedium
                   ?.copyWith(fontWeight: FontWeight.w400)),
-        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(-8.0)),
+        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
         Row(
           children: [
             _textField(

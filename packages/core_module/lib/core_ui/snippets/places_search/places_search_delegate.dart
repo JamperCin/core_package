@@ -78,7 +78,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
                     TextSpan(
                       text: item.description,
                       style: textTheme.labelSmall
-                          ?.copyWith(fontSize: appDimen.dimen(-2)),
+                          ?.copyWith(fontSize: appDimen.dimen(2)),
                     )
                   ])),
             ),

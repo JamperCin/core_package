@@ -64,7 +64,7 @@ class BottomAppBarWidget extends StatelessWidget {
                         size: model.iconSize ?? appDimen.dimen(defaultSize),
                         color: model.iconColor,
                       ),
-            SizedBox(height: appDimen.dimen(-5)),
+            SizedBox(height: appDimen.dimen(2)),
             model.text != null
                 ? Text(
                     model.text ?? '',

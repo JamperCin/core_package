@@ -49,12 +49,12 @@ class AddressItemWidget extends StatelessWidget {
                 )
             ],
           ),
-          SizedBox(height: appDimen.dimen(-10)),
+          SizedBox(height: appDimen.dimen(1)),
           Text(
             addressModel.phoneNumber,
             style: textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w300),
           ),
-          SizedBox(height: appDimen.dimen(-10)),
+          SizedBox(height: appDimen.dimen(1)),
           Text(
             addressModel.location?.address ?? '',
             style: textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w300),

@@ -59,7 +59,7 @@ class ListItemWidget extends StatelessWidget {
                       )
                   ],
                 ),
-                SizedBox(height: appDimen.dimen(-5)),
+                SizedBox(height: appDimen.dimen(2)),
                 DividerWidget(color: colorScheme.secondary),
               ],
             ),

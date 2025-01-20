@@ -1,3 +1,5 @@
+import 'package:core_module/core/app/app_style.dart';
+import 'package:core_module/core/app/app_theme.dart';
 import 'package:core_module/core/def/global_definitions.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
@@ -22,14 +24,11 @@ class MyApp extends StatelessWidget {
       envPath: 'assets/data/env.json',
     );
 
-
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: lightMode,
+      darkTheme: darkMode,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -84,8 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
+             Text(
               'You have pushed the button this many times:',
+              style: labelSmallTextLightModeStyle,
             ),
             ShimmerWidget(
               child: Text(

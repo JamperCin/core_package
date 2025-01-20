@@ -62,12 +62,12 @@ class PodWidget extends StatelessWidget {
                   )
                 : Container(
                     width: currentIndex.value == i
-                        ? podSize ?? appDimen.dimen(2)
-                        : podInActiveSize ?? appDimen.dimen(-5),
-                    margin: EdgeInsets.only(right: appDimen.dimen(1)),
+                        ? podSize ?? appDimen.dimen(12)
+                        : podInActiveSize ?? appDimen.dimen(6),
+                    margin: EdgeInsets.only(right: appDimen.dimen(6)),
                     height: currentIndex.value == i
-                        ? podSize ?? appDimen.dimen(2)
-                        : podInActiveSize ?? appDimen.dimen(-5),
+                        ? podSize ?? appDimen.dimen(12)
+                        : podInActiveSize ?? appDimen.dimen(6),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: currentIndex.value == i

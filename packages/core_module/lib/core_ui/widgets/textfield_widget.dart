@@ -119,10 +119,10 @@ class TextFieldWidget extends StatelessWidget {
                   .textTheme
                   .labelMedium
                   ?.copyWith(fontWeight: FontWeight.w400)),
-        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(-8.0)),
+        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
         Container(
           width: width ?? appDimen.screenWidth,
-          height: appDimen.dimen(48),
+          height: appDimen.dimen(60),
           padding: EdgeInsets.zero,
           margin: margin ?? EdgeInsets.zero,
           decoration: BoxDecoration(

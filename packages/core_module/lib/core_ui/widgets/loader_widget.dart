@@ -94,11 +94,11 @@ class LoaderWidget extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(appDimen.dimen(20))),
         color: colorScheme.inverseSurface,
       ),
-      padding: EdgeInsets.all(appDimen.dimen(25)),
+      padding: EdgeInsets.all(appDimen.dimen(30)),
       child: CupertinoActivityIndicator(
         animating: true,
         color: color ?? colorScheme.tertiary,
-        radius: radius ?? appDimen.dimen(30),
+        radius: radius ?? appDimen.dimen(40),
       ),
     );
   }

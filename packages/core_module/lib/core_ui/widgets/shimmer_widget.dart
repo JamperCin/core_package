@@ -41,9 +41,9 @@ class ShimmerWidget extends StatelessWidget {
                 children: [
                   DividerWidget(height: appDimen.dimen(2)),
                   SizedBox(height: appDimen.dimen(1)),
-                  DividerWidget(height: appDimen.dimen(-5)),
-                  SizedBox(height: appDimen.dimen(-1)),
-                  DividerWidget(height: appDimen.dimen(-8)),
+                  DividerWidget(height: appDimen.dimen(2)),
+                  SizedBox(height: appDimen.dimen(5)),
+                  DividerWidget(height: appDimen.dimen(3)),
                 ],
               ),
             ),

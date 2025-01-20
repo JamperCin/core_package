@@ -29,10 +29,10 @@ class ThirdPartyAuthWidget extends StatelessWidget {
             children: [
               IconButtonWidget.withCircularBorder(
                 borderColor: colorScheme.inverseSurface,
-                iconPadding: -5,
+                iconPadding: 2,
                 child: AssetImageWidget(
                   asset: icPin,
-                  height: appDimen.dimen(10),
+                  height: appDimen.dimen(20),
                 ),
               ),
               Text(
@@ -49,10 +49,10 @@ class ThirdPartyAuthWidget extends StatelessWidget {
             children: [
               IconButtonWidget.withCircularBorder(
                 borderColor: colorScheme.inverseSurface,
-                iconPadding: -5,
+                iconPadding: 2,
                 child: AssetImageWidget(
                   asset: icUser,
-                  height: appDimen.dimen(10),
+                  height: appDimen.dimen(20),
                 ),
               ),
               Text(
@@ -78,7 +78,7 @@ class ThirdPartyAuthWidget extends StatelessWidget {
             borderColor: colorScheme.inverseSurface,
             child: AssetImageWidget(
               asset: icApple,
-              height: appDimen.dimen(5),
+              height: appDimen.dimen(20),
             ),
           ),
         ),
@@ -88,7 +88,7 @@ class ThirdPartyAuthWidget extends StatelessWidget {
             borderColor: colorScheme.inverseSurface,
             child: AssetImageWidget(
               asset: icGoogle,
-              height: appDimen.dimen(5),
+              height: appDimen.dimen(20),
             ),
           ),
         ),
@@ -98,7 +98,7 @@ class ThirdPartyAuthWidget extends StatelessWidget {
             borderColor: colorScheme.inverseSurface,
             child: AssetImageWidget(
               asset: icFacebook,
-              height: appDimen.dimen(5),
+              height: appDimen.dimen(20),
             ),
           ),
         ),

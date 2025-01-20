@@ -62,7 +62,7 @@ class BottomSheetWidget extends StatelessWidget {
                 SizedBox(height: appDimen.dimen(2)),
                 DividerWidget(
                   width: appDimen.dimen(70),
-                  height: appDimen.dimen(-10),
+                  height: appDimen.dimen(1),
                 ),
                 SizedBox(height: appDimen.dimen(3)),
                 if (title != null)

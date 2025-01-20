@@ -33,7 +33,7 @@ class PromoCodeWidget extends StatelessWidget {
             title ?? '',
             style: textTheme.bodySmall,
           ),
-        if (title != null) SizedBox(height: appDimen.dimen(-5)),
+        if (title != null) SizedBox(height: appDimen.dimen(2)),
         Stack(
           children: [
             TextFieldWidget(

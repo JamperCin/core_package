@@ -25,9 +25,9 @@ class QuantityUpdateWidget extends StatelessWidget {
             }
           },
         ),
-        SizedBox(width: appDimen.dimen(-5)),
+        SizedBox(width: appDimen.dimen(2)),
         Obx(() => Text("${quantity.value}", style: textTheme.bodyMedium)),
-        SizedBox(width: appDimen.dimen(-5)),
+        SizedBox(width: appDimen.dimen(2)),
         IconButtonWidget.withContainer(
           backgroundColor: colorScheme.outlineVariant,
           icon: Icons.add,

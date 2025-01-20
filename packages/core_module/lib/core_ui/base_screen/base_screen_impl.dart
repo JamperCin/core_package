@@ -41,10 +41,10 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   @override
   Widget? appBarLeadingIcon(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(appDimen.dimen(1)),
+      padding: EdgeInsets.all(appDimen.dimen(5)),
       child: IconButtonWidget(
         icon: Icons.arrow_back_ios,
-        iconSize: appDimen.dimen(2),
+        iconSize: appDimen.dimen(30),
         padding: EdgeInsets.zero,
         onTap: () {
           Get.back();
@@ -55,8 +55,9 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
 
   @override
   double appBarHeight() {
-    return appDimen.dimen(55);
+    return appDimen.dimen(65);
   }
+
 
   @override
   Widget bottomSheet(BuildContext context) {
