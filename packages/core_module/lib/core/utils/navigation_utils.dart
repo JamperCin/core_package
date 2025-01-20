@@ -37,7 +37,7 @@ class NavUtils {
             () => event.target!,
             preventDuplicates: false,
             routeName: '${event.target?.toStringShort()}',
-            transition: event.transition,
+            transition: event.transition ?? Transition.cupertino,
           )?.then((value) {
             if (event.call != null) {
               event.call!();
