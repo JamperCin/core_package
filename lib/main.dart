@@ -1,8 +1,11 @@
+import 'package:core_module/core/def/global_definitions.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'new_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +21,6 @@ class MyApp extends StatelessWidget {
       context: context,
       envPath: 'assets/data/env.json',
     );
-
 
 
     return GetMaterialApp(
@@ -94,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ButtonWidget(
               text: 'Click Here',
               onTap: () {
-                debugPrint("Clicked here");
+                navUtils.fireTarget(NewScreen());
               },
             )
           ],

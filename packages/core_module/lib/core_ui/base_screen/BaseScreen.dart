@@ -1,3 +1,5 @@
+import 'package:core_module/core/app/app_dimens.dart';
+import 'package:core_module/core/def/global_definitions.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseScreen extends StatelessWidget {
@@ -71,6 +73,7 @@ abstract class BaseScreen extends StatelessWidget {
   /// effects beyond building a widget.
   @override
   Widget build(BuildContext context) {
+    appDimen = AppDimens(context);
     setContext(context);
     textTheme = Theme.of(context).textTheme;
     colorScheme = Theme.of(context).colorScheme;
