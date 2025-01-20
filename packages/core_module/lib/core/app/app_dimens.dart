@@ -32,15 +32,22 @@ class AppDimens {
     }
   }
 
-  static double _getSize(double value, double multiplier) {
-    double h = _scaleFactor == 0.0 ? value : _scaleFactor * multiplier * 1.9;
-    // debugPrint("Size === $h === Scale : $_scaleFactor == DefaultValue : $value");
-    return h;
+
+  //y=0.1x+0.4 Linear quadratic formula : Assume
+  // y=mx+c (a linear relationship).
+  double _getMultiplier(double value) {
+    double multiplier = (0.1 * value) + 0.4;
+    return multiplier;
+  }
+
+  double _responsiveSize(double value){
+    return  value * (screenWidth / 375);
   }
 
   double dimen(double value) {
-    double div = value / 50;
-    double v = (value + 15) / 10;
-    return _getSize(value, v) + div;
+    double multiplier = _getMultiplier(value);
+    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : _scaleFactor * multiplier * 1.9;
+    print("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
+    return h;
   }
 }
