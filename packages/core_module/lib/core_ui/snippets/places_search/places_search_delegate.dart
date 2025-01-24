@@ -24,11 +24,11 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
 
     //Get the list of all selected locations
     List<LocationSearchModel> preList =
-        appPreference.getListOfLocations().reversed.toList();
+        appDbPreference.getListOfLocations().reversed.toList();
 
     list.value.addAll(preList.length > 5 ? preList.sublist(0, 5) : preList);
 
-    selectedModel.value = await appPreference.getLocation();
+    selectedModel.value = await appDbPreference.getLocation();
 
     print("Selected ${selectedModel.value.address}");
   }
@@ -249,9 +249,9 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
           !list.any(
               (e) => e.address.toLowerCase() == place.address.toLowerCase())) {
         list.add(place);
-        appPreference.saveListOfLocations(list);
+        appDbPreference.saveListOfLocations(list);
       }
-      appPreference.saveLocation(place);
+      appDbPreference.saveLocation(place);
     }
   }
 }

@@ -159,7 +159,7 @@ class BaseApiService {
   }
 
   String getToken() {
-    return appPreference.getToken();
+    return appDbPreference.getToken();
   }
 
   String guestUserHeader() {

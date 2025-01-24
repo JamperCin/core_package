@@ -33,7 +33,7 @@ class LocationDisplayWidget extends StatelessWidget {
           assetColor: colorScheme.tertiary,
         ),
         FutureBuilder(
-          future: appPreference.getLocation(),
+          future: appDbPreference.getLocation(),
           builder: (BuildContext context,
               AsyncSnapshot<LocationSearchModel> snapshot) {
             return ConstrainedBox(

@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 ///Define global accessible variables
 late AppDimens appDimen;
 late NavUtils navUtils;
-late AppDbPreference appPreference;
+late AppDbPreference appDbPreference;
 late GeoLocationHelper geoLocationHelper;
 late NumberUtils numberUtils;
 late ValidationUtils validationUtils;

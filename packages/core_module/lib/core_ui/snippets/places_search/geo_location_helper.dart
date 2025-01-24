@@ -31,7 +31,7 @@ class GeoLocationHelper {
   ///Check the permission status of the user
   ///Permissions can be in the state of [DENIED, DENIED-FOREVER , WHILE-IN-USE, ALWAYS, etc ]
   Future<void> _checkPermissionStatus() async {
-    if (appPreference.getBool(appPreference.LOCATION_PERMISSION_ALLOWED)) {
+    if (appDbPreference.getBool(appDbPreference.LOCATION_PERMISSION_ALLOWED)) {
       return;
     }
 
@@ -45,8 +45,8 @@ class GeoLocationHelper {
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      appPreference.setBool(
-          appPreference.LOCATION_PERMISSION_ALLOWED, true);
+      appDbPreference.setBool(
+          appDbPreference.LOCATION_PERMISSION_ALLOWED, true);
       return;
     }
   }

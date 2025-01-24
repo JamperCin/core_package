@@ -38,8 +38,8 @@ class CoreModule {
     if (context != null) {
       appDimen = AppDimens(context);
     }
-    appPreference = AppDbPreference();
-    await appPreference.initPreference();
+    appDbPreference = AppDbPreference();
+    await appDbPreference.initPreference();
     //set up configuration file
     if (envPath != null) {
       config = Configuration(envPath: envPath,defaultEnv: defaultEnv);
