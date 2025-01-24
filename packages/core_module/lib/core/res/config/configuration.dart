@@ -5,6 +5,7 @@ class Configuration {
   static Configuration? _config;
   late FileUtils _fileUtils;
   final String _envPath;
+  late EnvType _defaultEnvType;
 
   ///Configuration fields
   String _userType = "";
@@ -15,8 +16,9 @@ class Configuration {
   int _networkTimeOut = 0;
   int _smsTimer = 0;
 
-  Configuration._(this._envPath) {
+  Configuration._(this._envPath,{EnvType defaultEnv = EnvType.production}) {
     _fileUtils = FileUtils();
+    _defaultEnvType = defaultEnv;
     _init();
   }
 
@@ -25,7 +27,7 @@ class Configuration {
   }
 
   Future<void> _init() async {
-    _defaultEnv =  await _fetchEnvironment(type: EnvType.staging);
+    _defaultEnv =  await _fetchEnvironment(type: _defaultEnvType);
     _googleEnv =  await _fetchEnvironment(type: EnvType.google);
     _userType = await _fileUtils.fetchObject(_envPath, 'userType');
     _appStoreId = await _fileUtils.fetchObject(_envPath, 'appStoreId');

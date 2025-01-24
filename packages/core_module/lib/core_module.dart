@@ -1,7 +1,7 @@
 library core_module;
 
 import 'package:core_module/core/app/app_dimens.dart';
-import 'package:core_module/core/db/app_preference.dart';
+import 'package:core_module/core/db/app_db_preference.dart';
 import 'package:core_module/core/def/global_definitions.dart';
 import 'package:core_module/core/res/config/configuration.dart';
 import 'package:core_module/core/utils/navigation_utils.dart';
@@ -36,7 +36,7 @@ class CoreModule {
     if (context != null) {
       appDimen = AppDimens(context);
     }
-    appPreference = AppPreference();
+    appPreference = AppDbPreference();
     await appPreference.initPreference();
     //set up configuration file
     if (envPath != null) {
