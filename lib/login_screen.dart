@@ -1,6 +1,6 @@
 import 'package:core_module/core/app/app_module_colors.dart';
-import 'package:core_module/core/def/global_definitions.dart';
-import 'package:core_module/core/res/assets_image_path.dart';
+import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_dec.dart';
 import 'package:core_module/core_ui/snippets/third_party_auth/third_party_auth_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';

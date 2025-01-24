@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/utils/map_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;

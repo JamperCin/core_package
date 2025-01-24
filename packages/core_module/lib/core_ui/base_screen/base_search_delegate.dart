@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core/app/app_style.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 
 abstract class BaseSearchDelegate<T> extends SearchDelegate<T> {
   Future<List<T>> fetchSuggestions({required String query});

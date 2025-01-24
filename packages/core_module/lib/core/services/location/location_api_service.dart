@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/model/remote/location_search_model.dart';
 import 'package:core_module/core/services/base_api_service.dart';
 import 'package:core_module/core/services/location/location_api_interface.dart';

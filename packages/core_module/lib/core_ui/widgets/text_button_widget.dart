@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 
 class TextButtonWidget extends StatelessWidget {
   final String text;

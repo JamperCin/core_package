@@ -2,7 +2,8 @@ library core_module;
 
 import 'package:core_module/core/app/app_dimens.dart';
 import 'package:core_module/core/db/app_db_preference.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/enum/env_type.dart';
 import 'package:core_module/core/res/config/configuration.dart';
 import 'package:core_module/core/utils/navigation_utils.dart';
 import 'package:core_module/core/utils/number_utils.dart';
@@ -29,6 +30,7 @@ class CoreModule {
   Future<void> init({
     BuildContext? context,
     String? envPath,
+    EnvType? defaultEnv,
     bool askLocationPermission = false,
     BaseScreenImpl? loginScreen,
     BaseScreenImpl? homePageScreen,
@@ -40,7 +42,7 @@ class CoreModule {
     await appPreference.initPreference();
     //set up configuration file
     if (envPath != null) {
-      config = Configuration(envPath: envPath);
+      config = Configuration(envPath: envPath,defaultEnv: defaultEnv);
     }
     navUtils = NavUtils();
     if (loginScreen != null && homePageScreen != null) {

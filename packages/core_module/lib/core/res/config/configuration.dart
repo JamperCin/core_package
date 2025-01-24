@@ -5,7 +5,7 @@ class Configuration {
   static Configuration? _config;
   late FileUtils _fileUtils;
   final String _envPath;
-  late EnvType _defaultEnvType;
+  late EnvType? _defaultEnvType;
 
   ///Configuration fields
   String _userType = "";
@@ -16,14 +16,14 @@ class Configuration {
   int _networkTimeOut = 0;
   int _smsTimer = 0;
 
-  Configuration._(this._envPath,{EnvType defaultEnv = EnvType.production}) {
+  Configuration._(this._envPath,{EnvType? defaultEnv}) {
     _fileUtils = FileUtils();
     _defaultEnvType = defaultEnv;
     _init();
   }
 
-  factory Configuration({required String envPath}) {
-    return _config ??= Configuration._(envPath);
+  factory Configuration({required String envPath,EnvType? defaultEnv}) {
+    return _config ??= Configuration._(envPath, defaultEnv: defaultEnv);
   }
 
   Future<void> _init() async {

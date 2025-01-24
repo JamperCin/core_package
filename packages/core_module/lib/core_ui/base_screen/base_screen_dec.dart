@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/base_screen/base_deco_ext.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_impl.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';

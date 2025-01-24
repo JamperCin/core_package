@@ -1,5 +1,5 @@
 import 'package:core_module/core/app/app_dimens.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseScreen extends StatelessWidget {

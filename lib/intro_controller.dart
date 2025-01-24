@@ -1,6 +1,6 @@
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
-import 'package:core_module/core/res/assets_image_path.dart';
+import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module_package/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/widgets/list_item_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 

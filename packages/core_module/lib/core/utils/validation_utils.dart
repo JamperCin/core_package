@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 
 class ValidationUtils {
   static ValidationUtils? _utils;

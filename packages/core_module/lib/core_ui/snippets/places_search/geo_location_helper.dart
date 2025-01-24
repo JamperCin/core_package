@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/model/remote/location_search_model.dart';
 
 class GeoLocationHelper {

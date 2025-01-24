@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core_ui/widgets/divider_widget.dart';
 
-import '../../core/def/global_definitions.dart';
+import '../../core/def/global_def.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   final BuildContext context;

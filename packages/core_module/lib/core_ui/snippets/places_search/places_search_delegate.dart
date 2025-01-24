@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/model/remote/location_search_model.dart';
 import 'package:core_module/core/services/location/location_api_service.dart';
 import 'package:core_module/core_ui/base_screen/base_search_standard.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 

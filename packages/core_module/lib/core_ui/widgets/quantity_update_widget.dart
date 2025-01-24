@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/widgets/icon_button_widget.dart';
 
 class QuantityUpdateWidget extends StatelessWidget {

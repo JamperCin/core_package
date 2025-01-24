@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core_ui/base_screen/base_search_delegate.dart';
 
-import '../../core/def/global_definitions.dart';
+import '../../core/def/global_def.dart';
 
 class BaseSearchStandard<T> extends BaseSearchDelegate<T> {
   @override

@@ -1,6 +1,6 @@
 import 'package:core_module/core/app/app_style.dart';
 import 'package:core_module/core/app/app_theme.dart';
-import 'package:core_module/core/def/global_definitions.dart';
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';

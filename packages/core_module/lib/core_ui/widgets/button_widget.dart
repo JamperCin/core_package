@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/def/global_definitions.dart';
+import '../../core/def/global_def.dart';
 
 class ButtonWidget extends StatelessWidget {
   final Widget? child;
