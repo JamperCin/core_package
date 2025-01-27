@@ -11,6 +11,7 @@ class ContainerWidget extends StatelessWidget {
   final BorderRadiusGeometry? border;
   final BoxBorder? borderSide;
   final double? width;
+  final double? notchWidth;
   final double? radius;
   final double? borderWidth;
   final Color? color;
@@ -35,7 +36,7 @@ class ContainerWidget extends StatelessWidget {
     this.borderColor,
     this.borderSide,
   })  : isCircular = false, isCircularNotch = false,
-        dottedBorder = false,
+        dottedBorder = false, notchWidth = null,
         radius = null;
 
   const ContainerWidget.withDottedBorder({
@@ -54,6 +55,7 @@ class ContainerWidget extends StatelessWidget {
         dottedBorder = true,
         isCircularNotch = false,
         border = null,
+        notchWidth = null,
         borderSide = null,
         radius = null;
 
@@ -74,6 +76,7 @@ class ContainerWidget extends StatelessWidget {
         height = null,
         borderSide = null,
         border = null,
+        notchWidth = null,
         width = null;
 
 
@@ -85,6 +88,7 @@ class ContainerWidget extends StatelessWidget {
     this.width,
     this.padding,
     this.margin,
+    this.notchWidth,
   })  : isCircular = false,
         borderRadius = null,
         borderColor = null,
@@ -143,7 +147,7 @@ class ContainerWidget extends StatelessWidget {
 
     if (isCircularNotch) {
       return ClipPath(
-        clipper: NotchClipper(),
+        clipper: NotchClipper(radius: notchWidth ?? 180),
         child: Container(
           color: color,
           height: height,
@@ -182,11 +186,15 @@ class ContainerWidget extends StatelessWidget {
 }
 
 class NotchClipper extends CustomClipper<Path> {
+  final double radius;
+
+  NotchClipper({super.reclip, required this.radius});
+
   @override
   Path getClip(Size size) {
     final double notchRadius = appDimen.dimen(100);
-    final double notchWidth = appDimen.dimen(150);
-    const double notchEdgeRadius = 10.0; // Radius for the rounded inner edges
+    final double notchWidth = appDimen.dimen(radius);
+    const double notchEdgeRadius = 5.0; // Radius for the rounded inner edges
     final double notchCenterX = size.width / 2;
 
     Path path = Path()

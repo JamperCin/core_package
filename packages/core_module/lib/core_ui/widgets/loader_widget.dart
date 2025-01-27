@@ -51,7 +51,7 @@ class LoaderWidget extends StatelessWidget {
   })  : progressIndicator = false,
         circularIndicator = true,
         context = null,
-        indicator = true;
+        indicator = false;
 
   ///Circular progress Indicator
   Future<void> showProgressIndicator({required context, Widget? child, bool autoDismiss = true}) async {
@@ -148,7 +148,7 @@ class LoaderWidget extends StatelessWidget {
       height: radius,
       width: radius,
       child: CircularProgressIndicator(
-        color: color ?? colorScheme.inverseSurface,
+        color: color ?? colorScheme.primary,
         strokeWidth: strokeWidth ?? 1.5,
       ),
     );
