@@ -27,7 +27,7 @@ class NewScreen extends BaseScreenStandard {
     return Column(children: [
       Text("New page here", style: textTheme.labelMedium,),
       TextButtonWidget.withTextOnly(onTap: () {
-        navUtils.fireTarget(IntroScreen());
+        navUtils.fireLogOut();
       }, text: "Intro Scrren",)
     ],);
   }

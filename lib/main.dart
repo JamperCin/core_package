@@ -5,6 +5,7 @@ import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
+import 'package:core_module_package/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'new_screen.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
     CoreModule().init(
       context: context,
       envPath: 'assets/data/env.json',
+      homePageScreen: 'NewScreen',
+      loginScreen: 'LoginScreen',
     );
 
     return GetMaterialApp(
@@ -29,6 +32,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightMode,
       darkTheme: darkMode,
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/LoginScreen', page: ()=> LoginScreen()),
+        GetPage(name: '/NewScreen', page: ()=> NewScreen()),
+      ],
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -96,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ButtonWidget(
               text: 'Click Here',
               onTap: () {
-                navUtils.fireTarget(NewScreen());
+                navUtils.fireTargetHome();
               },
             )
           ],

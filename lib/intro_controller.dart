@@ -61,6 +61,6 @@ class IntroController extends GetxController {
 
   void onSkipOnClick() {
     navUtils.fireTargetOff(LoginScreen());
-    appDbPreference.setBool(appDbPreference.IS_INTRO_SHOWN, true);
+   // appDbPreference.setBool(appDbPreference.IS_INTRO_SHOWN, true);
   }
 }

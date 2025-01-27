@@ -32,8 +32,8 @@ class CoreModule {
     String? envPath,
     EnvType? defaultEnv,
     bool askLocationPermission = false,
-    BaseScreenImpl? loginScreen,
-    BaseScreenImpl? homePageScreen,
+    String? loginScreen,
+    String? homePageScreen,
   }) async {
     if (context != null) {
       appDimen = AppDimens(context);
@@ -44,10 +44,7 @@ class CoreModule {
     if (envPath != null) {
       config = Configuration(envPath: envPath,defaultEnv: defaultEnv);
     }
-    navUtils = NavUtils();
-    if (loginScreen != null && homePageScreen != null) {
-      navUtils.setBaseScreens(login: loginScreen, home: homePageScreen);
-    }
+    navUtils = NavUtils(loginScreen: loginScreen, homePage: homePageScreen);
     snackBarSnippet = SnackBarSnippet();
     numberUtils = NumberUtils();
     validationUtils = ValidationUtils();

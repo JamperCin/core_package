@@ -15,6 +15,11 @@ import 'package:get/get.dart';
 class LoginScreen extends BaseScreenDecorated {
   //final _controller = Get.put(LoginController());
 
+  LoginScreen(){
+    print("Loaded ------> Login Screen");
+    LoaderWidget().showProgressIndicator(context: Get.context);
+  }
+
   @override
   String decoPageAsset() {
     return icProfileCircle;

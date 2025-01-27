@@ -8,28 +8,23 @@ import 'package:core_module/core_ui/base_screen/base_screen_impl.dart';
 
 class NavUtils {
   static NavUtils? _navUtils;
-  late BaseScreenImpl _loginScreen;
-  late BaseScreenImpl _homePage;
+  final String? loginScreen;
+  final String? homePage;
 
-  NavUtils._();
+  NavUtils._({this.loginScreen, this.homePage});
 
-  factory NavUtils() {
-    return _navUtils ??= NavUtils._();
+  factory NavUtils({String? loginScreen, String? homePage}) {
+    return _navUtils ??= NavUtils._(loginScreen: loginScreen, homePage: homePage,);
   }
 
-  void setBaseScreens({
-    required BaseScreenImpl login,
-    required BaseScreenImpl home,
-  }) {
-    _homePage = home;
-    _loginScreen = login;
-  }
 
   void fireEvent(Event event) {
     //iterate through the event action
     switch (event.action ?? EventAction.NAV_TO) {
       case EventAction.LOG_OUT:
-        Get.offAll(() => _loginScreen);
+        if(loginScreen != null) {
+          Get.offAllNamed('/$loginScreen');
+        }
         break;
       case EventAction.NAV_TO:
         if (event.target != null) {
@@ -57,11 +52,9 @@ class NavUtils {
         }
         break;
       case EventAction.NAV_HOME:
-        if (event.target == null) {
-          event.setTarget(_homePage);
+        if (homePage != null ) {
+          Get.offAllNamed('/$homePage');
         }
-        Get.offAll(() => event.target!);
-
         break;
       case EventAction.NAV_OFF:
         if (event.target != null) {
@@ -125,8 +118,15 @@ class NavUtils {
 
   void fireTargetHome() {
     fireEvent(Event(
-      target: _homePage,
+      target: null,
       action: EventAction.NAV_HOME,
+    ));
+  }
+
+  void fireLogOut() {
+    fireEvent(Event(
+      target: null,
+      action: EventAction.LOG_OUT,
     ));
   }
 
