@@ -107,8 +107,7 @@ class FileImagePickerWidget extends StatelessWidget {
     debugPrint("File == ${file.path}");
     isFileUploading.value = true;
     File newFile = File(file.path);
-    await Future.delayed(const Duration(seconds: 3));
-    //url = await FileUploadApiService().uploadFile(newFile);
+    url = await FileUploadApiService().uploadFile(newFile);
     isFileUploading.value = false;
   }
 }
