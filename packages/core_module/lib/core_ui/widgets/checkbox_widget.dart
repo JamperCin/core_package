@@ -29,6 +29,7 @@ class CheckboxWidget extends StatelessWidget {
 
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    assert (!(text.isNotEmpty && textWidget != null), 'Both text and textWidget cannot be present at the same time');
 
     return Obx(
       () => Row(
@@ -54,19 +55,20 @@ class CheckboxWidget extends StatelessWidget {
               },
             ),
           ),
-          text.isNotEmpty
-              ? Flexible(
-                  flex: 1,
-                  child: text.isNotEmpty || textWidget != null
-                      ? GestureDetector(
-                          onTap: () {
-                            if (onTextClick != null) onTextClick!;
-                          },
-                          child: textWidget ??
-                              Text(text, style: style ?? textTheme.labelMedium))
-                      : const SizedBox.shrink(),
-                )
-              : const SizedBox.shrink(),
+          if (text.isNotEmpty)
+            Flexible(
+              flex: 1,
+              child: GestureDetector(
+                  onTap: () {
+                    if (onTextClick != null) onTextClick!;
+                  },
+                  child: Text(text, style: style ?? textTheme.labelMedium)),
+            ),
+          if (textWidget != null)
+            Flexible(
+              flex: 1,
+              child: textWidget!,
+            )
         ],
       ),
     );
