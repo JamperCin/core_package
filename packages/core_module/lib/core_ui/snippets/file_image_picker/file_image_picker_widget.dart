@@ -19,7 +19,7 @@ class FileImagePickerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => isFileUploading.value
-          ? const LoaderWidget.withIndicator()
+          ?  LoaderWidget.withCircularIndicator(radius: appDimen.dimen(radius))
           : NetworkImageWidget.withCircular(
               url: url,
               radius: appDimen.dimen(radius),

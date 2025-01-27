@@ -6,16 +6,20 @@ import 'package:core_module/core/def/global_def.dart';
 class LoaderWidget extends StatelessWidget {
   final Color? color;
   final double? radius;
+  final double? strokeWidth;
   final BuildContext? context;
   final bool indicator;
   final bool progressIndicator;
+  final bool circularIndicator;
 
   const LoaderWidget({
     super.key,
     this.color,
     this.radius,
   })  : progressIndicator = false,
+   circularIndicator = false,
         context = null,
+        strokeWidth = null,
         indicator = false;
 
   ///Circular progress Indicator
@@ -24,7 +28,9 @@ class LoaderWidget extends StatelessWidget {
     this.color,
     this.radius,
   })  : progressIndicator = true,
+        circularIndicator = false,
         context = null,
+        strokeWidth = null,
         indicator = false;
 
   const LoaderWidget.withIndicator({
@@ -32,6 +38,18 @@ class LoaderWidget extends StatelessWidget {
     this.color,
     this.radius,
   })  : progressIndicator = false,
+        circularIndicator = false,
+        context = null,
+        strokeWidth = null,
+        indicator = true;
+
+  const LoaderWidget.withCircularIndicator({
+    super.key,
+    this.color,
+    this.radius,
+    this.strokeWidth,
+  })  : progressIndicator = false,
+        circularIndicator = true,
         context = null,
         indicator = true;
 
@@ -44,7 +62,7 @@ class LoaderWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _circularProgressIndicator(context),
+          _iosProgressIndicator(context),
           child ?? const SizedBox.shrink(),
         ],
       ),
@@ -66,15 +84,17 @@ class LoaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
 
     if (progressIndicator) {
-      return _circularProgressIndicator(context);
+      return _iosProgressIndicator(context);
     }
 
     if (indicator) {
       return _progressIndicator(context);
+    }
+
+    if(circularIndicator){
+      return _circularIndicator(context);
     }
 
     return const SizedBox.shrink();
@@ -86,7 +106,7 @@ class LoaderWidget extends StatelessWidget {
   ///
   /// {@youtube 560 315 https://www.youtube.com/watch?v=AENVH-ZqKDQ}
   ///
-  Widget _circularProgressIndicator(BuildContext context) {
+  Widget _iosProgressIndicator(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -114,6 +134,23 @@ class LoaderWidget extends StatelessWidget {
       animating: true,
       color: color ?? colorScheme.inverseSurface,
       radius: radius ?? appDimen.dimen(30),
+    );
+  }
+
+  ///A Circular progress indicator copied from cupertino style
+  /// An iOS-style activity indicator that spins clockwise.
+  ///
+  /// {@youtube 560 315 https://www.youtube.com/watch?v=AENVH-ZqKDQ}
+  ///
+  Widget _circularIndicator(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      height: radius,
+      width: radius,
+      child: CircularProgressIndicator(
+        color: color ?? colorScheme.inverseSurface,
+        strokeWidth: strokeWidth ?? 1.5,
+      ),
     );
   }
 }

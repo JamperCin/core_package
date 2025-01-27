@@ -184,7 +184,10 @@ class BaseApiService {
       }
     } catch (e) {
       debugPrint("Error $e");
-      return {"success": false, "error": 'An error occurred'} as T;
+      if (showToast) {
+        snackBarSnippet.snackBarError("An error occurred. Please try again later");
+      }
+      return null;
     }
   }
 

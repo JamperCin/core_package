@@ -66,8 +66,8 @@ class NetworkImageWidget extends StatelessWidget {
         onTap: onTap,
         child: AssetImageWidget(
           asset: isCircular ?  icProfileCircle : (placeholder ?? icProfile),
-          height: newHeight,
-          width: newWidth,
+          height: newHeight * 2,
+          width: newWidth * 2,
         ),
       );
     }
