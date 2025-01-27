@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/enum/file_type.dart';
 import 'package:core_module/core/utils/map_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class BaseApiService {
   Future<http.Response> _post(
@@ -70,6 +72,36 @@ class BaseApiService {
     );
   }
 
+  Future<http.StreamedResponse> _postMultipart({
+    required File file,
+    required Uri uri,
+    MediaType? mediaType,
+  }) async {
+    var request = http.MultipartRequest("POST", uri);
+    request.headers.addAll(_getMultiPartTokenHeaders());
+    String fileName = "";
+    if (mediaType == null || mediaType.type == "image") {
+      fileName = "prime_customer${DateTime.now().millisecond}_img.jpg";
+    } else {
+      fileName = "prime_file${DateTime.now().millisecond}_doc.pdf";
+    }
+
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        file.readAsBytes().asStream(),
+        file.lengthSync(),
+        filename: fileName,
+        contentType: mediaType ?? MediaType('image', 'jpg'),
+      ),
+    );
+
+    debugPrint(request.url.toString());
+
+    final stream = await request.send();
+    return stream;
+  }
+
   Future<Uri> _buildUrl(String url, {dynamic body, String? host}) async {
     return Uri(
       scheme: 'https',
@@ -120,11 +152,15 @@ class BaseApiService {
     T Function(dynamic)? parser,
   }) async {
     try {
-      var json = MapUtils().convertDecode(response.body);
+      dynamic json = {};
+      if (response is String) {
+        json = MapUtils().convertDecode(response);
+      } else {
+        json = MapUtils().convertDecode(response.body);
+      }
 
       if (print) {
-        debugPrint(
-            "Response Code: ${response.statusCode} \nResponse : $json\n");
+        debugPrint("Response : $json\n");
       }
 
       bool success =
@@ -220,6 +256,23 @@ class BaseApiService {
     );
     return _serialiseResponse<T>(
       response: response,
+      parser: parser,
+      showToast: showToast,
+    );
+  }
+
+  Future<T?> postMultiPartRequest<T>({
+    required String api,
+    required File file,
+    bool showToast = false,
+    String? host,
+    T Function(dynamic)? parser,
+  }) async {
+    final uri = await _buildUrl(api, host: host);
+    var response = await _postMultipart(file: file, uri: uri);
+    final respStr = await response.stream.bytesToString();
+    return _serialiseResponse<T>(
+      response: respStr,
       parser: parser,
       showToast: showToast,
     );

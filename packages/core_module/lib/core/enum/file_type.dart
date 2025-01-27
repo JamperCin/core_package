@@ -1,0 +1,3 @@
+enum FileType{
+  image, pdf,
+}

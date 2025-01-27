@@ -1,6 +1,6 @@
 name: core_module
 description: "A new Flutter package for setting up projects."
-version: 1.1.8
+version: 1.1.9
 homepage: https://github.com/JamperCin/core_package
 
 environment:
@@ -13,6 +13,7 @@ dependencies:
 
   flutter_animator: ^3.2.2
   http: ^1.2.2
+  http_parser: ^4.0.2
   uuid: ^4.5.1
   get: ^4.6.6
   geolocator: ^13.0.2
@@ -26,6 +27,8 @@ dependencies:
   shimmer: ^3.0.0
   cached_network_image: ^3.4.1
   sms_autofill: ^2.4.0
+  image_picker: ^1.1.2
+
 
 dev_dependencies:
   flutter_test:
