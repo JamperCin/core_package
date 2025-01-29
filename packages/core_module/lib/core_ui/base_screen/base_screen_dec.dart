@@ -23,8 +23,39 @@ abstract class BaseScreenDecorated extends BaseScreenImpl
   }
 
   @override
+  double decoAssetHeight() {
+   return appDimen.dimen(400);
+  }
+
+  @override
+  double decoAssetWidth() {
+   return appDimen.dimen(400);
+  }
+
+  @override
   double decoPageTopPadding() {
     return appDimen.dimen(70);
+  }
+
+  @override
+  Positioned decoBackPosition() {
+   return Positioned(
+     right: -appDimen.dimen(80),
+     top: -appDimen.dimen(70),
+     child: Transform.rotate(
+       angle: rotateAsset() ? (pi / 90 * 13) : 0,
+       child: AssetImageWidget(
+         height: decoAssetHeight(),
+         width: decoAssetWidth(),
+         asset: decoPageAsset(),
+       ),
+     ),
+   );
+  }
+
+  @override
+  Color backgroundColor(BuildContext context) {
+    return colorScheme.tertiary.withOpacity(0.8);
   }
 
   @override
@@ -33,21 +64,10 @@ abstract class BaseScreenDecorated extends BaseScreenImpl
       backgroundColor: colorScheme.tertiary,
       body: Stack(
         children: [
-          Positioned(
-            right: -appDimen.dimen(80),
-            top: -appDimen.dimen(70),
-            child: Transform.rotate(
-              angle: rotateAsset() ? (pi / 90 * 13) : 0,
-              child: AssetImageWidget(
-                height: appDimen.dimen(400),
-                width: appDimen.dimen(400),
-                asset: decoPageAsset(),
-              ),
-            ),
-          ),
+          decoBackPosition(),
           Positioned.fill(
             child: Container(
-              color: colorScheme.tertiary.withOpacity(0.8),
+              color: backgroundColor(context),
               child: Padding(
                 padding: EdgeInsets.only(
                   left: appDimen.dimen(20),
