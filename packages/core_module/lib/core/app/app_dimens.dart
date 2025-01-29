@@ -36,7 +36,7 @@ class AppDimens {
   //y=0.1x+0.4 Linear quadratic formula : Assume
   // y=mx+c (a linear relationship).
   double _getMultiplier(double value) {
-    double multiplier = (0.1 * value) + 0.4;
+    double multiplier = (0.1 * value) + 0.5;
     return multiplier;
   }
 
@@ -46,8 +46,8 @@ class AppDimens {
 
   double dimen(double value) {
     double multiplier = _getMultiplier(value);
-    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : _scaleFactor * multiplier * 1.9;
-    print("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
+    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * 1.9);
+   // debugPrint("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
     return h;
   }
 }

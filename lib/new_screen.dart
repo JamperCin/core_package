@@ -4,6 +4,8 @@ import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
+import 'package:core_module/core_ui/widgets/textfield_widget.dart';
+import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:core_module_package/intro_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +44,9 @@ class NewScreen extends BaseScreenStandard {
           color: Colors.black,
           height: appDimen.screenHeight * 0.3,
         ),
-        CheckboxWidget(onChange: (v){}, textWidget: Text('will'), text: "come",)
+        CheckboxWidget(onChange: (v){}, text: "Check the Terms and Conditions",),
+        TextFieldWidget.withPassword(hintText: 'Enter password',labelText: 'Password',),
+
       ],
     );
   }
