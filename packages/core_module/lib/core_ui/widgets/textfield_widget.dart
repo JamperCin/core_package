@@ -21,6 +21,7 @@ class TextFieldWidget extends StatelessWidget {
   final String obscuringCharacter;
   final TextStyle? style;
   final TextStyle? hintStyle;
+  final TextStyle? labelStyle;
   TextInputType? keyboardType;
   TextCapitalization? textCapitalization;
   List<TextInputFormatter>? inputFormatters;
@@ -44,6 +45,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
+    this.labelStyle,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.words,
     this.margin,
@@ -64,6 +66,7 @@ class TextFieldWidget extends StatelessWidget {
     this.hintText,
     this.style,
     this.hintStyle,
+    this.labelStyle,
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
@@ -91,6 +94,7 @@ class TextFieldWidget extends StatelessWidget {
     this.hintText,
     this.style,
     this.hintStyle,
+    this.labelStyle,
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
@@ -115,7 +119,7 @@ class TextFieldWidget extends StatelessWidget {
       children: [
         if (labelText.isNotEmpty)
           Text(labelText,
-              style: Theme.of(context)
+              style: labelStyle ?? Theme.of(context)
                   .textTheme
                   .labelMedium
                   ?.copyWith(fontWeight: FontWeight.w400)),
