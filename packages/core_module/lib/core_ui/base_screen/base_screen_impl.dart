@@ -38,6 +38,10 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
     return null;
   }
 
+  Color appBarIconColor(BuildContext context) {
+    return Theme.of(context).colorScheme.inverseSurface;
+  }
+
   @override
   Widget? appBarLeadingIcon(BuildContext context) {
     return Padding(
@@ -45,6 +49,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
       child: IconButtonWidget(
         icon: Icons.arrow_back_ios,
         iconSize: appDimen.dimen(30),
+        iconColor: appBarIconColor(context),
         padding: EdgeInsets.zero,
         onTap: () {
           Get.back();
@@ -57,7 +62,6 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   double appBarHeight() {
     return appDimen.dimen(65);
   }
-
 
   @override
   Widget bottomSheet(BuildContext context) {
