@@ -55,28 +55,25 @@ abstract class BaseScreenDecorated extends BaseScreenImpl
 
   @override
   Color backgroundColor(BuildContext context) {
-    return colorScheme.tertiary.withOpacity(0.8);
+    return colorScheme.tertiary;
   }
 
   @override
   Widget body(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorScheme.tertiary,
+      backgroundColor: backgroundColor(context),
       body: Stack(
         children: [
           decoBackPosition(),
           Positioned.fill(
-            child: Container(
-              color: backgroundColor(context),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: appDimen.dimen(20),
-                  right: appDimen.dimen(20),
-                  top: decoPageTopPadding(),
-                  bottom: appDimen.dimen(20),
-                ),
-                child: page(context),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: appDimen.dimen(20),
+                right: appDimen.dimen(20),
+                top: decoPageTopPadding(),
+                bottom: appDimen.dimen(20),
               ),
+              child: page(context),
             ),
           ),
         ],
