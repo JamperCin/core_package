@@ -72,7 +72,13 @@ class CheckboxWidget extends StatelessWidget {
                   onTap: () {
                     if (onTextClick != null) onTextClick!;
                   },
-                  child: Text(text, style: style ?? textTheme.labelMedium)),
+                  child: Text(text,
+                      style: style ??
+                          textTheme.labelMedium?.copyWith(
+                              color: isChecked.value
+                                  ? (checkedValue ?? colorScheme.primary)
+                                  : (unCheckedValue ??
+                                      colorScheme.inverseSurface)))),
             ),
           if (textWidget != null)
             Flexible(
