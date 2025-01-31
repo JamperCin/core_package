@@ -7,11 +7,17 @@ import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 class BottomAppBarWidget extends StatelessWidget {
   final GestureTapCallback? onTap;
   final BottomBarModel model;
+  final TextStyle? style;
+  final Color? inActiveColor;
+  final Color? activeColor;
 
   const BottomAppBarWidget({
     super.key,
     this.onTap,
     required this.model,
+    this.style,
+    this.inActiveColor,
+    this.activeColor,
   });
 
   @override
@@ -37,17 +43,17 @@ class BottomAppBarWidget extends StatelessWidget {
                                 model.iconSize ?? appDimen.dimen(defaultSize),
                             width:
                                 model.iconSize ?? appDimen.dimen(defaultSize),
-                            assetColor: model.isSelected
-                                ? colorScheme.primary
-                                : (model.iconColor ?? colorScheme.onSecondary),
+                            assetColor:  model.isSelected
+                                ? (activeColor ?? colorScheme.primary)
+                                : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
                             asset: model.asset ?? '',
                           )
                         : Icon(
                             model.icon,
                             size: model.iconSize ?? appDimen.dimen(defaultSize),
-                            color: model.isSelected
-                                ? colorScheme.primary
-                                : (model.iconColor ?? colorScheme.onSecondary),
+                            color:  model.isSelected
+                                ? (activeColor ?? colorScheme.primary)
+                                : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
                           ),
                   )
                 : model.icon == null
@@ -55,23 +61,26 @@ class BottomAppBarWidget extends StatelessWidget {
                         height: model.iconSize ?? appDimen.dimen(defaultSize),
                         width: model.iconSize ?? appDimen.dimen(defaultSize),
                         assetColor: model.isSelected
-                            ? colorScheme.primary
-                            : (model.iconColor ?? colorScheme.inverseSurface),
+                            ? (activeColor ?? colorScheme.primary)
+                            : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
                         asset: model.asset ?? '',
                       )
                     : Icon(
                         model.icon,
                         size: model.iconSize ?? appDimen.dimen(defaultSize),
-                        color: model.iconColor,
+                        color:  model.isSelected
+                            ? (activeColor ?? colorScheme.primary)
+                            : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
                       ),
             SizedBox(height: appDimen.dimen(2)),
             model.text != null
                 ? Text(
                     model.text ?? '',
-                    style: textTheme.labelMedium?.copyWith(
-                        color: model.isSelected
-                            ? colorScheme.primary
-                            : (model.iconColor ?? colorScheme.inverseSurface),),
+                    style: style ?? textTheme.labelMedium?.copyWith(
+                      color: model.isSelected
+                          ? colorScheme.primary
+                          : (model.iconColor ?? colorScheme.inverseSurface),
+                    ),
                   )
                 : const SizedBox()
           ],
