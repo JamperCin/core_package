@@ -8,7 +8,7 @@ import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
   final bool isEnabled;
-  final Widget? prefixIcon;
+  Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool isPhoneNumber;
   final double borderRadius;
@@ -98,20 +98,24 @@ class TextFieldWidget extends StatelessWidget {
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
+    this.prefixIcon,
     this.margin,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
         isPhoneNumber = false,
-        prefixIcon = AssetImageWidget(
-          asset:icPassword,
-          width: appDimen.dimen(14),
-          height: appDimen.dimen(14),
-        ),
         inputFormatters = null,
         obscureText = true.obs;
 
   @override
   Widget build(BuildContext context) {
+    if(obscureText != null) {
+      prefixIcon = prefixIcon ?? AssetImageWidget(
+        asset: icPassword,
+        width: appDimen.dimen(14),
+        height: appDimen.dimen(14),
+      );
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

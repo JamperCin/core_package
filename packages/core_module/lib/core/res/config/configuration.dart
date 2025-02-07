@@ -7,38 +7,49 @@ class Configuration {
   final String _envPath;
   late EnvType? _defaultEnvType;
 
-  ///Configuration fields
+  ///Configuration private fields to be consumed
   String _userType = "";
   String _defaultEnv = "";
   String _googleApi = "";
   String _appStoreId = "";
   String _googleEnv = "";
+  String _googlePlayLink = "";
+  String _appleStoreLink = "";
+  String _privacyPolicy = "";
+  String _termsAndConditions = "";
   int _networkTimeOut = 0;
   int _smsTimer = 0;
 
-  Configuration._(this._envPath,{EnvType? defaultEnv}) {
+  Configuration._(this._envPath, {EnvType? defaultEnv}) {
     _fileUtils = FileUtils();
     _defaultEnvType = defaultEnv;
     _init();
   }
 
-  factory Configuration({required String envPath,EnvType? defaultEnv}) {
+  factory Configuration({required String envPath, EnvType? defaultEnv}) {
     return _config ??= Configuration._(envPath, defaultEnv: defaultEnv);
   }
 
   Future<void> _init() async {
-    _defaultEnv =  await _fetchEnvironment(type: _defaultEnvType);
-    _googleEnv =  await _fetchEnvironment(type: EnvType.google);
-    _userType = await _fileUtils.fetchObject(_envPath, 'userType');
-    _appStoreId = await _fileUtils.fetchObject(_envPath, 'appStoreId');
-    _googleApi = await _fileUtils.fetchObject(_envPath, 'googleApi');
-    _networkTimeOut = await _fileUtils.fetchObject(_envPath, 'timeOut');
-    _smsTimer = await _fileUtils.fetchObject(_envPath, 'smsTimer');
+    _defaultEnv = await _fetchEnvironment(type: _defaultEnvType);
+    _googleEnv = await _fetchEnvironment(type: EnvType.google);
+    _userType = await fetchData(key: 'userType');
+    _appStoreId = await fetchData(key: 'appStoreId');
+    _googleApi = await fetchData(key: 'googleApi');
+    _networkTimeOut = await fetchData(key: 'timeOut');
+    _smsTimer = await fetchData(key: 'smsTimer');
+    _googlePlayLink = await fetchData(key: 'googlePlayLink');
+    _appleStoreLink = await fetchData(key: 'appleStoreLink');
+    _privacyPolicy = await fetchData(key: 'privacyPolicy');
+    _termsAndConditions = await fetchData(key: 'termsAndConditions');
+  }
+
+  Future<dynamic> fetchData({required String key}) async {
+    return await _fileUtils.fetchObject(_envPath, key);
   }
 
   Future<String> _fetchEnvironment({EnvType? type}) async {
-    final results =
-        await _fileUtils.fetchListOfMap(path: _envPath, key: 'env');
+    final results = await _fileUtils.fetchListOfMap(path: _envPath, key: 'env');
     String envType = (type ?? EnvType.production).name;
     Map<String, dynamic> map = results.where((e) => e['name'] == envType).first;
     return map['host'] as String;
@@ -64,11 +75,11 @@ class Configuration {
     return _googleApi;
   }
 
-  int getSmsTimer(){
+  int getSmsTimer() {
     return _smsTimer;
   }
 
-  int getTimeOut(){
+  int getTimeOut() {
     return _networkTimeOut;
   }
 }
