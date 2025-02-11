@@ -43,17 +43,21 @@ class BottomAppBarWidget extends StatelessWidget {
                                 model.iconSize ?? appDimen.dimen(defaultSize),
                             width:
                                 model.iconSize ?? appDimen.dimen(defaultSize),
-                            assetColor:  model.isSelected
+                            assetColor: model.isSelected
                                 ? (activeColor ?? colorScheme.primary)
-                                : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
+                                : (inActiveColor ??
+                                    model.iconColor ??
+                                    colorScheme.inverseSurface),
                             asset: model.asset ?? '',
                           )
                         : Icon(
                             model.icon,
                             size: model.iconSize ?? appDimen.dimen(defaultSize),
-                            color:  model.isSelected
+                            color: model.isSelected
                                 ? (activeColor ?? colorScheme.primary)
-                                : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
+                                : (inActiveColor ??
+                                    model.iconColor ??
+                                    colorScheme.inverseSurface),
                           ),
                   )
                 : model.icon == null
@@ -62,27 +66,40 @@ class BottomAppBarWidget extends StatelessWidget {
                         width: model.iconSize ?? appDimen.dimen(defaultSize),
                         assetColor: model.isSelected
                             ? (activeColor ?? colorScheme.primary)
-                            : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
+                            : (inActiveColor ??
+                                model.iconColor ??
+                                colorScheme.inverseSurface),
                         asset: model.asset ?? '',
                       )
                     : Icon(
                         model.icon,
                         size: model.iconSize ?? appDimen.dimen(defaultSize),
-                        color:  model.isSelected
+                        color: model.isSelected
                             ? (activeColor ?? colorScheme.primary)
-                            : (inActiveColor ?? model.iconColor ?? colorScheme.inverseSurface),
+                            : (inActiveColor ??
+                                model.iconColor ??
+                                colorScheme.inverseSurface),
                       ),
             SizedBox(height: appDimen.dimen(2)),
             model.text != null
                 ? Text(
                     model.text ?? '',
-                    style: style ?? textTheme.labelMedium?.copyWith(
-                      color: model.isSelected
-                          ? colorScheme.primary
-                          : (model.iconColor ?? colorScheme.inverseSurface),
-                    ),
+                    style: style?.copyWith(
+                          color: model.isSelected
+                              ? (activeColor ?? colorScheme.primary)
+                              : (inActiveColor ??
+                                  model.iconColor ??
+                                  colorScheme.inverseSurface),
+                        ) ??
+                        textTheme.labelMedium?.copyWith(
+                          color: model.isSelected
+                              ? (activeColor ?? colorScheme.primary)
+                              : (inActiveColor ??
+                                  model.iconColor ??
+                                  colorScheme.inverseSurface),
+                        ),
                   )
-                : const SizedBox()
+                : const SizedBox.shrink()
           ],
         ),
       ),
