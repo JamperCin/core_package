@@ -17,6 +17,7 @@ class NetworkImageWidget extends StatelessWidget {
   final String? heroTag;
   final BoxFit? fit;
   final Widget? childOnOverlay;
+  final Widget? placeHolderWidget;
   final GestureTapCallback? onTap;
   final bool setOverlay;
   final bool isCircular;
@@ -32,6 +33,7 @@ class NetworkImageWidget extends StatelessWidget {
     this.setOverlay = false,
     this.url,
     this.fit,
+    this.placeHolderWidget,
   })  : radius = null,
         borderRadius = null,
         isCircular = false;
@@ -47,6 +49,7 @@ class NetworkImageWidget extends StatelessWidget {
     this.childOnOverlay,
     this.setOverlay = false,
     this.url,
+    this.placeHolderWidget,
   })  : isCircular = true,
         height = 0,
         width = 0;
@@ -64,7 +67,7 @@ class NetworkImageWidget extends StatelessWidget {
     if (url == null || url!.isEmpty) {
       return GestureDetector(
         onTap: onTap,
-        child: AssetImageWidget(
+        child: placeHolderWidget ?? AssetImageWidget(
           asset: isCircular ?  icProfileCircle : (placeholder ?? icProfile),
           height: newHeight * 2,
           width: newWidth * 2,
@@ -114,7 +117,7 @@ class NetworkImageWidget extends StatelessWidget {
       placeholder: (context, url) => Shimmer.fromColors(
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
-        child: AssetImageWidget(
+        child: placeHolderWidget ?? AssetImageWidget(
           asset: placeholder ?? icProfile,
           height: newHeight,
           width: newWidth,
