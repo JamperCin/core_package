@@ -1,7 +1,6 @@
 import 'package:core_module/core/utils/map_utils.dart';
 import 'package:flutter/services.dart';
 
-
 class FileUtils {
   static FileUtils? _fileUtils;
 
@@ -25,25 +24,31 @@ class FileUtils {
     }
   }
 
-  Future<List<T>> fetchList<T>(
-      String path, String key, dynamic Function(dynamic) parser) async {
+  Future<List<T>> fetchList<T>({
+    required String path,
+    String? objectKey,
+    required String key,
+    required dynamic Function(dynamic) parser,
+  }) async {
     final results = await loadResources<List<T>>(
         path: path,
         parser: (data) {
-          final listMap = (data as Map<String, dynamic>)[key] as List;
+          final listMap = ((objectKey != null ? data[objectKey] : data ) as Map<String, dynamic>)[key] as List;
           return [...listMap.map((e) => parser(e))];
         });
     return results;
   }
 
+
   Future<List<Map<String, dynamic>>> fetchListOfMap({
     required String path,
     required String key,
+    String? objectKey,
   }) async {
     final results = await loadResources<List<Map<String, dynamic>>>(
         path: path,
         parser: (data) {
-          final listMap = (data as Map<String, dynamic>)[key] as List;
+          final listMap = ((objectKey != null ? data[objectKey] : data ) as Map<String, dynamic>)[key] as List;
           return [...listMap.map((e) => e as Map<String, dynamic>)];
         });
     return results;
