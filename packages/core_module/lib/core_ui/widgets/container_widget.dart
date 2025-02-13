@@ -18,6 +18,7 @@ class ContainerWidget extends StatelessWidget {
   final bool dottedBorder;
   final Color? borderColor;
   final EdgeInsets? padding;
+  final String? backgroundImage;
   final EdgeInsetsGeometry? margin;
   final GestureTapCallback? onTap;
 
@@ -35,8 +36,11 @@ class ContainerWidget extends StatelessWidget {
     this.borderWidth,
     this.borderColor,
     this.borderSide,
-  })  : isCircular = false, isCircularNotch = false,
-        dottedBorder = false, notchWidth = null,
+    this.backgroundImage,
+  })  : isCircular = false,
+        isCircularNotch = false,
+        dottedBorder = false,
+        notchWidth = null,
         radius = null;
 
   const ContainerWidget.withDottedBorder({
@@ -55,6 +59,7 @@ class ContainerWidget extends StatelessWidget {
         dottedBorder = true,
         isCircularNotch = false,
         border = null,
+        backgroundImage = null,
         notchWidth = null,
         borderSide = null,
         radius = null;
@@ -74,11 +79,11 @@ class ContainerWidget extends StatelessWidget {
         dottedBorder = false,
         isCircularNotch = false,
         height = null,
+        backgroundImage = null,
         borderSide = null,
         border = null,
         notchWidth = null,
         width = null;
-
 
   const ContainerWidget.withCircularNotch({
     super.key,
@@ -96,6 +101,7 @@ class ContainerWidget extends StatelessWidget {
         borderWidth = null,
         dottedBorder = false,
         isCircularNotch = true,
+        backgroundImage = null,
         radius = null,
         borderSide = null,
         border = null;
@@ -159,7 +165,8 @@ class ContainerWidget extends StatelessWidget {
       );
     }
 
-
+    assert(!(color != null && backgroundImage != null),
+        'Both color and backgroundImage cannot be present at the same time');
 
     return InkWell(
       onTap: onTap,
@@ -170,14 +177,22 @@ class ContainerWidget extends StatelessWidget {
         padding: padding,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: color ?? colorScheme.secondary,
-          borderRadius: border ?? BorderRadius.all(
-            Radius.circular(borderRadius ?? 10),
-          ),
-          border: borderSide ?? Border.all(
-            color: borderColor ?? color ?? colorScheme.secondary,
-            width: borderWidth ?? 1,
-          ),
+          color: backgroundImage == null ? (color ?? colorScheme.surfaceContainer) : null ,
+          image: backgroundImage != null
+              ? DecorationImage(
+                  image: AssetImage(backgroundImage!),
+                  fit: BoxFit.cover,
+                )
+              : null,
+          borderRadius: border ??
+              BorderRadius.all(
+                Radius.circular(borderRadius ?? 10),
+              ),
+          border: borderSide ??
+              Border.all(
+                color: borderColor ?? color ?? colorScheme.secondary,
+                width: borderWidth ?? 1,
+              ),
         ),
         child: child,
       ),
@@ -224,7 +239,6 @@ class NotchClipper extends CustomClipper<Path> {
       ..lineTo(size.width, size.height)
       ..lineTo(0, size.height)
       ..close();
-
 
     return path;
   }

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     CoreModule().init(
       context: context,
-      envPath: 'assets/data/env.json',
+      //envPath: 'assets/data/env.json',
       homePageScreen: 'NewScreen',
       loginScreen: 'LoginScreen',
     );

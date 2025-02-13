@@ -1,4 +1,5 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
@@ -40,9 +41,10 @@ class NewScreen extends BaseScreenStandard {
           text: "Intro Scrren",
         ),
         FileImagePickerWidget(),
-        ContainerWidget.withCircularNotch(
-          color: Colors.black,
+        ContainerWidget(
+         // color: Colors.black,
           height: appDimen.screenHeight * 0.3,
+          backgroundImage: icApple,
         ),
         CheckboxWidget(onChange: (v){}, text: "Check the Terms and Conditions",),
         TextFieldWidget.withPassword(hintText: 'Enter password',labelText: 'Password',),
