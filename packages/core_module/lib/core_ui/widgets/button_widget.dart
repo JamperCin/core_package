@@ -7,6 +7,8 @@ class ButtonWidget extends StatelessWidget {
   final TextStyle? style;
   final Color? backgroundColor;
   final Color? disabledColor;
+  final double? height;
+  final double? width;
   final bool enabled;
   final VoidCallback onTap;
 
@@ -19,6 +21,8 @@ class ButtonWidget extends StatelessWidget {
     this.backgroundColor,
     this.enabled = true,
     this.disabledColor,
+    this.height,
+    this.width,
   });
 
   @override
@@ -27,10 +31,10 @@ class ButtonWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return SizedBox(
-      width: appDimen.screenWidth,
-      height: appDimen.dimen(50),
+      width: width ?? appDimen.screenWidth,
+      height: height ?? appDimen.dimen(50),
       child: ElevatedButton(
-        onPressed:enabled? onTap : (){},
+        onPressed: enabled ? onTap : () {},
         style: textTheme.style?.copyWith(
             backgroundColor: enabled
                 ? (backgroundColor != null
