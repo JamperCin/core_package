@@ -171,13 +171,15 @@ class ContainerWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: height ?? appDimen.dimen(180),
-        width: width ?? appDimen.dimen(180),
+        height: height,
+        width: width,
         margin: margin,
         padding: padding,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: backgroundImage == null ? (color ?? colorScheme.surfaceContainer) : null ,
+          color: backgroundImage == null
+              ? (color ?? colorScheme.surfaceContainer)
+              : null,
           image: backgroundImage != null
               ? DecorationImage(
                   image: AssetImage(backgroundImage!),
