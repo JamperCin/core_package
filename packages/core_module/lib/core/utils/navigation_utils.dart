@@ -85,8 +85,8 @@ class NavUtils {
         break;
     }
 
-    if (event.target != null && event.model != null) {
-      event.target!.setModel(event.model!);
+    if (event.target != null ) {
+      event.target!.setModel(event.model ?? BaseObject());
     }
   }
 
