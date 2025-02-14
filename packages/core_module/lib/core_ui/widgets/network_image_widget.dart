@@ -153,7 +153,7 @@ class NetworkImageWidget extends StatelessWidget {
                 ? ContainerWidget(
                     height: newHeight,
                     width: newWidth,
-                    color: Colors.black.withValues(alpha: .5),
+                    color: Colors.black.withOpacity(.5),
                     borderRadius: borderRadius,
                   )
                 : const SizedBox.shrink(),
