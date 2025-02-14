@@ -33,9 +33,9 @@ class NetworkImageWidget extends StatelessWidget {
     this.setOverlay = false,
     this.url,
     this.fit,
+    this.borderRadius,
     this.placeHolderWidget,
   })  : radius = null,
-        borderRadius = null,
         isCircular = false;
 
   const NetworkImageWidget.withCircular({
@@ -153,7 +153,7 @@ class NetworkImageWidget extends StatelessWidget {
                 ? ContainerWidget(
                     height: newHeight,
                     width: newWidth,
-                    color: Colors.black.withOpacity(.5),
+                    color: Colors.black.withValues(alpha: .5),
                     borderRadius: borderRadius,
                   )
                 : const SizedBox.shrink(),

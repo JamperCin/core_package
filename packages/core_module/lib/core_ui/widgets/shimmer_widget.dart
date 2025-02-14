@@ -1,3 +1,5 @@
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/res/assets_path.dart';
@@ -14,14 +16,16 @@ class ShimmerWidget extends StatelessWidget {
   ShimmerWidget({
     super.key,
     this.child,
-    this.height,this.width,
+    this.height,
+    this.width,
   }) : length = null;
 
   ShimmerWidget.withList({
     super.key,
     this.length = 5,
     this.child,
-  }) : height = null, width = null;
+  })  : height = null,
+        width = null;
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +34,27 @@ class ShimmerWidget extends StatelessWidget {
         child: Column(
           children: List<Widget>.generate(
             length!,
-            (int index) => ListTile(
-              leading: AssetImageWidget(
-                asset: icProfile,
-                height: appDimen.dimen(120),
-                width: appDimen.dimen(110),
-              ),
-              title: DividerWidget(height: appDimen.dimen(10)),
-              subtitle: Column(
-                children: [
-                  DividerWidget(height: appDimen.dimen(2)),
-                  SizedBox(height: appDimen.dimen(1)),
-                  DividerWidget(height: appDimen.dimen(2)),
-                  SizedBox(height: appDimen.dimen(5)),
-                  DividerWidget(height: appDimen.dimen(3)),
-                ],
+            (int index) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.dp()),
+              child: ListTile(
+                leading: ContainerWidget.withCircular(
+                  radius: 70.dp(),
+                ),
+                subtitle: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(child: DividerWidget(height: 6.dp())),
+                        SizedBox(width: 10.dp()),
+                        Flexible(child: DividerWidget(height: 6.dp())),
+                      ],
+                    ),
+                    SizedBox(height: 4.dp()),
+                    DividerWidget(height: 6.dp()),
+                    SizedBox(height: 4.dp()),
+                    DividerWidget(height: 6.dp()),
+                  ],
+                ),
               ),
             ),
           ),

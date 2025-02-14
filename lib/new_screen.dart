@@ -4,6 +4,7 @@ import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
+import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
@@ -28,28 +29,26 @@ class NewScreen extends BaseScreenStandard {
 
   @override
   Widget body(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "New page here",
-          style: textTheme.labelMedium,
-        ),
-        TextButtonWidget.withTextOnly(
-          onTap: () {
-            navUtils.fireLogOut();
-          },
-          text: "Intro Scrren",
-        ),
-        FileImagePickerWidget(),
-        ContainerWidget(
-         // color: Colors.black,
-          height: appDimen.screenHeight * 0.3,
-          backgroundImage: icApple,
-        ),
-        CheckboxWidget(onChange: (v){}, text: "Check the Terms and Conditions",),
-        TextFieldWidget.withPassword(hintText: 'Enter password',labelText: 'Password',),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            "New page here",
+            style: textTheme.labelMedium,
+          ),
+          ShimmerWidget.withList(length: 5),
+          TextButtonWidget.withTextOnly(
+            onTap: () {
+              navUtils.fireLogOut();
+            },
+            text: "Intro Scrren",
+          ),
+          FileImagePickerWidget(),
+          CheckboxWidget(onChange: (v){}, text: "Check the Terms and Conditions",),
+          TextFieldWidget.withPassword(hintText: 'Enter password',labelText: 'Password',),
 
-      ],
+        ],
+      ),
     );
   }
 }
