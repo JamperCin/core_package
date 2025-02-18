@@ -166,7 +166,7 @@ class ContainerWidget extends StatelessWidget {
     }
 
     assert(!(color != null && backgroundImage != null),
-        'Both color and backgroundImage cannot be present at the same time');
+        'Both color and backgroundImage cannot be present or have values at the same time');
 
     return InkWell(
       onTap: onTap,
