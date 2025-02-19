@@ -19,9 +19,9 @@ class TextButtonWidget extends StatelessWidget {
     this.text = '',
     this.child,
     this.padding,
+    this.backgroundColor,
     required this.onTap,
-  })  : backgroundColor = Colors.transparent,
-        splashColor = null,
+  })  : splashColor = null,
         textOnly = false;
 
   const TextButtonWidget.withTextOnly({
@@ -54,7 +54,7 @@ class TextButtonWidget extends StatelessWidget {
 
     return TextButton(
       style: TextButton.styleFrom(
-        backgroundColor: backgroundColor, // Set text color
+        backgroundColor: backgroundColor ?? Colors.transparent, // Set text color
         padding: padding ??
             EdgeInsets.symmetric(
                 horizontal: appDimen.dimen(2),
