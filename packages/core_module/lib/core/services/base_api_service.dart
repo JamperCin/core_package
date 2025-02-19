@@ -104,7 +104,7 @@ class BaseApiService {
 
   Future<Uri> _buildUrl(String url, {dynamic body, String? host}) async {
     return Uri(
-      scheme: 'https',
+      scheme: config.getEnvironmentScheme(),
       host: host ?? config.getEnvironment(),
       path: url.replaceAll("?", ""),
       queryParameters: body,
@@ -210,6 +210,7 @@ class BaseApiService {
   Future<List<T>> getListRequest<T>({
     required String api,
     required String key,
+    String? objectKey,
     bool showToast = false,
     required T Function(Map<String, dynamic>) fromJson,
     Map<String, dynamic>? param,
@@ -219,7 +220,7 @@ class BaseApiService {
             param: param,
             showToast: showToast,
             parser: (json) {
-              final listMap = json['data'][key] as List;
+              final listMap = json[objectKey ?? 'data'][key] as List;
               return [...listMap.map((e) => fromJson(e))];
             }) ??
         [];

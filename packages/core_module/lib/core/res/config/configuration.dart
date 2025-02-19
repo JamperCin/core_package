@@ -10,6 +10,7 @@ class Configuration {
   ///Configuration private fields to be consumed
   String _userType = "";
   String _defaultEnv = "";
+  String _defaultEnvScheme = "";
   String _googleApi = "";
   String _appStoreId = "";
   String _googleEnv = "";
@@ -32,6 +33,7 @@ class Configuration {
 
   Future<void> _init() async {
     _defaultEnv = await _fetchEnvironment(type: _defaultEnvType);
+    _defaultEnvScheme = await _fetchEnvironmentScheme(type: _defaultEnvType);
     _googleEnv = await _fetchEnvironment(type: EnvType.google);
     _userType = await fetchData(key: 'userType');
     _appStoreId = await fetchData(key: 'appStoreId');
@@ -54,14 +56,28 @@ class Configuration {
   }
 
   Future<String> _fetchEnvironment({EnvType? type}) async {
+    Map<String, dynamic> map = await _fetchEnvMap(type: type);
+    return map['host'] as String;
+  }
+
+  Future<String> _fetchEnvironmentScheme({EnvType? type}) async {
+    Map<String, dynamic> map = await _fetchEnvMap(type: type);
+    final isHttpsScheme =  map['https'] as bool;
+    return isHttpsScheme ? "https" : "http";
+  }
+
+  Future<Map<String, dynamic>> _fetchEnvMap({EnvType? type}) async {
     final results = await _fileUtils.fetchListOfMap(path: _envPath, key: 'env');
     String envType = (type ?? EnvType.production).name;
     Map<String, dynamic> map = results.where((e) => e['name'] == envType).first;
-    return map['host'] as String;
+    return map;
   }
 
   String getEnvironment() {
     return _defaultEnv;
+  }
+  String getEnvironmentScheme() {
+    return _defaultEnvScheme;
   }
 
   String getGoogleEnvironment() {
