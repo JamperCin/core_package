@@ -1,3 +1,4 @@
+import 'package:core_module/core/app/app_dimens.dart';
 import 'package:core_module/core/app/app_style.dart';
 import 'package:core_module/core/app/app_theme.dart';
 import 'package:core_module/core/def/global_def.dart';
@@ -10,7 +11,15 @@ import 'package:flutter/material.dart';
 
 import 'new_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(seconds: 1));
+  await  CoreModule().init(
+    envPath: 'assets/data/env.json',
+    homePageScreen: 'NewScreen',
+    loginScreen: 'LoginScreen',
+  );
+
   runApp(const MyApp());
 }
 
@@ -20,12 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    CoreModule().init(
-      context: context,
-      //envPath: 'assets/data/env.json',
-      homePageScreen: 'NewScreen',
-      loginScreen: 'LoginScreen',
-    );
+   appDimen = AppDimens(context);
 
     return GetMaterialApp(
       title: 'Flutter Demo',
@@ -55,12 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    PlacesPickerWidget.searchPlaces(
-      onSearch: (onSearch) {
-        print("Place: $onSearch");
-      },
-      context: context,
-    );
+    // PlacesPickerWidget.searchPlaces(
+    //   onSearch: (onSearch) {
+    //     print("Place: $onSearch");
+    //   },
+    //   context: context,
+    // );
+    String counter = config.fetchData(key: "appStoreLink");
+    final counter2 = config.getAppStoreId();
+    print("PRINT --> $counter2 ---> $counter");
 
     setState(() {
       _counter++;
@@ -92,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
              Text(
-              'You have pushed the button this many times:',
+              "counter counts here",
               style: labelSmallTextLightModeStyle,
             ),
             ShimmerWidget(

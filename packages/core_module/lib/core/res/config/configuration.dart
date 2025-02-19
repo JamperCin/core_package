@@ -6,6 +6,7 @@ class Configuration {
   late FileUtils _fileUtils;
   final String _envPath;
   late EnvType? _defaultEnvType;
+  late Map<String, dynamic> _envMap;
 
   ///Configuration private fields to be consumed
   String _userType = "";
@@ -32,27 +33,28 @@ class Configuration {
   }
 
   Future<void> _init() async {
+    await _loadEnvMap();
     _defaultEnv = await _fetchEnvironment(type: _defaultEnvType);
-    _defaultEnvScheme = await _fetchEnvironmentScheme(type: _defaultEnvType);
     _googleEnv = await _fetchEnvironment(type: EnvType.google);
-    _userType = await fetchData(key: 'userType');
-    _appStoreId = await fetchData(key: 'appStoreId');
-    _googleApi = await fetchData(key: 'googleApi');
-    _networkTimeOut = await fetchData(key: 'httpTimeOut');
-    _smsTimer = await fetchData(key: 'smsTimer');
-    _googlePlayLink = await fetchData(key: 'googlePlayStoreLink');
-    _appleStoreLink = await fetchData(key: 'appleStoreLink');
-    _privacyPolicy = await fetchData(key: 'privacyPolicy');
-    _termsAndConditions = await fetchData(key: 'termsAndConditions');
+    _defaultEnvScheme = await _fetchEnvironmentScheme(type: _defaultEnvType);
+    _userType = fetchData(key: 'userType');
+    _appStoreId = fetchData(key: 'appStoreId');
+    _googleApi = fetchData(key: 'googleApi');
+    _networkTimeOut = fetchData(key: 'httpTimeOut');
+    _smsTimer = fetchData(key: 'smsTimer');
+    _googlePlayLink = fetchData(key: 'googlePlayStoreLink');
+    _appleStoreLink = fetchData(key: 'appStoreLink');
+    _privacyPolicy = fetchData(key: 'privacyPolicy');
+    _termsAndConditions = fetchData(key: 'termsAndConditions');
   }
 
-  Future<dynamic> fetchData({required String key}) async {
-    return await _fileUtils.fetchObject(_envPath, key);
-  }
+  ///--------------------------------------------------------------------------
 
-  dynamic fetchDataNonAsync({required String key}) async {
-    final data = await _fileUtils.fetchObject(_envPath, key);
-    return data;
+  Future<dynamic> _loadEnvMap() async {
+    _envMap = await _fileUtils.loadResources<Map<String, dynamic>>(
+      path: _envPath,
+      parser: (json) => json,
+    );
   }
 
   Future<String> _fetchEnvironment({EnvType? type}) async {
@@ -62,20 +64,34 @@ class Configuration {
 
   Future<String> _fetchEnvironmentScheme({EnvType? type}) async {
     Map<String, dynamic> map = await _fetchEnvMap(type: type);
-    final isHttpsScheme =  map['https'] as bool;
+    final isHttpsScheme = map['https'] as bool;
     return isHttpsScheme ? "https" : "http";
   }
 
   Future<Map<String, dynamic>> _fetchEnvMap({EnvType? type}) async {
-    final results = await _fileUtils.fetchListOfMap(path: _envPath, key: 'env');
+    final result = _envMap['env'];
     String envType = (type ?? EnvType.production).name;
-    Map<String, dynamic> map = results.where((e) => e['name'] == envType).first;
+    Map<String, dynamic> map = result.where((e) => e['name'] == envType).first;
+    return map;
+  }
+
+  ///-----------------------------------------------------------------------------
+
+  dynamic fetchData({required String key}) {
+    return _envMap.containsKey(key) ? _envMap[key] : null;
+  }
+
+  Map<String, dynamic> fetchEnv({String? envKey}) {
+    final result = _envMap['env'];
+    String envType = envKey ?? EnvType.production.name;
+    Map<String, dynamic> map = result.where((e) => e['name'] == envType).first;
     return map;
   }
 
   String getEnvironment() {
     return _defaultEnv;
   }
+
   String getEnvironmentScheme() {
     return _defaultEnvScheme;
   }
