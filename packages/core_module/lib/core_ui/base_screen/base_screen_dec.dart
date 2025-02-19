@@ -38,6 +38,11 @@ abstract class BaseScreenDecorated extends BaseScreenImpl
   }
 
   @override
+  Color decoBgBlurColor(BuildContext context) {
+   return colorScheme.tertiary.withOpacity(0.8);
+  }
+
+  @override
   Positioned decoBackPosition() {
    return Positioned(
      right: -appDimen.dimen(80),
@@ -66,14 +71,17 @@ abstract class BaseScreenDecorated extends BaseScreenImpl
         children: [
           decoBackPosition(),
           Positioned.fill(
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: appDimen.dimen(20),
-                right: appDimen.dimen(20),
-                top: decoPageTopPadding(),
-                bottom: appDimen.dimen(20),
+            child: Container(
+              color: decoBgBlurColor(context),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: appDimen.dimen(20),
+                  right: appDimen.dimen(20),
+                  top: decoPageTopPadding(),
+                  bottom: appDimen.dimen(20),
+                ),
+                child: page(context),
               ),
-              child: page(context),
             ),
           ),
         ],

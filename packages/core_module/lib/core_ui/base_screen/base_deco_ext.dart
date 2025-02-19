@@ -5,6 +5,7 @@ abstract class BaseDecoExt{
   double decoPageTopPadding();
   double decoAssetHeight();
   double decoAssetWidth();
+  Color decoBgBlurColor(BuildContext context);
   bool rotateAsset();
   Positioned decoBackPosition();
 
