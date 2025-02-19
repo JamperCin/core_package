@@ -36,9 +36,9 @@ class Configuration {
     _userType = await fetchData(key: 'userType');
     _appStoreId = await fetchData(key: 'appStoreId');
     _googleApi = await fetchData(key: 'googleApi');
-    _networkTimeOut = await fetchData(key: 'timeOut');
+    _networkTimeOut = await fetchData(key: 'httpTimeOut');
     _smsTimer = await fetchData(key: 'smsTimer');
-    _googlePlayLink = await fetchData(key: 'googlePlayLink');
+    _googlePlayLink = await fetchData(key: 'googlePlayStoreLink');
     _appleStoreLink = await fetchData(key: 'appleStoreLink');
     _privacyPolicy = await fetchData(key: 'privacyPolicy');
     _termsAndConditions = await fetchData(key: 'termsAndConditions');
@@ -46,6 +46,11 @@ class Configuration {
 
   Future<dynamic> fetchData({required String key}) async {
     return await _fileUtils.fetchObject(_envPath, key);
+  }
+
+  dynamic fetchDataNonAsync({required String key}) async {
+    final data = await _fileUtils.fetchObject(_envPath, key);
+    return data;
   }
 
   Future<String> _fetchEnvironment({EnvType? type}) async {
@@ -73,6 +78,22 @@ class Configuration {
 
   String getGoogleApiKey() {
     return _googleApi;
+  }
+
+  String getGooglePlayStoreLink() {
+    return _googlePlayLink;
+  }
+
+  String getAppleStoreLink() {
+    return _appleStoreLink;
+  }
+
+  String getPrivacyPolicyLink() {
+    return _privacyPolicy;
+  }
+
+  String getTermsAndConditionsLink() {
+    return _termsAndConditions;
   }
 
   int getSmsTimer() {
