@@ -23,6 +23,12 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   }
 
   @override
+  TextStyle? appBarTitleStyle(BuildContext context) {
+    return textTheme.titleMedium
+        ?.copyWith(color: colorScheme.inverseSurface);
+  }
+
+  @override
   void setContext(BuildContext context) {
     mContext = context;
     appDimen = AppDimens(context);
@@ -157,8 +163,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
       title: appBarTitleWidget(context) ??
           Text(
             appBarTitle(),
-            style: textTheme.titleMedium
-                ?.copyWith(color: colorScheme.inverseSurface),
+            style: appBarTitleStyle(context),
           ),
       actions: actions(),
     );

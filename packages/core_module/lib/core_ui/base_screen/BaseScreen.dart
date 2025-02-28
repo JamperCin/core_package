@@ -8,6 +8,7 @@ abstract class BaseScreen extends StatelessWidget {
   String appBarTitle();
   Widget? appBarTitleWidget(BuildContext context);
   Widget? appBarLeadingIcon(BuildContext context);
+  TextStyle? appBarTitleStyle(BuildContext context);
   late TextTheme textTheme;
   late ColorScheme colorScheme;
   ///Set the elevation of the appBar. The default elevation is == 10
