@@ -8,6 +8,7 @@ class DropDownWidget<T> extends StatelessWidget {
   final Rx<T> selectedItem;
   final List<T> list;
   final Widget Function(T value)? builder;
+  final Function(T item)? onItemSelected;
   final double? height;
   final int? elevation;
   final double? horizontalPadding;
@@ -35,7 +36,7 @@ class DropDownWidget<T> extends StatelessWidget {
     this.iconColor,
     this.underlineColor,
     this.elevation,
-    this.underlineThickness,
+    this.underlineThickness, this.onItemSelected,
   });
 
   @override
@@ -67,6 +68,7 @@ class DropDownWidget<T> extends StatelessWidget {
           ),
           onChanged: (T? newValue) {
             selectedItem.value = newValue as T;
+            if(onItemSelected != null)onItemSelected!(selectedItem.value);
           },
           items: list.map<DropdownMenuItem<T>>((T value) {
             return DropdownMenuItem<T>(
