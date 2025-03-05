@@ -10,15 +10,8 @@ import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 
 class LoginScreen extends BaseScreenDecorated {
-  //final _controller = Get.put(LoginController());
-
-  LoginScreen(){
-    print("Loaded ------> Login Screen");
-    LoaderWidget().showProgressIndicator(context: Get.context);
-  }
 
   @override
   String decoPageAsset() {

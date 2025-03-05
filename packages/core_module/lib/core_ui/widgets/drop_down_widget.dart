@@ -7,7 +7,7 @@ import 'container_widget.dart';
 class DropDownWidget<T> extends StatelessWidget {
   final Rx<T> selectedItem;
   final List<T> list;
-  final Widget Function(T value) builder;
+  final Widget Function(T value)? builder;
   final double? height;
   final int? elevation;
   final double? horizontalPadding;
@@ -24,13 +24,18 @@ class DropDownWidget<T> extends StatelessWidget {
     super.key,
     required this.selectedItem,
     required this.list,
-    required this.builder,
+    this.builder,
     this.height,
     this.horizontalPadding,
     this.padding,
     this.margin,
     this.borderColor,
-    this.textStyle, this.iconSize, this.iconColor, this.underlineColor, this.elevation, this.underlineThickness,
+    this.textStyle,
+    this.iconSize,
+    this.iconColor,
+    this.underlineColor,
+    this.elevation,
+    this.underlineThickness,
   });
 
   @override
@@ -53,7 +58,7 @@ class DropDownWidget<T> extends StatelessWidget {
             size: iconSize ?? 24.dp(),
           ),
           iconSize: iconSize ?? 24.dp(),
-          elevation:   elevation ?? 16,
+          elevation: elevation ?? 16,
           style: textStyle ??
               textTheme.bodyMedium?.copyWith(color: colorScheme.primary),
           underline: Container(
@@ -66,7 +71,12 @@ class DropDownWidget<T> extends StatelessWidget {
           items: list.map<DropdownMenuItem<T>>((T value) {
             return DropdownMenuItem<T>(
               value: value,
-              child: builder(value),
+              child: builder != null
+                  ? builder!(value)
+                  : Text(
+                      "$value",
+                      style: textStyle,
+                    ),
             );
           }).toList(),
         ),
