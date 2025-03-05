@@ -7,6 +7,7 @@ class TabBarWidget extends StatefulWidget {
   final Color? indicatorColor;
   final Color? dividerColor;
   final Color? labelColor;
+  final Color? unselectedLabelColor;
   final TextStyle? labelStyle;
 
   const TabBarWidget({
@@ -17,7 +18,7 @@ class TabBarWidget extends StatefulWidget {
     this.indicatorColor,
     this.dividerColor,
     this.labelColor,
-    this.labelStyle,
+    this.labelStyle, this.unselectedLabelColor,
   });
 
   @override
@@ -55,7 +56,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       dividerColor: widget.dividerColor ?? colorScheme.surface,
       labelColor: widget.labelColor ?? colorScheme.primary,
       labelStyle: widget.labelStyle ?? textTheme.bodyMedium,
-      unselectedLabelColor: colorScheme.secondaryFixedDim,
+      unselectedLabelColor: widget.unselectedLabelColor ?? colorScheme.tertiaryContainer,
     );
   }
 }

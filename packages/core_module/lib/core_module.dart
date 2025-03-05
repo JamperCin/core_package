@@ -8,7 +8,6 @@ import 'package:core_module/core/res/config/configuration.dart';
 import 'package:core_module/core/utils/navigation_utils.dart';
 import 'package:core_module/core/utils/number_utils.dart';
 import 'package:core_module/core/utils/validation_utils.dart';
-import 'package:core_module/core_ui/base_screen/base_screen_impl.dart';
 import 'package:core_module/core_ui/snippets/places_search/geo_location_helper.dart';
 import 'package:core_module/core_ui/snippets/snack_bar_snippet.dart';
 import 'package:flutter/cupertino.dart';
