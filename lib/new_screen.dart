@@ -5,6 +5,7 @@ import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
+import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
@@ -44,9 +45,30 @@ class NewScreen extends BaseScreenStandard {
             text: "Intro Scrren",
           ),
           FileImagePickerWidget(),
-          CheckboxWidget(onChange: (v){}, text: "Check the Terms and Conditions",),
-          TextFieldWidget.withPassword(hintText: 'Enter password',labelText: 'Password',),
-
+          CheckboxWidget(
+            onChange: (v) {},
+            text: "Check the Terms and Conditions",
+          ),
+          TextFieldWidget.withPassword(
+            hintText: 'Enter password',
+            labelText: 'Password',
+          ),
+          SizedBox(height: 20),
+          TabBarWidget(tabs: [
+            Tab(
+             // icon: Icon(Icons.ac_unit_outlined),
+              text: "Summary",
+            ),
+            Tab(
+              // icon: Icon(Icons.ac_unit_outlined),
+              text: "Jobs",
+            ),
+            Tab(
+             // icon: Icon(Icons.local_activity),
+              text: "Description",
+            )
+          ], onTabOnClick: (int ) {  },),
+          SizedBox(height: 20),
         ],
       ),
     );

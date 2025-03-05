@@ -17,7 +17,7 @@ class LoaderWidget extends StatelessWidget {
     this.color,
     this.radius,
   })  : progressIndicator = false,
-   circularIndicator = false,
+        circularIndicator = false,
         context = null,
         strokeWidth = null,
         indicator = false;
@@ -54,7 +54,12 @@ class LoaderWidget extends StatelessWidget {
         indicator = false;
 
   ///Circular progress Indicator
-  Future<void> showProgressIndicator({required context, Widget? child, bool autoDismiss = true}) async {
+  Future<void> showProgressIndicator({
+    required context,
+    Widget? child,
+    bool autoDismiss = true,
+    double? radius,
+  }) async {
     Loader.show(
       context,
       progressIndicator: Column(
@@ -62,7 +67,7 @@ class LoaderWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _iosProgressIndicator(context),
+          _iosProgressIndicator(context, radius: radius,),
           child ?? const SizedBox.shrink(),
         ],
       ),
@@ -72,28 +77,27 @@ class LoaderWidget extends StatelessWidget {
       isBottomBarOverlay: true,
     );
 
-    if(autoDismiss) {
+    if (autoDismiss) {
       await Future.delayed(Duration(seconds: config.getTimeOut()));
       hideProgress();
     }
   }
 
-  void hideProgress(){
+  void hideProgress() {
     Loader.hide();
   }
 
   @override
   Widget build(BuildContext context) {
-
     if (progressIndicator) {
-      return _iosProgressIndicator(context);
+      return _iosProgressIndicator(context,radius: radius);
     }
 
     if (indicator) {
       return _progressIndicator(context);
     }
 
-    if(circularIndicator){
+    if (circularIndicator) {
       return _circularIndicator(context);
     }
 
@@ -106,7 +110,7 @@ class LoaderWidget extends StatelessWidget {
   ///
   /// {@youtube 560 315 https://www.youtube.com/watch?v=AENVH-ZqKDQ}
   ///
-  Widget _iosProgressIndicator(BuildContext context) {
+  Widget _iosProgressIndicator(BuildContext context, {double? radius}) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -118,7 +122,7 @@ class LoaderWidget extends StatelessWidget {
       child: CupertinoActivityIndicator(
         animating: true,
         color: color ?? colorScheme.tertiary,
-        radius: radius ?? appDimen.dimen(20),
+        radius: radius ?? appDimen.dimen(30),
       ),
     );
   }
