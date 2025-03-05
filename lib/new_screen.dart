@@ -1,9 +1,12 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
+import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
@@ -37,7 +40,7 @@ class NewScreen extends BaseScreenStandard {
             "New page here",
             style: textTheme.labelMedium,
           ),
-          ShimmerWidget.withList(length: 5),
+          // ShimmerWidget.withList(length: 5),
           TextButtonWidget.withTextOnly(
             onTap: () {
               navUtils.fireLogOut();
@@ -54,23 +57,39 @@ class NewScreen extends BaseScreenStandard {
             labelText: 'Password',
           ),
           SizedBox(height: 20),
-          TabBarWidget(tabs: [
-            Tab(
-             // icon: Icon(Icons.ac_unit_outlined),
-              text: "Summary",
-            ),
-            Tab(
-              // icon: Icon(Icons.ac_unit_outlined),
-              text: "Jobs",
-            ),
-            Tab(
-             // icon: Icon(Icons.local_activity),
-              text: "Description",
-            )
-          ], onTabOnClick: (int ) {  },),
+          TabBarWidget(
+            tabs: [
+              Tab(
+                // icon: Icon(Icons.ac_unit_outlined),
+                text: "Summary",
+              ),
+              Tab(
+                // icon: Icon(Icons.ac_unit_outlined),
+                text: "Jobs",
+              ),
+              Tab(
+                // icon: Icon(Icons.local_activity),
+                text: "Description",
+              )
+            ],
+            onTabOnClick: (int) {},
+          ),
           SizedBox(height: 20),
+          DropDownWidget<IntroModel>(
+            selectedItem: list.first.obs,
+            list: list,
+            builder: (v) {
+              return Text(v.mainText);
+            },
+          )
         ],
       ),
     );
   }
+
+  final list = [
+    IntroModel(mainText: "2025"),
+    IntroModel(mainText: "2024"),
+    IntroModel(mainText: "2023"),
+  ];
 }
