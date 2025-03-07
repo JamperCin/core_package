@@ -2,23 +2,34 @@ import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatefulWidget {
   final List<Widget> tabs;
-  final Function(int)? onTabOnClick;
+  final Function(int)? onTap;
   final bool tabBarScrollable;
   final Color? indicatorColor;
   final Color? dividerColor;
   final Color? labelColor;
   final Color? unselectedLabelColor;
   final TextStyle? labelStyle;
+  final TextStyle? unselectedLabelStyle;
+  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? indicatorPadding;
+  final double? dividerHeight;
+  final double? indicatorWeight;
 
   const TabBarWidget({
     super.key,
     required this.tabs,
-    this.onTabOnClick,
+    this.onTap,
     this.tabBarScrollable = true,
     this.indicatorColor,
     this.dividerColor,
     this.labelColor,
-    this.labelStyle, this.unselectedLabelColor,
+    this.labelStyle,
+    this.unselectedLabelColor,
+    this.unselectedLabelStyle,
+    this.padding,
+    this.indicatorPadding,
+    this.dividerHeight,
+    this.indicatorWeight,
   });
 
   @override
@@ -50,13 +61,19 @@ class _TabBarWidgetState extends State<TabBarWidget>
       physics:
           widget.tabBarScrollable ? null : const NeverScrollableScrollPhysics(),
       controller: _tabController,
-      onTap: widget.onTabOnClick,
+      onTap: widget.onTap,
       tabs: widget.tabs,
       indicatorColor: widget.indicatorColor ?? colorScheme.primary,
       dividerColor: widget.dividerColor ?? colorScheme.surface,
       labelColor: widget.labelColor ?? colorScheme.primary,
       labelStyle: widget.labelStyle ?? textTheme.bodyMedium,
-      unselectedLabelColor: widget.unselectedLabelColor ?? colorScheme.tertiaryContainer,
+      unselectedLabelColor:
+          widget.unselectedLabelColor ?? colorScheme.tertiaryContainer,
+      unselectedLabelStyle: widget.unselectedLabelStyle ?? textTheme.bodyMedium,
+      padding: widget.padding,
+      dividerHeight: widget.dividerHeight,
+      indicatorPadding: widget.indicatorPadding ?? EdgeInsets.zero,
+      indicatorWeight: widget.indicatorWeight ?? 2.0,
     );
   }
 }
