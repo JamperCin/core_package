@@ -72,7 +72,7 @@ class NewScreen extends BaseScreenStandard {
                 text: "Description",
               )
             ],
-            onTabOnClick: (int) {},
+            onTap: (int) {},
           ),
           SizedBox(height: 20),
           DropDownWidget<IntroModel>(
@@ -81,7 +81,9 @@ class NewScreen extends BaseScreenStandard {
             builder: (v) {
               return Text(v.mainText);
             },
-          )
+          ),
+          SizedBox(height: 20),
+          ShimmerWidget.withGrid(),
         ],
       ),
     );
