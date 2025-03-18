@@ -4,6 +4,7 @@ import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
+import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
@@ -83,7 +84,10 @@ class NewScreen extends BaseScreenStandard {
             },
           ),
           SizedBox(height: 20),
+          ButtonWidget.withOutLine(onTap: (){}, text: "Click me",),
+          SizedBox(height: 20),
           ShimmerWidget.withGrid(),
+
         ],
       ),
     );
