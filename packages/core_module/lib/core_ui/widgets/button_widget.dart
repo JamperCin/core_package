@@ -10,6 +10,7 @@ class ButtonWidget extends StatelessWidget {
   Color? borderColor;
   final Color? textColor;
   final double? height;
+  final double? borderRadius;
   final double? width;
   final double? borderWidth;
   final bool enabled;
@@ -29,7 +30,7 @@ class ButtonWidget extends StatelessWidget {
     this.height,
     this.width,
     this.borderColor,
-    this.borderWidth,
+    this.borderWidth, this.borderRadius,
   }) : withOutline = false;
 
   ButtonWidget.withOutLine({
@@ -45,7 +46,7 @@ class ButtonWidget extends StatelessWidget {
     this.width,
     this.borderColor,
     this.textColor,
-    this.borderWidth,
+    this.borderWidth, this.borderRadius,
   }) : withOutline = true;
 
   @override
@@ -55,7 +56,7 @@ class ButtonWidget extends StatelessWidget {
 
     if (withOutline) {
       backgroundColor = backgroundColor ?? colorScheme.tertiary;
-      borderColor = borderColor  ?? colorScheme.primary;
+      borderColor = borderColor ?? colorScheme.primary;
       style = textTheme.style?.textStyle?.resolve(<WidgetState>{})?.copyWith(
           color: textColor ?? borderColor ?? colorScheme.primary);
     }
@@ -72,10 +73,20 @@ class ButtonWidget extends StatelessWidget {
                   : textTheme.style?.backgroundColor)
               : WidgetStateProperty.all(
                   disabledColor ?? colorScheme.primaryFixed),
-          side: WidgetStateProperty.all(BorderSide(
-            width: borderWidth ?? 1,
-            color: borderColor ?? backgroundColor ?? colorScheme.primary,
-          )),
+          side: WidgetStateProperty.all(
+            BorderSide(
+              width: borderWidth ?? 1,
+              color: borderColor ?? backgroundColor ?? colorScheme.primary,
+            ),
+            ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.horizontal(
+                left: Radius.circular(borderRadius ?? 10),
+                right: Radius.circular(borderRadius ?? 10),
+              ),
+            ),
+          ),
         ),
         child: child ??
             Text(
