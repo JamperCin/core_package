@@ -7,17 +7,19 @@ class AppDimens {
   double screenWidth = 0.0;
   double screenHeight = 0.0;
   static double _scaleFactor = 0.0;
+  late double? _constantMultiplier;
 
-  AppDimens._(BuildContext context) {
-    _init(context);
+  AppDimens._(BuildContext context,{double? constantMultiplier}) {
+    _init(context, constantMultiplier: constantMultiplier);
   }
 
-  factory AppDimens(BuildContext context) {
-    return _instance ??= AppDimens._(context);
+  factory AppDimens(BuildContext context,{double? constantMultiplier}) {
+    return _instance ??= AppDimens._(context, constantMultiplier: constantMultiplier);
   }
 
-  void _init(BuildContext context) {
+  void _init(BuildContext context,{double? constantMultiplier}) {
     _mediaQueryData = MediaQuery.of(context);
+    _constantMultiplier = constantMultiplier;
     isTablet = _mediaQueryData.size.shortestSide > 600;
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
@@ -65,7 +67,7 @@ class AppDimens {
 
   double dimen(double value) {
     double multiplier = _getMultiplier(value);
-    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * 1.9);
+    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * (_constantMultiplier ?? 1.9));
    // debugPrint("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
     return h;
   }
