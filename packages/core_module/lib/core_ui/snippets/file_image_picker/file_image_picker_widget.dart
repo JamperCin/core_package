@@ -1,32 +1,88 @@
 import 'dart:io';
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/services/file_upload_service/file_upload_api_services.dart';
 import 'package:core_module/core_module.dart';
+import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 import 'package:core_module/core_ui/widgets/bottom_sheet_widget.dart';
 import 'package:core_module/core_ui/widgets/loader_widget.dart';
 import 'package:core_module/core_ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../widgets/container_widget.dart';
+
 class FileImagePickerWidget extends StatelessWidget {
   RxBool isFileUploading = false.obs;
   String? url;
-  double radius;
+  String? cameraAsset;
+  double? radius;
+  double? iconSize;
+  double? buttonSize;
+  Color? buttonBackgroundColor;
+  Color? borderColor;
+  Color? iconColor;
 
-  FileImagePickerWidget({super.key, this.url, this.radius = 80});
+  FileImagePickerWidget({
+    super.key,
+    this.url,
+    this.radius,
+    this.cameraAsset,
+    this.iconColor,
+    this.iconSize,
+    this.buttonBackgroundColor,
+    this.buttonSize,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => isFileUploading.value
-          ?  LoaderWidget.withCircularIndicator(radius: appDimen.dimen(radius))
-          : NetworkImageWidget.withCircular(
+    return Obx(() => isFileUploading.value
+        ? LoaderWidget.withCircularIndicator(radius: radius ?? 60.dp())
+        : _imageWidget(context));
+  }
+
+  Widget _imageWidget(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: 120.dp(),
+        maxWidth: 120.dp(),
+      ),
+      child: Stack(
+        children: [
+          ContainerWidget.withCircular(
+            padding: EdgeInsets.all(1.dp()),
+            borderColor: borderColor ?? colorScheme.primary,
+            color: Colors.transparent,
+            child: NetworkImageWidget.withCircular(
               url: url,
-              radius: appDimen.dimen(radius),
-              onTap: () {
-                _onShowOptions(context);
-              },
+              radius: radius ?? 60.dp(),
             ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: SizedBox(
+              height: buttonSize ?? 50.dp(),
+              width: buttonSize ?? 50.dp(),
+              child: FloatingActionButton(
+                shape: const CircleBorder(),
+                onPressed: () {
+                  _onShowOptions(context);
+                },
+                backgroundColor: buttonBackgroundColor ?? colorScheme.primary,
+                child: Icon(
+                  Icons.camera_alt,
+                  color: iconColor ?? colorScheme.tertiary,
+                  size: iconSize ?? 30.dp(),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 

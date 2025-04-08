@@ -16,6 +16,8 @@ class TextFieldWidget extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
   final Color? focusColor;
+  final Color? unFocusColor;
+  final Color? disabledColor;
   final String? hintText;
   final String labelText;
   final String obscuringCharacter;
@@ -48,7 +50,7 @@ class TextFieldWidget extends StatelessWidget {
     this.labelStyle,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.words,
-    this.margin,
+    this.margin, this.unFocusColor, this.disabledColor,
   })  : obscureText = null,
         isPhoneNumber = false,
         inputFormatters = null,
@@ -70,7 +72,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
-    this.margin,
+    this.margin, this.unFocusColor, this.disabledColor,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
         isPhoneNumber = true,
@@ -99,7 +101,7 @@ class TextFieldWidget extends StatelessWidget {
     this.labelText = '',
     this.backgroundColor,
     this.prefixIcon,
-    this.margin,
+    this.margin, this.unFocusColor, this.disabledColor,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
         isPhoneNumber = false,
@@ -191,20 +193,20 @@ class TextFieldWidget extends StatelessWidget {
               width: 1,
             ),
           ),
-          // disabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color: disabledColor ?? AppColors.black,
-          //     width: .5,
-          //   ),
-          //   borderRadius: BorderRadius.circular(borderRadius),
-          // ),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide: BorderSide(
-          //     color: unFocusColor ?? AppColors.black,
-          //     width: .5,
-          //   ),
-          //   borderRadius: BorderRadius.circular(borderRadius),
-          // ),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: disabledColor ?? Theme.of(context).colorScheme.secondary,
+              width: .5,
+            ),
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: unFocusColor ?? Theme.of(context).colorScheme.tertiary,
+              width: .5,
+            ),
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: focusColor ?? Theme.of(context).colorScheme.primary,
