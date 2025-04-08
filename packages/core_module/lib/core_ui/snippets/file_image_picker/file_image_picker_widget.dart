@@ -17,11 +17,14 @@ class FileImagePickerWidget extends StatelessWidget {
   String? url;
   String? cameraAsset;
   double? radius;
+  double? containerSize;
   double? iconSize;
   double? buttonSize;
   Color? buttonBackgroundColor;
   Color? borderColor;
   Color? iconColor;
+  Future<String> Function(File)? parser;
+  Function(String)? onFileUploaded;
 
   FileImagePickerWidget({
     super.key,
@@ -33,6 +36,9 @@ class FileImagePickerWidget extends StatelessWidget {
     this.buttonBackgroundColor,
     this.buttonSize,
     this.borderColor,
+    this.parser,
+    this.containerSize,
+    this.onFileUploaded,
   });
 
   @override
@@ -43,13 +49,12 @@ class FileImagePickerWidget extends StatelessWidget {
   }
 
   Widget _imageWidget(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: 120.dp(),
-        maxWidth: 120.dp(),
+        maxHeight: containerSize ?? 120.dp(),
+        maxWidth: containerSize ?? 120.dp(),
       ),
       child: Stack(
         children: [
@@ -163,7 +168,10 @@ class FileImagePickerWidget extends StatelessWidget {
     debugPrint("File == ${file.path}");
     isFileUploading.value = true;
     File newFile = File(file.path);
-    url = await FileUploadApiService().uploadFile(newFile);
+    url = parser != null  ? await parser!(newFile) : await FileUploadApiService().uploadFile(newFile);
     isFileUploading.value = false;
+    if(onFileUploaded != null && url != null && url!.isNotEmpty) {
+      onFileUploaded!(url ?? '');
+    }
   }
 }

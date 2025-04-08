@@ -18,6 +18,7 @@ class Configuration {
   String _googlePlayLink = "";
   String _appleStoreLink = "";
   String _privacyPolicy = "";
+  String _fileUploadApi = "";
   String _termsAndConditions = "";
   int _networkTimeOut = 0;
   int _smsTimer = 0;
@@ -46,6 +47,7 @@ class Configuration {
     _appleStoreLink = fetchData(key: 'appStoreLink');
     _privacyPolicy = fetchData(key: 'privacyPolicy');
     _termsAndConditions = fetchData(key: 'termsAndConditions');
+    _fileUploadApi = fetchData(key: 'fileUploadApi');
   }
 
   ///--------------------------------------------------------------------------
@@ -94,6 +96,10 @@ class Configuration {
 
   String getEnvironmentScheme() {
     return _defaultEnvScheme;
+  }
+
+  String getFileUploadApi(){
+    return _fileUploadApi;
   }
 
   String getGoogleEnvironment() {
