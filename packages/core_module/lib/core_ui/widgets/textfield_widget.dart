@@ -13,6 +13,10 @@ class TextFieldWidget extends StatelessWidget {
   final bool isPhoneNumber;
   final double borderRadius;
   final double? width;
+  final int? maxLength;
+  final ValueChanged<String>? onChanged;
+  ValueChanged<String>? onFieldSubmitted;
+  final int? maxLines;
   final Color? borderColor;
   final Color? backgroundColor;
   final Color? focusColor;
@@ -22,6 +26,8 @@ class TextFieldWidget extends StatelessWidget {
   final String labelText;
   final String obscuringCharacter;
   final TextStyle? style;
+  final TextAlign? textAlign;
+  final TextInputAction? textInputAction;
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
   TextInputType? keyboardType;
@@ -30,6 +36,7 @@ class TextFieldWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   RxBool? obscureText;
   final VoidCallback? onTap;
+  final FocusNode? focusNode;
 
   TextFieldWidget({
     super.key,
@@ -50,7 +57,15 @@ class TextFieldWidget extends StatelessWidget {
     this.labelStyle,
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.words,
-    this.margin, this.unFocusColor, this.disabledColor,
+    this.margin,
+    this.unFocusColor,
+    this.disabledColor,
+    this.maxLength,
+    this.onChanged,
+    this.maxLines,
+    this.textAlign,
+    this.textInputAction,
+    this.focusNode,
   })  : obscureText = null,
         isPhoneNumber = false,
         inputFormatters = null,
@@ -72,7 +87,15 @@ class TextFieldWidget extends StatelessWidget {
     this.onTap,
     this.labelText = '',
     this.backgroundColor,
-    this.margin, this.unFocusColor, this.disabledColor,
+    this.margin,
+    this.unFocusColor,
+    this.disabledColor,
+    this.maxLength,
+    this.onChanged,
+    this.maxLines,
+    this.textAlign,
+    this.textInputAction,
+    this.focusNode,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
         isPhoneNumber = true,
@@ -101,7 +124,15 @@ class TextFieldWidget extends StatelessWidget {
     this.labelText = '',
     this.backgroundColor,
     this.prefixIcon,
-    this.margin, this.unFocusColor, this.disabledColor,
+    this.margin,
+    this.unFocusColor,
+    this.disabledColor,
+    this.maxLength,
+    this.onChanged,
+    this.maxLines,
+    this.textAlign,
+    this.textInputAction,
+    this.focusNode,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
         isPhoneNumber = false,
@@ -110,12 +141,13 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(obscureText != null) {
-      prefixIcon = prefixIcon ?? AssetImageWidget(
-        asset: icPassword,
-        width: appDimen.dimen(14),
-        height: appDimen.dimen(14),
-      );
+    if (obscureText != null) {
+      prefixIcon = prefixIcon ??
+          AssetImageWidget(
+            asset: icPassword,
+            width: appDimen.dimen(14),
+            height: appDimen.dimen(14),
+          );
     }
 
     return Column(
@@ -125,10 +157,11 @@ class TextFieldWidget extends StatelessWidget {
       children: [
         if (labelText.isNotEmpty)
           Text(labelText,
-              style: labelStyle ?? Theme.of(context)
-                  .textTheme
-                  .labelMedium
-                  ?.copyWith(fontWeight: FontWeight.w400)),
+              style: labelStyle ??
+                  Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(fontWeight: FontWeight.w400)),
         if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
         Container(
           width: width ?? appDimen.screenWidth,
@@ -158,9 +191,12 @@ class TextFieldWidget extends StatelessWidget {
       onTap: onTap,
       child: TextFormField(
         enabled: isEnabled,
+        focusNode: focusNode,
         controller: controller,
+        textAlign: textAlign ?? TextAlign.left,
         obscureText: obscureText != null && obscureText!.value,
         style: style ?? Theme.of(context).textTheme.labelMedium,
+        textInputAction: textInputAction ?? TextInputAction.go,
         decoration: InputDecoration(
           prefixIcon: prefixIcon != null
               ? Padding(
@@ -217,10 +253,13 @@ class TextFieldWidget extends StatelessWidget {
           filled: true,
           fillColor: Colors.transparent,
         ),
-        textInputAction: TextInputAction.go,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         textCapitalization: textCapitalization ?? TextCapitalization.words,
+        maxLines: maxLines,
+        maxLength: maxLength,
+        onChanged: onChanged,
+        onFieldSubmitted: onFieldSubmitted,
       ),
     );
   }
