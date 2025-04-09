@@ -21,6 +21,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
   final Color? focusColor;
+  final Color? counterColor;
   final Color? unFocusColor;
   final Color? disabledColor;
   final String? hintText;
@@ -31,6 +32,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
+  final TextStyle? counterStyle;
   TextInputType? keyboardType;
   TextCapitalization? textCapitalization;
   List<TextInputFormatter>? inputFormatters;
@@ -66,7 +68,10 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode, this.height,
+    this.focusNode,
+    this.height,
+    this.counterColor,
+    this.counterStyle,
   })  : obscureText = null,
         isPhoneNumber = false,
         inputFormatters = null,
@@ -96,7 +101,10 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode, this.height,
+    this.focusNode,
+    this.height,
+    this.counterColor,
+    this.counterStyle,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
         isPhoneNumber = true,
@@ -133,7 +141,10 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode, this.height,
+    this.focusNode,
+    this.height,
+    this.counterColor,
+    this.counterStyle,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
         isPhoneNumber = false,
@@ -167,18 +178,6 @@ class TextFieldWidget extends StatelessWidget {
         SizedBox(
           width: width ?? appDimen.screenWidth,
           height: height ?? appDimen.dimen(60),
-          /* padding: EdgeInsets.zero,
-          margin: margin ?? EdgeInsets.zero,
-          decoration: BoxDecoration(
-            color: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
-            borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(borderRadius),
-              right: Radius.circular(borderRadius),
-            ),
-            border: Border.all(
-              color: borderColor ?? Theme.of(context).colorScheme.primary,
-            ),
-          ),*/
           child: obscureText != null
               ? Obx(() => _textField(context))
               : _textField(context),
@@ -253,6 +252,9 @@ class TextFieldWidget extends StatelessWidget {
           ),
           filled: true,
           fillColor: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
+          counterStyle: counterStyle ??
+              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: counterColor ?? Theme.of(context).colorScheme.primary),
         ),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
