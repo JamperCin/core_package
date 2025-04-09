@@ -1,4 +1,5 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
@@ -35,6 +36,7 @@ class NewScreen extends BaseScreenStandard {
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.all(24.dp()),
       child: Column(
         children: [
           Text(

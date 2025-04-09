@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               ButtonWidget.withOutLine(
-                text: 'Click Here and pss me throuh window here',
+                text: 'Click Here ',
                 asset: icApple,
                 onTap: () {
                   navUtils.fireTargetHome();

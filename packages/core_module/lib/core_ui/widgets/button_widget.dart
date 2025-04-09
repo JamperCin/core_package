@@ -15,6 +15,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? assetColor;
   Color? assetBgColor;
   final double? height;
+  final double? assetPadding;
   final double? assetSize;
   final String? asset;
   final double? borderRadius;
@@ -41,7 +42,9 @@ class ButtonWidget extends StatelessWidget {
     this.borderRadius,
     this.assetColor,
     this.assetSize,
-    this.asset, this.assetBgColor,
+    this.asset,
+    this.assetBgColor,
+    this.assetPadding,
   }) : withOutline = false;
 
   ButtonWidget.withOutLine({
@@ -61,7 +64,9 @@ class ButtonWidget extends StatelessWidget {
     this.borderRadius,
     this.assetColor,
     this.assetSize,
-    this.asset, this.assetBgColor,
+    this.asset,
+    this.assetBgColor,
+    this.assetPadding,
   }) : withOutline = true;
 
   @override
@@ -118,9 +123,10 @@ class ButtonWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ContainerWidget.withCircular(
-                borderColor: assetBgColor ?? colorScheme.tertiary.withOpacity(.3),
+                borderColor:
+                    assetBgColor ?? colorScheme.tertiary.withOpacity(.3),
                 color: assetBgColor ?? colorScheme.tertiary.withOpacity(.3),
-                padding: EdgeInsets.all(3.dp()),
+                padding: EdgeInsets.all(assetPadding ?? 5.dp()),
                 child: AssetImageWidget(
                   asset: asset!,
                   height: assetSize ?? 20.dp(),
@@ -128,21 +134,33 @@ class ButtonWidget extends StatelessWidget {
                   assetColor: assetColor ?? colorScheme.tertiary,
                 ),
               ),
-              SizedBox(width: 20.dp()),
-              Flexible(
-                  child: Text(
-                text,
-                style: style ??
-                    textTheme.style?.textStyle?.resolve(<WidgetState>{})?.copyWith(color: textColor),
-              )),
+              // SizedBox(width: 20.dp()),
+              Flexible(child: _buttonText(context)),
               SizedBox(width: 20.dp()),
             ],
           )
-        : Text(
+        : _buttonText(context);
+
+    /*Text(
             text,
             style: style ??
                 textTheme.style?.textStyle
                     ?.resolve(<WidgetState>{})?.copyWith(color: textColor),
-          );
+          );*/
+  }
+
+  Widget _buttonText(BuildContext context) {
+    final textTheme = Theme.of(context).elevatedButtonTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return RichText(
+      maxLines: 1,
+      text: TextSpan(
+        text: text,
+        style: style ??
+            textTheme.style?.textStyle?.resolve(<WidgetState>{})?.copyWith(
+                color: textColor ?? colorScheme.tertiary),
+      ),
+    );
   }
 }

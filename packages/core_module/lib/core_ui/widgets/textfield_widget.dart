@@ -13,6 +13,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool isPhoneNumber;
   final double borderRadius;
   final double? width;
+  final double? height;
   final int? maxLength;
   final ValueChanged<String>? onChanged;
   ValueChanged<String>? onFieldSubmitted;
@@ -65,7 +66,7 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode,
+    this.focusNode, this.height,
   })  : obscureText = null,
         isPhoneNumber = false,
         inputFormatters = null,
@@ -95,7 +96,7 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode,
+    this.focusNode, this.height,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
         isPhoneNumber = true,
@@ -132,7 +133,7 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textInputAction,
-    this.focusNode,
+    this.focusNode, this.height,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
         isPhoneNumber = false,
@@ -163,10 +164,10 @@ class TextFieldWidget extends StatelessWidget {
                       .labelMedium
                       ?.copyWith(fontWeight: FontWeight.w400)),
         if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
-        Container(
+        SizedBox(
           width: width ?? appDimen.screenWidth,
-          height: appDimen.dimen(60),
-          padding: EdgeInsets.zero,
+          height: height ?? appDimen.dimen(60),
+          /* padding: EdgeInsets.zero,
           margin: margin ?? EdgeInsets.zero,
           decoration: BoxDecoration(
             color: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
@@ -177,7 +178,7 @@ class TextFieldWidget extends StatelessWidget {
             border: Border.all(
               color: borderColor ?? Theme.of(context).colorScheme.primary,
             ),
-          ),
+          ),*/
           child: obscureText != null
               ? Obx(() => _textField(context))
               : _textField(context),
@@ -225,42 +226,48 @@ class TextFieldWidget extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
-              color: borderColor ?? Theme.of(context).colorScheme.secondary,
+              color: borderColor ?? Theme.of(context).colorScheme.primary,
               width: 1,
             ),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: disabledColor ?? Theme.of(context).colorScheme.secondary,
-              width: .5,
+              width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: unFocusColor ?? Theme.of(context).colorScheme.tertiary,
-              width: .5,
+              color: unFocusColor ?? Theme.of(context).colorScheme.primary,
+              width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: focusColor ?? Theme.of(context).colorScheme.primary,
-              width: 2,
+              width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           filled: true,
-          fillColor: Colors.transparent,
+          fillColor: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
         ),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         textCapitalization: textCapitalization ?? TextCapitalization.words,
-        maxLines: maxLines,
+        maxLines: maxLines ?? 1,
         maxLength: maxLength,
         onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
       ),
     );
   }
+
+  ///Explanation of the border colors:
+//enabledBorder: Sets the border color when the TextField is not focused.
+// focusedBorder: Sets the border color when the TextField is focused.
+// errorBorder: Sets the border color when an error occurs.
+// focusedErrorBorder: Sets the border color when focused but with an error.
 }
