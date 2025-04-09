@@ -62,6 +62,7 @@ class LoginScreen extends BaseScreenDecorated {
           ),
           SizedBox(height: appDimen.dimen(40)),
           ButtonWidget(
+            asset: icApple,
             onTap: () async {
               await LoaderWidget().showProgressIndicator(context: context);
               await Future.delayed(const Duration(seconds: 3));

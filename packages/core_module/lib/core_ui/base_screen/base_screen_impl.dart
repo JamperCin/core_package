@@ -25,8 +25,11 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
 
   @override
   TextStyle? appBarTitleStyle(BuildContext context) {
-    return textTheme.bodyMedium
-        ?.copyWith(color: colorScheme.inverseSurface,fontSize: 20.dp());
+    return textTheme.bodyMedium?.copyWith(
+      color: colorScheme.inverseSurface,
+      fontSize: 17.dp(),
+      fontWeight: FontWeight.w600,
+    );
   }
 
   @override
@@ -55,7 +58,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
       padding: EdgeInsets.all(appDimen.dimen(5)),
       child: IconButtonWidget(
         icon: Icons.arrow_back_ios,
-        iconSize: appDimen.dimen(20),
+        iconSize: appDimen.dimen(24),
         iconColor: appBarIconColor(context),
         padding: EdgeInsets.zero,
         onTap: () {

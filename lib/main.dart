@@ -2,6 +2,8 @@ import 'package:core_module/core/app/app_dimens.dart';
 import 'package:core_module/core/app/app_style.dart';
 import 'package:core_module/core/app/app_theme.dart';
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
@@ -95,26 +97,30 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-             Text(
-              "counter counts here",
-              style: labelSmallTextLightModeStyle,
-            ),
-            ShimmerWidget(
-              child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
+        child: Padding(
+          padding:  EdgeInsets.all(20.dp()),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+               Text(
+                "counter counts here",
+                style: labelSmallTextLightModeStyle,
               ),
-            ),
-            ButtonWidget(
-              text: 'Click Here',
-              onTap: () {
-                navUtils.fireTargetHome();
-              },
-            )
-          ],
+              ShimmerWidget(
+                child: Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ),
+              ButtonWidget.withOutLine(
+                text: 'Click Here and pss me throuh window here',
+                asset: icApple,
+                onTap: () {
+                  navUtils.fireTargetHome();
+                },
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
