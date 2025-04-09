@@ -1,4 +1,5 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core_ui/widgets/icon_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   @override
   TextStyle? appBarTitleStyle(BuildContext context) {
     return textTheme.bodyMedium
-        ?.copyWith(color: colorScheme.inverseSurface);
+        ?.copyWith(color: colorScheme.inverseSurface,fontSize: 20.dp());
   }
 
   @override
