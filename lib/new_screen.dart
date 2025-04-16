@@ -5,6 +5,7 @@ import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
+import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
@@ -55,9 +56,10 @@ class NewScreen extends BaseScreenStandard {
             onChange: (v) {},
             text: "Check the Terms and Conditions",
           ),
-          TextFieldWidget.withPassword(
+          TextFieldWidget(
             hintText: 'Enter password',
             labelText: 'Password',
+            maxLength: 10,
           ),
           SizedBox(height: 20),
           TabBarWidget(
@@ -86,7 +88,11 @@ class NewScreen extends BaseScreenStandard {
             },
           ),
           SizedBox(height: 20),
-          ButtonWidget.withOutLine(onTap: (){}, text: "Click me",),
+          ButtonWidget.withOutLine(onTap: (){
+            PlacesPickerWidget.searchPlaces(context:  context,onSearch: (loc){
+              print("Loc -> ${loc.toJson().toString()}");
+            });
+          }, text: "Click me",),
           SizedBox(height: 20),
           ShimmerWidget.withGrid(),
 

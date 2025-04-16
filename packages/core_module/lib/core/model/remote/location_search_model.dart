@@ -1,44 +1,22 @@
 import 'package:core_module/core/model/local/base_object.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class LocationSearchModel extends BaseObject {
-  final String placeId;
-  final String description;
-  final String address;
-  final double latitude;
-  final double longitude;
+part 'location_search_model.freezed.dart';
+part 'location_search_model.g.dart';
 
-  LocationSearchModel({
-    this.placeId = '',
-    this.description = '',
-    this.address = '',
-    this.latitude = 0.0,
-    this.longitude = 0.0,
-  });
+///Run this command after any changes to any of the model files
+///command @command [dart run build_runner build --delete-conflicting-outputs]
+///
+@freezed
+class LocationSearchModel extends BaseObject with _$LocationSearchModel {
+  const factory LocationSearchModel({
+    @Default('') String placeId,
+    @Default('') String description,
+    @Default('') String address,
+    @Default(0.0) double latitude,
+    @Default(0.0) double longitude,
+}) = _LocationSearchModel;
 
-  LocationSearchModel copyWith({
-    String? placeId,
-    String? description,
-    String? address,
-    double? latitude,
-    double? longitude,
-  }) {
-    return LocationSearchModel(
-      placeId: placeId ?? this.placeId,
-      description: description ?? this.description,
-      address: address ?? this.address,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-    );
-  }
-
-
-  static LocationSearchModel fromJson(Map<String, dynamic> json) {
-    return LocationSearchModel(
-      placeId: json['placeId'] as String? ?? '',
-      description: json['description'] as String? ?? '',
-      address: json['address'] as String? ?? '',
-      latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0,
-      longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
-    );
-  }
+  factory LocationSearchModel.fromJson(Map<String, dynamic> json) =>
+      _$LocationSearchModelFromJson(json);
 }
