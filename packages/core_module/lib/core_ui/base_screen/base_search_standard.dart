@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core_ui/base_screen/base_search_delegate.dart';
 
@@ -18,10 +19,9 @@ class BaseSearchStandard<T> extends BaseSearchDelegate<T> {
   Widget cardWidget(BuildContext context, T item) {
     return Card(
       elevation: cardElevation(),
-      margin: EdgeInsets.only(
-        left: appDimen.dimen(10),
-        right: appDimen.dimen(10),
-        top: appDimen.dimen(5),
+      margin: EdgeInsets.symmetric(
+        horizontal: 10.dp(),
+        vertical: 5.dp(),
       ),
       child: listItemWidget(context, item),
     );

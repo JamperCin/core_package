@@ -79,7 +79,7 @@ ThemeData lightMode = ThemeData(
     onError: redColor,
 
     ///Surface
-    surface: darkSurfaceColor,
+    surface: whiteColor,
     onSurface: whiteColor,
     onInverseSurface: darkSurfaceVariant,
 

@@ -1,3 +1,5 @@
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core/model/local/country_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,14 +7,19 @@ import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 
+import '../snippets/country_picker/country_picker.dart';
+
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
+  final TextEditingController? countryController;
   final bool isEnabled;
   Widget? prefixIcon;
   final Widget? suffixIcon;
-  final bool isPhoneNumber;
+  final bool hasCountryPicker;
   final double borderRadius;
   final double? width;
+  final double? countryWidgetWidth;
+  final double? pickerRightMargin;
   final double? height;
   final int? maxLength;
   final ValueChanged<String>? onChanged;
@@ -25,6 +32,9 @@ class TextFieldWidget extends StatelessWidget {
   final Color? unFocusColor;
   final Color? disabledColor;
   final String? hintText;
+  final String? countryWidgetHintText;
+  final String? countrySearchHintText;
+  final TextStyle? phoneCodeTextStyle;
   final String labelText;
   final String obscuringCharacter;
   final TextStyle? style;
@@ -32,6 +42,8 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
+  final TextStyle? countrySearchTextStyle;
+  final TextStyle? countryTextStyle;
   final TextStyle? counterStyle;
   TextInputType? keyboardType;
   TextCapitalization? textCapitalization;
@@ -39,6 +51,7 @@ class TextFieldWidget extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   RxBool? obscureText;
   final VoidCallback? onTap;
+  final Function(CountryModel?)? onCountrySelected;
   final FocusNode? focusNode;
 
   TextFieldWidget({
@@ -73,25 +86,39 @@ class TextFieldWidget extends StatelessWidget {
     this.counterColor,
     this.counterStyle,
   })  : obscureText = null,
-        isPhoneNumber = false,
+        hasCountryPicker = false,
         inputFormatters = null,
+        pickerRightMargin = null,
+        countrySearchTextStyle = null,
+        countryTextStyle = null,
+        countryWidgetWidth = null,
+        phoneCodeTextStyle = null,
+        onCountrySelected = null,
+        countrySearchHintText = null,
+        countryController = null,
+        countryWidgetHintText = null,
         obscuringCharacter = "*";
 
   TextFieldWidget.withPhoneNumber({
     super.key,
     this.controller,
+    this.countryController,
     this.isEnabled = true,
+    this.hasCountryPicker = false,
+    this.countryWidgetWidth,
     this.suffixIcon,
     this.width,
     this.borderColor,
     this.focusColor,
     this.borderRadius = 10,
+    this.pickerRightMargin,
     this.hintText,
     this.style,
     this.hintStyle,
     this.labelStyle,
     this.onTap,
     this.labelText = '',
+    this.countryWidgetHintText = '',
     this.backgroundColor,
     this.margin,
     this.unFocusColor,
@@ -99,15 +126,19 @@ class TextFieldWidget extends StatelessWidget {
     this.maxLength,
     this.onChanged,
     this.maxLines,
+    this.countrySearchHintText,
     this.textAlign,
+    this.countrySearchTextStyle,
+    this.countryTextStyle,
+    this.onCountrySelected,
     this.textInputAction,
     this.focusNode,
     this.height,
+    this.phoneCodeTextStyle,
     this.counterColor,
     this.counterStyle,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
-        isPhoneNumber = true,
         prefixIcon = AssetImageWidget(
           asset: icMobile,
           width: appDimen.dimen(14),
@@ -147,8 +178,17 @@ class TextFieldWidget extends StatelessWidget {
     this.counterStyle,
   })  : obscuringCharacter = "*",
         keyboardType = TextInputType.visiblePassword,
-        isPhoneNumber = false,
+        hasCountryPicker = false,
         inputFormatters = null,
+        pickerRightMargin = null,
+        countryController = null,
+        phoneCodeTextStyle = null,
+        countryWidgetWidth = null,
+        countrySearchHintText = null,
+        countrySearchTextStyle = null,
+        onCountrySelected = null,
+        countryTextStyle = null,
+        countryWidgetHintText = null,
         obscureText = true.obs;
 
   @override
@@ -180,7 +220,9 @@ class TextFieldWidget extends StatelessWidget {
           height: height ?? appDimen.dimen(60),
           child: obscureText != null
               ? Obx(() => _textField(context))
-              : _textField(context),
+              : hasCountryPicker
+                  ? _textFieldWithCountryPicker(context)
+                  : _textField(context),
         ),
       ],
     );
@@ -264,6 +306,95 @@ class TextFieldWidget extends StatelessWidget {
         onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
       ),
+    );
+  }
+
+  Widget _textFieldWithCountryPicker(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          flex: 0,
+          child: SizedBox(
+            width: countryWidgetWidth ?? 100.dp(),
+            child: InkWell(
+              onTap: () async {
+                CountryPicker().showCountryPicker(
+                  context,
+                  onSearch: (country) {
+                    countryController?.text = "+${country?.phoneCode ?? ''}";
+                    onCountrySelected?.call(country);
+                  },
+                  searchTextStyle: countrySearchTextStyle,
+                  textStyle: countryTextStyle,
+                  searchHint: countrySearchHintText,
+                  phoneCodeTextStyle: phoneCodeTextStyle,
+                );
+              },
+              child: TextFormField(
+                enabled: false,
+                textAlign: textAlign ?? TextAlign.center,
+                style: style ?? Theme.of(context).textTheme.labelMedium,
+                controller: countryController,
+                decoration: InputDecoration(
+                  hintText: countryWidgetHintText,
+                  hintStyle: hintStyle ??
+                      Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(color: colorScheme.secondary),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    borderSide: BorderSide(
+                      color:
+                          borderColor ?? Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: disabledColor ??
+                          Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color:
+                          unFocusColor ?? Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color:
+                          focusColor ?? Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  filled: true,
+                  fillColor:
+                      backgroundColor ?? Theme.of(context).colorScheme.tertiary,
+                  counterStyle: counterStyle ??
+                      Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: counterColor ??
+                              Theme.of(context).colorScheme.primary),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: pickerRightMargin ?? 10.dp()),
+        Flexible(
+          flex: 1,
+          child: _textField(context),
+        ),
+      ],
     );
   }
 

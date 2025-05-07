@@ -1,5 +1,5 @@
 const _rootPath = "packages/core_module/assets/images";
-
+const countriesJson = "packages/core_module/assets/data/countries.json";
 ///Define the
 
 const icEyeSvg = "$_rootPath/ic_eye.svg";

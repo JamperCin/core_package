@@ -34,7 +34,6 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
   }
 
   @override
-  // TODO: implement searchFieldLabel
   String? get searchFieldLabel => "Search location...";
 
   @override

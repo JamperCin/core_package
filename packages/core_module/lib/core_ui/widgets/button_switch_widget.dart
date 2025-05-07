@@ -6,6 +6,8 @@ import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../core/def/global_def.dart';
+
 class ButtonSwitchWidget extends StatelessWidget {
   final RxList<DictionaryModel> items;
   final double? padding;
@@ -15,6 +17,8 @@ class ButtonSwitchWidget extends StatelessWidget {
   final Color? unSelectedTextColor;
   final Color? borderColor;
   final double? borderWidth;
+  final double? height;
+  final double? width;
   final TextStyle? textStyle;
   final Function(DictionaryModel)? onTap;
 
@@ -29,7 +33,7 @@ class ButtonSwitchWidget extends StatelessWidget {
     this.selectedColor,
     this.unSelectedTextColor,
     this.onTap,
-    this.textStyle,
+    this.textStyle, this.height, this.width,
   });
 
   @override
@@ -40,8 +44,10 @@ class ButtonSwitchWidget extends StatelessWidget {
       borderColor: borderColor ?? colorScheme.onInverseSurface,
       borderWidth: borderWidth ?? 1,
       borderRadius: borderRadius ?? 10,
+      height: height,
+      width: width ?? appDimen.screenWidth,
       color: backgroundColor ?? colorScheme.onInverseSurface,
-      padding: EdgeInsets.all(padding ?? 3.dp()),
+      padding: EdgeInsets.all(padding ?? 1.dp()),
       child: Obx(
         ()=> Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
