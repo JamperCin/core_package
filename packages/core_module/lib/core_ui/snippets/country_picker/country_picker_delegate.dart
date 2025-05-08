@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../core/res/assets_path.dart';
 import '../../../core/utils/file_utils.dart';
 import '../../../core_module.dart';
+import '../../widgets/text_button_widget.dart';
 import 'country_localizations.dart';
 
 class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
@@ -15,11 +16,13 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
   final TextStyle? phoneCodeTextStyle;
   final TextStyle? searchTextStyle;
   final String? searchHint;
+  final Color? dividerColor;
 
   CountryPickerDelegate({
     this.textStyle,
     this.searchTextStyle,
     this.searchHint,
+    this.dividerColor,
     this.phoneCodeTextStyle,
   }) {
     _initData();
@@ -69,9 +72,14 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
   @override
   Widget listItemWidget(BuildContext context, CountryModel item) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
-    return InkWell(
+    return TextButtonWidget(
+      padding: EdgeInsets.only(
+        left: 2.dp(),
+        right: 2.dp(),
+      ),
       onTap: () {
         item = item.copyWith(
           nameLocalized: CountryLocalizations.of(context)
@@ -82,7 +90,6 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
       },
       child: Column(
         children: [
-          SizedBox(height: 2.dp()),
           Row(
             children: [
               SizedBox(
@@ -116,8 +123,8 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
               Expanded(
                 child: Text(
                   CountryLocalizations.of(context)
-                          ?.countryName(countryCode: item.countryCode)
-                          ?.replaceAll(RegExp(r"\s+"), " ") ??
+                      ?.countryName(countryCode: item.countryCode)
+                      ?.replaceAll(RegExp(r"\s+"), " ") ??
                       item.name,
                   style: textStyle ?? textTheme.bodySmall,
                 ),
@@ -125,7 +132,7 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
             ],
           ),
           SizedBox(height: 2.dp()),
-          const DividerWidget(),
+          DividerWidget(color: dividerColor ?? colorScheme.surfaceDim),
         ],
       ),
     );

@@ -1,17 +1,45 @@
+import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
+import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/country_picker/country_picker_delegate.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/res/assets_path.dart';
+import '../../../core/utils/file_utils.dart';
+import '../../widgets/bottom_sheet_widget.dart';
+import '../../widgets/divider_widget.dart';
+import '../../widgets/text_button_widget.dart';
+import '../../widgets/textfield_widget.dart';
+import 'country_localizations.dart';
+
 class CountryPicker {
-  ///Pick a country from the country picker
-  Future<void> showCountryPicker(
-    BuildContext context, {
-    required Function(CountryModel?) onSearch,
-    TextStyle? textStyle,
-    TextStyle? searchTextStyle,
-    TextStyle? phoneCodeTextStyle,
-    String? searchHint,
-  }) async {
+  late Future<List<CountryModel>> countryList;
+  Rx<Future<List<CountryModel>>> filteredList = Rx(Future.value([]));
+
+  final TextStyle? textStyle;
+  final TextStyle? searchTextStyle;
+  final TextStyle? phoneCodeTextStyle;
+  final String? searchHint;
+  final String? modalSearchTitle;
+  final double? modalHeight;
+  final EdgeInsetsGeometry? modalMargin;
+  final Color? dividerColor;
+  final BuildContext context;
+  final Function(CountryModel?)? onCountrySelected;
+
+  ///Pick a country from the country picker normal style
+  CountryPicker.showPicker(
+    this.context, {
+    this.textStyle,
+    this.searchTextStyle,
+    this.phoneCodeTextStyle,
+    this.searchHint,
+    this.dividerColor,
+    this.onCountrySelected,
+  })  : modalSearchTitle = null,
+        modalMargin = null,
+        modalHeight = null {
     showSearch(
       context: context,
       delegate: CountryPickerDelegate(
@@ -20,7 +48,171 @@ class CountryPicker {
           searchTextStyle: searchTextStyle,
           phoneCodeTextStyle: phoneCodeTextStyle),
     ).then((location) {
-      onSearch(location);
+      onCountrySelected?.call(location);
     });
+  }
+
+  CountryPicker.showCountryPickerModalStyle(
+    this.context, {
+    this.textStyle,
+    this.searchTextStyle,
+    this.phoneCodeTextStyle,
+    this.searchHint,
+    this.modalSearchTitle,
+    this.onCountrySelected,
+    this.modalHeight,
+    this.dividerColor,
+    this.modalMargin,
+  }) {
+    _initData();
+
+    BottomSheetWidget(
+        context: context,
+        title: modalSearchTitle ?? 'Search Country',
+        height: modalHeight ?? appDimen.screenHeight * 0.8,
+        margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
+        subChild: Column(
+          children: [
+            _searchFieldWidget(),
+            SizedBox(height: 16.dp()),
+            SizedBox(
+                height: appDimen.screenHeight * 0.7,
+                child: Obx(
+                  () => FutureBuilder(
+                    future: filteredList.value,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<CountryModel>> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView(
+                          children: [
+                            ...snapshot.data!.map((item) => _itemWidget(item)),
+                          ],
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ))
+          ],
+        ));
+  }
+
+  Future<void> _initData() async {
+    countryList = FileUtils().fetchList<CountryModel>(
+      path: countriesJson,
+      key: "countries",
+      parser: (json) {
+        return CountryModel.fromJson(json);
+      },
+    );
+    filteredList.value = countryList.then((list) => list);
+  }
+
+  Widget _searchFieldWidget() {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    TextEditingController searchController = TextEditingController();
+
+    return TextFieldWidget(
+      borderRadius: 30,
+      controller: searchController,
+      hintText: searchHint ?? 'Search Country...',
+      style: searchTextStyle ?? textTheme.bodySmall,
+      prefixIcon: Icon(
+        Icons.search_rounded,
+        color: colorScheme.inverseSurface,
+        size: 16.dp(),
+      ),
+      suffixIcon: InkWell(
+        onTap: () {
+          searchController.text = "";
+          filteredList.value = countryList.then((list) => list);
+        },
+        child: Icon(
+          Icons.cancel_rounded,
+          color: colorScheme.inverseSurface,
+          size: 16.dp(),
+        ),
+      ),
+      onChanged: (query) async {
+        await countryList.then((value) {
+          filteredList.value = Future.value(RxList<CountryModel>.from(value
+              .where((element) =>
+                  element.name.toLowerCase().contains(query.toLowerCase()) ||
+                  element.countryCode
+                      .toLowerCase()
+                      .contains(query.toLowerCase()) ||
+                  element.phoneCode.toLowerCase().contains(query.toLowerCase()))
+              .toList()));
+        });
+      },
+    );
+  }
+
+  Widget _itemWidget(CountryModel item) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final bool isRtl = Directionality.of(context) == TextDirection.rtl;
+
+    return TextButtonWidget(
+      padding: EdgeInsets.all(5.dp()),
+      onTap: () {
+        navUtils.fireBack();
+        item = item.copyWith(
+          nameLocalized: CountryLocalizations.of(context)
+              ?.countryName(countryCode: item.countryCode)
+              ?.replaceAll(RegExp(r"\s+"), " "),
+        );
+        onCountrySelected?.call(item);
+      },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                // the conditional 50 prevents irregularities caused by the flags in RTL mode
+                width: isRtl ? 50 : null,
+                child: FutureBuilder(
+                  future: FileUtils.countryCodeToEmoji(item.countryCode),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    String data = snapshot.hasData
+                        ? snapshot.data!
+                        : CountryModel.worldWide.countryCode;
+                    return Text(
+                      data == CountryModel.worldWide.countryCode
+                          ? '\uD83C\uDF0D'
+                          : data,
+                      style: textTheme.bodyMedium,
+                    );
+                  },
+                ),
+              ),
+              SizedBox(width: 10.dp()),
+              SizedBox(
+                width: 50,
+                child: Text(
+                  '${isRtl ? '' : '+'}${item.phoneCode}${isRtl ? '+' : ''}',
+                  style: phoneCodeTextStyle ?? textTheme.bodyMedium,
+                ),
+              ),
+              SizedBox(width: 10.dp()),
+              Expanded(
+                child: Text(
+                  CountryLocalizations.of(context)
+                          ?.countryName(countryCode: item.countryCode)
+                          ?.replaceAll(RegExp(r"\s+"), " ") ??
+                      item.name,
+                  style: textStyle ?? textTheme.bodySmall,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: appDimen.dimen(2)),
+          DividerWidget(color: dividerColor ?? colorScheme.surfaceDim),
+        ],
+      ),
+    );
   }
 }

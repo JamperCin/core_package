@@ -321,9 +321,9 @@ class TextFieldWidget extends StatelessWidget {
             width: countryWidgetWidth ?? 100.dp(),
             child: InkWell(
               onTap: () async {
-                CountryPicker().showCountryPicker(
+                CountryPicker.showCountryPickerModalStyle(
                   context,
-                  onSearch: (country) {
+                  onCountrySelected: (country) {
                     countryController?.text = "+${country?.phoneCode ?? ''}";
                     onCountrySelected?.call(country);
                   },
