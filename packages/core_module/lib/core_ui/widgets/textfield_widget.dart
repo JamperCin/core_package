@@ -105,14 +105,12 @@ class TextFieldWidget extends StatelessWidget {
         modalTitleTextStyle = null,
         onCountrySelected = null,
         countrySearchHintText = null,
-
         countryWidgetHintText = null,
         obscuringCharacter = "*";
 
   TextFieldWidget.withPhoneNumber({
     super.key,
     this.controller,
-
     this.isEnabled = true,
     this.hasCountryPicker = false,
     this.countryWidgetWidth,
@@ -150,15 +148,11 @@ class TextFieldWidget extends StatelessWidget {
     this.height,
     this.phoneCodeTextStyle,
     this.countryPickerType,
+    this.prefixIcon,
     this.counterColor,
     this.counterStyle,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
-        prefixIcon = AssetImageWidget(
-          asset: icMobile,
-          width: appDimen.dimen(14),
-          height: appDimen.dimen(14),
-        ),
         inputFormatters = [FilteringTextInputFormatter.digitsOnly],
         obscuringCharacter = "*";
 
@@ -216,6 +210,15 @@ class TextFieldWidget extends StatelessWidget {
       prefixIcon = prefixIcon ??
           AssetImageWidget(
             asset: icPassword,
+            width: appDimen.dimen(14),
+            height: appDimen.dimen(14),
+          );
+    }
+
+    if (keyboardType == TextInputType.phone) {
+      prefixIcon = prefixIcon ??
+          AssetImageWidget(
+            asset: icMobile,
             width: appDimen.dimen(14),
             height: appDimen.dimen(14),
           );
@@ -340,7 +343,7 @@ class TextFieldWidget extends StatelessWidget {
           flex: 0,
           child: Obx(
             () => SizedBox(
-              width: countryWidgetWidth ?? 110.dp(),
+              width: countryWidgetWidth ?? 105.dp(),
               child: InkWell(
                 onTap: () async {
                   CountryPicker(
@@ -361,7 +364,8 @@ class TextFieldWidget extends StatelessWidget {
                 child: TextFormField(
                   enabled: false,
                   textAlign: textAlign ?? TextAlign.center,
-                  style: countryWidgetTextStyle ?? Theme.of(context).textTheme.labelMedium,
+                  style: countryWidgetTextStyle ??
+                      Theme.of(context).textTheme.labelMedium,
                   controller: TextEditingController(
                       text: _selectedCountry.value.phoneCode.isNotEmpty
                           ? "+${_selectedCountry.value.phoneCode}"
