@@ -3,6 +3,7 @@ import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/country_picker/country_picker_delegate.dart';
+import 'package:core_module/core_ui/snippets/country_picker/res/country_codes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/res/assets_path.dart';
@@ -99,9 +100,8 @@ class CountryPicker {
   }
 
   Future<void> _initData() async {
-    countryList = FileUtils().fetchList<CountryModel>(
-      path: countriesJson,
-      key: "countries",
+    countryList = FileUtils().fetchListWithPreList<CountryModel>(
+      listMap: countryCodes,
       parser: (json) {
         return CountryModel.fromJson(json);
       },

@@ -1,6 +1,7 @@
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
 import 'package:core_module/core_ui/base_screen/base_search_standard.dart';
+import 'package:core_module/core_ui/snippets/country_picker/res/country_codes.dart';
 import 'package:core_module/core_ui/widgets/divider_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,8 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
   }
 
   Future<void> _initData() async {
-    countryList = FileUtils().fetchList<CountryModel>(
-      path: countriesJson,
-      key: "countries",
+    countryList = FileUtils().fetchListWithPreList<CountryModel>(
+      listMap: countryCodes,
       parser: (json) {
         return CountryModel.fromJson(json);
       },

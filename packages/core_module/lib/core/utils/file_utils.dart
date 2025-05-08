@@ -39,6 +39,13 @@ class FileUtils {
     return results;
   }
 
+  Future<List<T>> fetchListWithPreList<T>({
+    required List<Map<String, dynamic>> listMap,
+    required T Function(Map<String, dynamic>) parser,
+  }) async {
+    final results = listMap.map(parser).toList();
+    return results;
+  }
 
   Future<List<Map<String, dynamic>>> fetchListOfMap({
     required String path,
