@@ -22,6 +22,7 @@ class TextFieldWidget extends StatelessWidget {
   final double? countryWidgetWidth;
   final double? pickerRightMargin;
   final double? height;
+  final double? countryDropDownIconSize;
   final int? maxLength;
   final ValueChanged<String>? onChanged;
   ValueChanged<String>? onFieldSubmitted;
@@ -97,6 +98,7 @@ class TextFieldWidget extends StatelessWidget {
         countryTextStyle = null,
         countryWidgetWidth = null,
         countryPickerType = null,
+        countryDropDownIconSize = null,
         phoneCodeTextStyle = null,
         countryDropDownIconColor = null,
         modalTitleTextStyle = null,
@@ -124,6 +126,7 @@ class TextFieldWidget extends StatelessWidget {
     this.style,
     this.hintStyle,
     this.labelStyle,
+    this.countryDropDownIconSize,
     this.onTap,
     this.labelText = '',
     this.countryWidgetHintText = '',
@@ -192,6 +195,7 @@ class TextFieldWidget extends StatelessWidget {
         inputFormatters = null,
         pickerRightMargin = null,
         modalTitleTextStyle = null,
+        countryDropDownIconSize = null,
         countryController = null,
         countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
@@ -365,7 +369,7 @@ class TextFieldWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     suffixIcon: Icon(
                       Icons.arrow_drop_down_outlined,
-                      size: 20.dp(),
+                      size: countryDropDownIconSize ?? 40.dp(),
                       color: countryDropDownIconColor ?? colorScheme.secondary,
                     ),
                     //hintText: countryWidgetHintText,
