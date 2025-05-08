@@ -116,7 +116,7 @@ class ShimmerWidget extends StatelessWidget {
       direction: direction ?? ShimmerDirection.ltr,
       child: child ??
           Container(
-            color: colorScheme.tertiary,
+            color: colorScheme.inverseSurface,
             height: height ?? appDimen.dimen(150),
             width: width ?? appDimen.screenWidth * 0.8,
           ),

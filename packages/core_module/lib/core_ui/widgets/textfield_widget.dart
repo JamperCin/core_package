@@ -224,6 +224,9 @@ class TextFieldWidget extends StatelessWidget {
           );
     }
 
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,10 +235,10 @@ class TextFieldWidget extends StatelessWidget {
         if (labelText.isNotEmpty)
           Text(labelText,
               style: labelStyle ??
-                  Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(fontWeight: FontWeight.w400)),
+                  textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: colorScheme.inverseSurface,
+                  )),
         if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
         SizedBox(
           width: width ?? appDimen.screenWidth,
@@ -251,6 +254,9 @@ class TextFieldWidget extends StatelessWidget {
   }
 
   Widget _textField(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return InkWell(
       onTap: onTap,
       child: TextFormField(
@@ -259,7 +265,7 @@ class TextFieldWidget extends StatelessWidget {
         controller: controller,
         textAlign: textAlign ?? TextAlign.left,
         obscureText: obscureText != null && obscureText!.value,
-        style: style ?? Theme.of(context).textTheme.labelMedium,
+        style: style ?? textTheme.labelMedium?.copyWith(color: colorScheme.inverseSurface),
         textInputAction: textInputAction ?? TextInputAction.go,
         decoration: InputDecoration(
           prefixIcon: prefixIcon != null
@@ -275,7 +281,7 @@ class TextFieldWidget extends StatelessWidget {
                     height: appDimen.dimen(6),
                     width: appDimen.dimen(6),
                     asset: obscureText!.value ? icEyeSvg : icEyeClosedSvg,
-                    assetColor: Theme.of(context).colorScheme.inverseSurface,
+                    assetColor: colorScheme.inverseSurface,
                     onTap: () {
                       if (obscureText != null) {
                         obscureText!.value = !(obscureText!.value);
@@ -285,40 +291,40 @@ class TextFieldWidget extends StatelessWidget {
                 )
               : suffixIcon,
           hintText: hintText,
-          hintStyle: hintStyle ?? Theme.of(context).textTheme.labelSmall,
+          hintStyle: hintStyle ?? textTheme.labelSmall?.copyWith(color: colorScheme.surfaceBright),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
-              color: borderColor ?? Theme.of(context).colorScheme.primary,
+              color: borderColor ?? colorScheme.primary,
               width: 1,
             ),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: disabledColor ?? Theme.of(context).colorScheme.secondary,
+              color: disabledColor ?? colorScheme.secondary,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: unFocusColor ?? Theme.of(context).colorScheme.primary,
+              color: unFocusColor ?? colorScheme.primary,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: focusColor ?? Theme.of(context).colorScheme.primary,
+              color: focusColor ?? colorScheme.primary,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           filled: true,
-          fillColor: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
+          fillColor: backgroundColor ?? colorScheme.surface,
           counterStyle: counterStyle ??
-              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: counterColor ?? Theme.of(context).colorScheme.primary),
+              textTheme.bodyMedium
+                  ?.copyWith(color: counterColor ?? colorScheme.primary),
         ),
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
@@ -335,6 +341,7 @@ class TextFieldWidget extends StatelessWidget {
 
   Widget _textFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -365,7 +372,8 @@ class TextFieldWidget extends StatelessWidget {
                   enabled: false,
                   textAlign: textAlign ?? TextAlign.center,
                   style: countryWidgetTextStyle ??
-                      Theme.of(context).textTheme.labelMedium,
+                      textTheme.labelMedium
+                          ?.copyWith(color: colorScheme.inverseSurface),
                   controller: TextEditingController(
                       text: _selectedCountry.value.phoneCode.isNotEmpty
                           ? "+${_selectedCountry.value.phoneCode}"
@@ -374,53 +382,45 @@ class TextFieldWidget extends StatelessWidget {
                     suffixIcon: Icon(
                       Icons.arrow_drop_down_outlined,
                       size: countryDropDownIconSize ?? 30.dp(),
-                      color: countryDropDownIconColor ?? colorScheme.secondary,
+                      color:
+                          countryDropDownIconColor ?? colorScheme.surfaceBright,
                     ),
-                    //hintText: countryWidgetHintText,
                     hintStyle: hintStyle ??
-                        Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(color: colorScheme.secondary),
+                        textTheme.labelSmall
+                            ?.copyWith(color: colorScheme.surfaceBright),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(borderRadius),
                       borderSide: BorderSide(
-                        color: borderColor ??
-                            Theme.of(context).colorScheme.primary,
+                        color: borderColor ?? colorScheme.primary,
                         width: 1,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: disabledColor ??
-                            Theme.of(context).colorScheme.primary,
+                        color: disabledColor ?? colorScheme.primary,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(borderRadius),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: unFocusColor ??
-                            Theme.of(context).colorScheme.primary,
+                        color: unFocusColor ?? colorScheme.primary,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(borderRadius),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color:
-                            focusColor ?? Theme.of(context).colorScheme.primary,
+                        color: focusColor ?? colorScheme.primary,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(borderRadius),
                     ),
                     filled: true,
-                    fillColor: backgroundColor ??
-                        Theme.of(context).colorScheme.tertiary,
+                    fillColor: backgroundColor ?? colorScheme.surface,
                     counterStyle: counterStyle ??
-                        Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: counterColor ??
-                                Theme.of(context).colorScheme.primary),
+                        textTheme.bodyMedium?.copyWith(
+                            color: counterColor ?? colorScheme.primary),
                   ),
                 ),
               ),

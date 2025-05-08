@@ -21,6 +21,7 @@ class CountryPicker {
 
   final TextStyle? textStyle;
   final TextStyle? searchTextStyle;
+  final TextStyle? searchHintTextStyle;
   final TextStyle? phoneCodeTextStyle;
   final TextStyle? modalTitleTextStyle;
   final String? searchHint;
@@ -44,6 +45,7 @@ class CountryPicker {
     this.modalHeight,
     this.dividerColor,
     this.modalMargin,
+    this.searchHintTextStyle,
     this.modalTitleTextStyle,
   }) {
     if (countryPickerType == CountryPickerType.modalStyle) {
@@ -59,6 +61,7 @@ class CountryPicker {
         dividerColor: dividerColor,
         modalMargin: modalMargin,
         modalTitleTextStyle: modalTitleTextStyle,
+        searchHintTextStyle: searchHintTextStyle,
       );
     } else {
       CountryPicker.showPicker(
@@ -85,6 +88,7 @@ class CountryPicker {
   })  : modalSearchTitle = null,
         modalMargin = null,
         modalTitleTextStyle = null,
+        searchHintTextStyle = null,
         countryPickerType = null,
         modalHeight = null {
     showSearch(
@@ -109,17 +113,22 @@ class CountryPicker {
     this.onCountrySelected,
     this.modalHeight,
     this.modalTitleTextStyle,
+    this.searchHintTextStyle,
     this.dividerColor,
     this.modalMargin,
   }) : countryPickerType = null {
     _initData();
+
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     BottomSheetWidget(
       context: context,
       title: modalSearchTitle ?? 'Search Country',
       height: modalHeight ?? appDimen.screenHeight * 0.8,
       margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
-      titleStyle: modalTitleTextStyle,
+      titleStyle: modalTitleTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
+      color: colorScheme.surface,
       subChild: Column(
         children: [
           _searchFieldWidget(),
@@ -167,7 +176,12 @@ class CountryPicker {
       borderRadius: 30,
       controller: searchController,
       hintText: searchHint ?? 'Search Country...',
-      style: searchTextStyle ?? textTheme.bodySmall,
+      hintStyle: searchHintTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      style: searchTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      backgroundColor: colorScheme.surface,
+      borderColor: colorScheme.inverseSurface,
+      unFocusColor: colorScheme.inverseSurface,
+      focusColor: colorScheme.inverseSurface,
       prefixIcon: Icon(
         Icons.search_rounded,
         color: colorScheme.inverseSurface,
@@ -243,7 +257,7 @@ class CountryPicker {
                 width: 50,
                 child: Text(
                   '${isRtl ? '' : '+'}${item.phoneCode}${isRtl ? '+' : ''}',
-                  style: phoneCodeTextStyle ?? textTheme.bodyMedium,
+                  style: phoneCodeTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
               SizedBox(width: 10.dp()),
@@ -253,13 +267,13 @@ class CountryPicker {
                           ?.countryName(countryCode: item.countryCode)
                           ?.replaceAll(RegExp(r"\s+"), " ") ??
                       item.name,
-                  style: textStyle ?? textTheme.bodySmall,
+                  style: textStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
             ],
           ),
           SizedBox(height: appDimen.dimen(2)),
-          DividerWidget(color: dividerColor ?? colorScheme.surfaceDim),
+          DividerWidget(color: dividerColor ?? colorScheme.inverseSurface),
         ],
       ),
     );

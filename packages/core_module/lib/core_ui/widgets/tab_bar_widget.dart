@@ -64,11 +64,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
       onTap: widget.onTap,
       tabs: widget.tabs,
       indicatorColor: widget.indicatorColor ?? colorScheme.primary,
-      dividerColor: widget.dividerColor ?? colorScheme.surface,
+      dividerColor: widget.dividerColor ?? colorScheme.surfaceBright,
       labelColor: widget.labelColor ?? colorScheme.primary,
       labelStyle: widget.labelStyle ?? textTheme.bodyMedium,
       unselectedLabelColor:
-          widget.unselectedLabelColor ?? colorScheme.tertiaryContainer,
+          widget.unselectedLabelColor ?? colorScheme.surfaceBright,
       unselectedLabelStyle: widget.unselectedLabelStyle ?? textTheme.bodyMedium,
       padding: widget.padding,
       dividerHeight: widget.dividerHeight,

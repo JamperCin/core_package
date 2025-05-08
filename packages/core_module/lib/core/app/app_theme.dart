@@ -57,40 +57,56 @@ ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme(
     brightness: Brightness.light,
 
+    //-----TODO : ----------------     Colors to consider
+
     ///primary colors and inverted color
     primary: primaryGreenColor,
+    ///Secondary colors
+    secondary: greyPrimaryColor,
+    ///Error
+    error: redColor,
+
+    ///Surface --> [surface] and [inverseSurface] should be two contrasting colors
+    surface: darkSurfaceColor,
+    inverseSurface: whiteColor,
+    surfaceDim: darkColor,
+    surfaceBright: dividerColor,
+
+    ///Tertiary colors
+    tertiary: whiteColor,
+    //-----TODO : ----------------     Colors to consider
+
+
     inversePrimary: greenFaded,
-    //
+
     onPrimary: secondaryGreenColor,
     primaryContainer: orangeQuadColor,
     primaryFixedDim: orangeXColor,
     primaryFixed: orangeFadeColor,
 
     ///Secondary colors
-    secondary: greyPrimaryColor,
+
     onSecondary: greySecondaryColor,
     secondaryContainer: greyTertiaryColor,
 
-    ///Tertiary colors
-    tertiary: whiteColor,
+
 
     ///Error
-    error: redColor,
     onError: redColor,
 
     ///Surface
-    surface: whiteColor,
+
     onSurface: whiteColor,
     onInverseSurface: darkSurfaceVariant,
 
     ///Inverse surface
-    inverseSurface: darkColor,
+
 
     ///Green color
     outline: greenPrimaryColor,
     shadow: greyTertiaryLightColor,
     outlineVariant: darkBrownColor,
-    surfaceDim: dividerColor,
+
   ),
 );
 
