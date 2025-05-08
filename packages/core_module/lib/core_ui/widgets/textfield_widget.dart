@@ -12,7 +12,6 @@ import '../snippets/country_picker/country_picker.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
-  TextEditingController? countryController;
   final bool isEnabled;
   Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -43,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
   final String labelText;
   final String obscuringCharacter;
   final TextStyle? style;
+  final TextStyle? countryWidgetTextStyle;
   final TextAlign? textAlign;
   final TextInputAction? textInputAction;
   final TextStyle? hintStyle;
@@ -96,6 +96,7 @@ class TextFieldWidget extends StatelessWidget {
         pickerRightMargin = null,
         countrySearchTextStyle = null,
         countryTextStyle = null,
+        countryWidgetTextStyle = null,
         countryWidgetWidth = null,
         countryPickerType = null,
         countryDropDownIconSize = null,
@@ -104,14 +105,14 @@ class TextFieldWidget extends StatelessWidget {
         modalTitleTextStyle = null,
         onCountrySelected = null,
         countrySearchHintText = null,
-        countryController = null,
+
         countryWidgetHintText = null,
         obscuringCharacter = "*";
 
   TextFieldWidget.withPhoneNumber({
     super.key,
     this.controller,
-    this.countryController,
+
     this.isEnabled = true,
     this.hasCountryPicker = false,
     this.countryWidgetWidth,
@@ -137,6 +138,7 @@ class TextFieldWidget extends StatelessWidget {
     this.disabledColor,
     this.maxLength,
     this.onChanged,
+    this.countryWidgetTextStyle,
     this.maxLines,
     this.countrySearchHintText,
     this.textAlign,
@@ -196,11 +198,11 @@ class TextFieldWidget extends StatelessWidget {
         pickerRightMargin = null,
         modalTitleTextStyle = null,
         countryDropDownIconSize = null,
-        countryController = null,
         countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
         countryWidgetWidth = null,
         countrySearchHintText = null,
+        countryWidgetTextStyle = null,
         countrySearchTextStyle = null,
         countryPickerType = null,
         onCountrySelected = null,
@@ -330,7 +332,6 @@ class TextFieldWidget extends StatelessWidget {
 
   Widget _textFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    // countryController = countryController ?? TextEditingController();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -339,14 +340,13 @@ class TextFieldWidget extends StatelessWidget {
           flex: 0,
           child: Obx(
             () => SizedBox(
-              width: countryWidgetWidth ?? 100.dp(),
+              width: countryWidgetWidth ?? 110.dp(),
               child: InkWell(
                 onTap: () async {
                   CountryPicker(
                     context,
                     onCountrySelected: (country) {
                       _selectedCountry.value = country ?? const CountryModel();
-                      // countryController?.text = "+${country?.phoneCode ?? ''}";
                       onCountrySelected?.call(country);
                     },
                     searchTextStyle: countrySearchTextStyle,
@@ -361,7 +361,7 @@ class TextFieldWidget extends StatelessWidget {
                 child: TextFormField(
                   enabled: false,
                   textAlign: textAlign ?? TextAlign.center,
-                  style: style ?? Theme.of(context).textTheme.labelMedium,
+                  style: countryWidgetTextStyle ?? Theme.of(context).textTheme.labelMedium,
                   controller: TextEditingController(
                       text: _selectedCountry.value.phoneCode.isNotEmpty
                           ? "+${_selectedCountry.value.phoneCode}"
@@ -369,7 +369,7 @@ class TextFieldWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     suffixIcon: Icon(
                       Icons.arrow_drop_down_outlined,
-                      size: countryDropDownIconSize ?? 40.dp(),
+                      size: countryDropDownIconSize ?? 30.dp(),
                       color: countryDropDownIconColor ?? colorScheme.secondary,
                     ),
                     //hintText: countryWidgetHintText,
@@ -423,7 +423,7 @@ class TextFieldWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: pickerRightMargin ?? 10.dp()),
+        SizedBox(width: pickerRightMargin ?? 6.dp()),
         Flexible(
           flex: 1,
           child: _textField(context),
