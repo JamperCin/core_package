@@ -7,11 +7,12 @@ import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 
+import '../../core/enum/country_picker_type.dart';
 import '../snippets/country_picker/country_picker.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
-  final TextEditingController? countryController;
+  TextEditingController? countryController;
   final bool isEnabled;
   Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -32,6 +33,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color? unFocusColor;
   final Color? disabledColor;
   final String? hintText;
+  final CountryPickerType? countryPickerType;
   final String? countryWidgetHintText;
   final String? countrySearchHintText;
   final TextStyle? phoneCodeTextStyle;
@@ -92,6 +94,7 @@ class TextFieldWidget extends StatelessWidget {
         countrySearchTextStyle = null,
         countryTextStyle = null,
         countryWidgetWidth = null,
+        countryPickerType = null,
         phoneCodeTextStyle = null,
         onCountrySelected = null,
         countrySearchHintText = null,
@@ -135,6 +138,7 @@ class TextFieldWidget extends StatelessWidget {
     this.focusNode,
     this.height,
     this.phoneCodeTextStyle,
+    this.countryPickerType,
     this.counterColor,
     this.counterStyle,
   })  : obscureText = null,
@@ -186,6 +190,7 @@ class TextFieldWidget extends StatelessWidget {
         countryWidgetWidth = null,
         countrySearchHintText = null,
         countrySearchTextStyle = null,
+        countryPickerType = null,
         onCountrySelected = null,
         countryTextStyle = null,
         countryWidgetHintText = null,
@@ -311,6 +316,7 @@ class TextFieldWidget extends StatelessWidget {
 
   Widget _textFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    countryController = countryController ?? TextEditingController();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,7 +327,7 @@ class TextFieldWidget extends StatelessWidget {
             width: countryWidgetWidth ?? 100.dp(),
             child: InkWell(
               onTap: () async {
-                CountryPicker.showPicker(
+                CountryPicker(
                   context,
                   onCountrySelected: (country) {
                     countryController?.text = "+${country?.phoneCode ?? ''}";
@@ -329,6 +335,8 @@ class TextFieldWidget extends StatelessWidget {
                   },
                   searchTextStyle: countrySearchTextStyle,
                   textStyle: countryTextStyle,
+                  countryPickerType:
+                      countryPickerType ?? CountryPickerType.modalStyle,
                   searchHint: countrySearchHintText,
                   phoneCodeTextStyle: phoneCodeTextStyle,
                 );

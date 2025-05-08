@@ -6,6 +6,7 @@ import 'package:core_module/core_ui/snippets/country_picker/country_picker_deleg
 import 'package:core_module/core_ui/snippets/country_picker/res/country_codes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/enum/country_picker_type.dart';
 import '../../../core/res/assets_path.dart';
 import '../../../core/utils/file_utils.dart';
 import '../../widgets/bottom_sheet_widget.dart';
@@ -23,11 +24,51 @@ class CountryPicker {
   final TextStyle? phoneCodeTextStyle;
   final String? searchHint;
   final String? modalSearchTitle;
+  final CountryPickerType? countryPickerType;
   final double? modalHeight;
   final EdgeInsetsGeometry? modalMargin;
   final Color? dividerColor;
   final BuildContext context;
   final Function(CountryModel?)? onCountrySelected;
+
+  CountryPicker(
+    this.context, {
+    this.textStyle,
+    this.countryPickerType,
+    this.searchTextStyle,
+    this.phoneCodeTextStyle,
+    this.searchHint,
+    this.modalSearchTitle,
+    this.onCountrySelected,
+    this.modalHeight,
+    this.dividerColor,
+    this.modalMargin,
+  }) {
+    if (countryPickerType == CountryPickerType.modalStyle) {
+      CountryPicker.showCountryPickerModalStyle(
+        context,
+        textStyle: textStyle,
+        searchTextStyle: searchTextStyle,
+        phoneCodeTextStyle: phoneCodeTextStyle,
+        searchHint: searchHint,
+        modalSearchTitle: modalSearchTitle,
+        onCountrySelected: onCountrySelected,
+        modalHeight: modalHeight,
+        dividerColor: dividerColor,
+        modalMargin: modalMargin,
+      );
+    } else {
+      CountryPicker.showPicker(
+        context,
+        textStyle: textStyle,
+        onCountrySelected: onCountrySelected,
+        searchHint: searchHint,
+        searchTextStyle: searchTextStyle,
+        phoneCodeTextStyle: phoneCodeTextStyle,
+        dividerColor: dividerColor,
+      );
+    }
+  }
 
   ///Pick a country from the country picker normal style
   CountryPicker.showPicker(
@@ -40,6 +81,7 @@ class CountryPicker {
     this.onCountrySelected,
   })  : modalSearchTitle = null,
         modalMargin = null,
+        countryPickerType = null,
         modalHeight = null {
     showSearch(
       context: context,
@@ -64,7 +106,7 @@ class CountryPicker {
     this.modalHeight,
     this.dividerColor,
     this.modalMargin,
-  }) {
+  }) : countryPickerType = null {
     _initData();
 
     BottomSheetWidget(
