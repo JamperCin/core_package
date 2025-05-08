@@ -22,6 +22,7 @@ class CountryPicker {
   final TextStyle? textStyle;
   final TextStyle? searchTextStyle;
   final TextStyle? phoneCodeTextStyle;
+  final TextStyle? modalTitleTextStyle;
   final String? searchHint;
   final String? modalSearchTitle;
   final CountryPickerType? countryPickerType;
@@ -43,6 +44,7 @@ class CountryPicker {
     this.modalHeight,
     this.dividerColor,
     this.modalMargin,
+    this.modalTitleTextStyle,
   }) {
     if (countryPickerType == CountryPickerType.modalStyle) {
       CountryPicker.showCountryPickerModalStyle(
@@ -56,6 +58,7 @@ class CountryPicker {
         modalHeight: modalHeight,
         dividerColor: dividerColor,
         modalMargin: modalMargin,
+        modalTitleTextStyle: modalTitleTextStyle,
       );
     } else {
       CountryPicker.showPicker(
@@ -81,6 +84,7 @@ class CountryPicker {
     this.onCountrySelected,
   })  : modalSearchTitle = null,
         modalMargin = null,
+        modalTitleTextStyle = null,
         countryPickerType = null,
         modalHeight = null {
     showSearch(
@@ -104,41 +108,44 @@ class CountryPicker {
     this.modalSearchTitle,
     this.onCountrySelected,
     this.modalHeight,
+    this.modalTitleTextStyle,
     this.dividerColor,
     this.modalMargin,
   }) : countryPickerType = null {
     _initData();
 
     BottomSheetWidget(
-        context: context,
-        title: modalSearchTitle ?? 'Search Country',
-        height: modalHeight ?? appDimen.screenHeight * 0.8,
-        margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
-        subChild: Column(
-          children: [
-            _searchFieldWidget(),
-            SizedBox(height: 16.dp()),
-            SizedBox(
-                height: appDimen.screenHeight * 0.7,
-                child: Obx(
-                  () => FutureBuilder(
-                    future: filteredList.value,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<CountryModel>> snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView(
-                          children: [
-                            ...snapshot.data!.map((item) => _itemWidget(item)),
-                          ],
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ))
-          ],
-        ));
+      context: context,
+      title: modalSearchTitle ?? 'Search Country',
+      height: modalHeight ?? appDimen.screenHeight * 0.8,
+      margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
+      titleStyle: modalTitleTextStyle,
+      subChild: Column(
+        children: [
+          _searchFieldWidget(),
+          SizedBox(height: 16.dp()),
+          SizedBox(
+              height: appDimen.screenHeight * 0.7,
+              child: Obx(
+                () => FutureBuilder(
+                  future: filteredList.value,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<CountryModel>> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                        children: [
+                          ...snapshot.data!.map((item) => _itemWidget(item)),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
+              ))
+        ],
+      ),
+    );
   }
 
   Future<void> _initData() async {

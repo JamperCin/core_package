@@ -29,6 +29,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
   final Color? focusColor;
+  final Color? countryDropDownIconColor;
   final Color? counterColor;
   final Color? unFocusColor;
   final Color? disabledColor;
@@ -37,6 +38,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? countryWidgetHintText;
   final String? countrySearchHintText;
   final TextStyle? phoneCodeTextStyle;
+  final TextStyle? modalTitleTextStyle;
   final String labelText;
   final String obscuringCharacter;
   final TextStyle? style;
@@ -96,6 +98,8 @@ class TextFieldWidget extends StatelessWidget {
         countryWidgetWidth = null,
         countryPickerType = null,
         phoneCodeTextStyle = null,
+        countryDropDownIconColor = null,
+        modalTitleTextStyle = null,
         onCountrySelected = null,
         countrySearchHintText = null,
         countryController = null,
@@ -115,6 +119,7 @@ class TextFieldWidget extends StatelessWidget {
     this.focusColor,
     this.borderRadius = 10,
     this.pickerRightMargin,
+    this.countryDropDownIconColor,
     this.hintText,
     this.style,
     this.hintStyle,
@@ -124,6 +129,7 @@ class TextFieldWidget extends StatelessWidget {
     this.countryWidgetHintText = '',
     this.backgroundColor,
     this.margin,
+    this.modalTitleTextStyle,
     this.unFocusColor,
     this.disabledColor,
     this.maxLength,
@@ -185,7 +191,9 @@ class TextFieldWidget extends StatelessWidget {
         hasCountryPicker = false,
         inputFormatters = null,
         pickerRightMargin = null,
+        modalTitleTextStyle = null,
         countryController = null,
+        countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
         countryWidgetWidth = null,
         countrySearchHintText = null,
@@ -314,84 +322,98 @@ class TextFieldWidget extends StatelessWidget {
     );
   }
 
+  final Rx<CountryModel> _selectedCountry = const CountryModel().obs;
+
   Widget _textFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    countryController = countryController ?? TextEditingController();
+    // countryController = countryController ?? TextEditingController();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
           flex: 0,
-          child: SizedBox(
-            width: countryWidgetWidth ?? 100.dp(),
-            child: InkWell(
-              onTap: () async {
-                CountryPicker(
-                  context,
-                  onCountrySelected: (country) {
-                    countryController?.text = "+${country?.phoneCode ?? ''}";
-                    onCountrySelected?.call(country);
-                  },
-                  searchTextStyle: countrySearchTextStyle,
-                  textStyle: countryTextStyle,
-                  countryPickerType:
-                      countryPickerType ?? CountryPickerType.modalStyle,
-                  searchHint: countrySearchHintText,
-                  phoneCodeTextStyle: phoneCodeTextStyle,
-                );
-              },
-              child: TextFormField(
-                enabled: false,
-                textAlign: textAlign ?? TextAlign.center,
-                style: style ?? Theme.of(context).textTheme.labelMedium,
-                controller: countryController,
-                decoration: InputDecoration(
-                  hintText: countryWidgetHintText,
-                  hintStyle: hintStyle ??
-                      Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: colorScheme.secondary),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    borderSide: BorderSide(
-                      color:
-                          borderColor ?? Theme.of(context).colorScheme.primary,
-                      width: 1,
+          child: Obx(
+            () => SizedBox(
+              width: countryWidgetWidth ?? 100.dp(),
+              child: InkWell(
+                onTap: () async {
+                  CountryPicker(
+                    context,
+                    onCountrySelected: (country) {
+                      _selectedCountry.value = country ?? const CountryModel();
+                      // countryController?.text = "+${country?.phoneCode ?? ''}";
+                      onCountrySelected?.call(country);
+                    },
+                    searchTextStyle: countrySearchTextStyle,
+                    textStyle: countryTextStyle,
+                    countryPickerType:
+                        countryPickerType ?? CountryPickerType.modalStyle,
+                    searchHint: countrySearchHintText,
+                    phoneCodeTextStyle: phoneCodeTextStyle,
+                    modalTitleTextStyle: modalTitleTextStyle,
+                  );
+                },
+                child: TextFormField(
+                  enabled: false,
+                  textAlign: textAlign ?? TextAlign.center,
+                  style: style ?? Theme.of(context).textTheme.labelMedium,
+                  controller: TextEditingController(
+                      text: _selectedCountry.value.phoneCode.isNotEmpty
+                          ? "+${_selectedCountry.value.phoneCode}"
+                          : ''),
+                  decoration: InputDecoration(
+                    suffixIcon: Icon(
+                      Icons.arrow_drop_down_outlined,
+                      size: 20.dp(),
+                      color: countryDropDownIconColor ?? colorScheme.secondary,
                     ),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: disabledColor ??
-                          Theme.of(context).colorScheme.primary,
-                      width: 1,
+                    //hintText: countryWidgetHintText,
+                    hintStyle: hintStyle ??
+                        Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(color: colorScheme.secondary),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(borderRadius),
+                      borderSide: BorderSide(
+                        color: borderColor ??
+                            Theme.of(context).colorScheme.primary,
+                        width: 1,
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(borderRadius),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          unFocusColor ?? Theme.of(context).colorScheme.primary,
-                      width: 1,
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: disabledColor ??
+                            Theme.of(context).colorScheme.primary,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(borderRadius),
                     ),
-                    borderRadius: BorderRadius.circular(borderRadius),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          focusColor ?? Theme.of(context).colorScheme.primary,
-                      width: 1,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: unFocusColor ??
+                            Theme.of(context).colorScheme.primary,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(borderRadius),
                     ),
-                    borderRadius: BorderRadius.circular(borderRadius),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color:
+                            focusColor ?? Theme.of(context).colorScheme.primary,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(borderRadius),
+                    ),
+                    filled: true,
+                    fillColor: backgroundColor ??
+                        Theme.of(context).colorScheme.tertiary,
+                    counterStyle: counterStyle ??
+                        Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: counterColor ??
+                                Theme.of(context).colorScheme.primary),
                   ),
-                  filled: true,
-                  fillColor:
-                      backgroundColor ?? Theme.of(context).colorScheme.tertiary,
-                  counterStyle: counterStyle ??
-                      Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: counterColor ??
-                              Theme.of(context).colorScheme.primary),
                 ),
               ),
             ),
