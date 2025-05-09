@@ -29,6 +29,7 @@ mixin _$CountryModel {
   int get e164Sc => throw _privateConstructorUsedError;
   @JsonKey(name: 'geographic')
   bool get geographic => throw _privateConstructorUsedError;
+  bool get selected => throw _privateConstructorUsedError;
   @JsonKey(name: 'level')
   int get level => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
@@ -66,6 +67,7 @@ abstract class $CountryModelCopyWith<$Res> {
       @JsonKey(name: 'iso2_cc') String countryCode,
       @JsonKey(name: 'e164_sc') int e164Sc,
       @JsonKey(name: 'geographic') bool geographic,
+      bool selected,
       @JsonKey(name: 'level') int level,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'example') String example,
@@ -96,6 +98,7 @@ class _$CountryModelCopyWithImpl<$Res, $Val extends CountryModel>
     Object? countryCode = null,
     Object? e164Sc = null,
     Object? geographic = null,
+    Object? selected = null,
     Object? level = null,
     Object? name = null,
     Object? example = null,
@@ -124,6 +127,10 @@ class _$CountryModelCopyWithImpl<$Res, $Val extends CountryModel>
       geographic: null == geographic
           ? _value.geographic
           : geographic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as bool,
       level: null == level
           ? _value.level
@@ -171,6 +178,7 @@ abstract class _$$CountryModelImplCopyWith<$Res>
       @JsonKey(name: 'iso2_cc') String countryCode,
       @JsonKey(name: 'e164_sc') int e164Sc,
       @JsonKey(name: 'geographic') bool geographic,
+      bool selected,
       @JsonKey(name: 'level') int level,
       @JsonKey(name: 'name') String name,
       @JsonKey(name: 'example') String example,
@@ -199,6 +207,7 @@ class __$$CountryModelImplCopyWithImpl<$Res>
     Object? countryCode = null,
     Object? e164Sc = null,
     Object? geographic = null,
+    Object? selected = null,
     Object? level = null,
     Object? name = null,
     Object? example = null,
@@ -227,6 +236,10 @@ class __$$CountryModelImplCopyWithImpl<$Res>
       geographic: null == geographic
           ? _value.geographic
           : geographic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as bool,
       level: null == level
           ? _value.level
@@ -269,6 +282,7 @@ class _$CountryModelImpl implements _CountryModel {
       @JsonKey(name: 'iso2_cc') this.countryCode = '',
       @JsonKey(name: 'e164_sc') this.e164Sc = -1,
       @JsonKey(name: 'geographic') this.geographic = false,
+      this.selected = false,
       @JsonKey(name: 'level') this.level = -1,
       @JsonKey(name: 'name') this.name = '',
       @JsonKey(name: 'example') this.example = '',
@@ -298,6 +312,9 @@ class _$CountryModelImpl implements _CountryModel {
   @JsonKey(name: 'geographic')
   final bool geographic;
   @override
+  @JsonKey()
+  final bool selected;
+  @override
   @JsonKey(name: 'level')
   final int level;
   @override
@@ -321,7 +338,7 @@ class _$CountryModelImpl implements _CountryModel {
 
   @override
   String toString() {
-    return 'CountryModel(phoneCode: $phoneCode, nameLocalized: $nameLocalized, countryCode: $countryCode, e164Sc: $e164Sc, geographic: $geographic, level: $level, name: $name, example: $example, displayName: $displayName, fullExampleWithPlusSign: $fullExampleWithPlusSign, displayNameNoCountryCode: $displayNameNoCountryCode, e164Key: $e164Key)';
+    return 'CountryModel(phoneCode: $phoneCode, nameLocalized: $nameLocalized, countryCode: $countryCode, e164Sc: $e164Sc, geographic: $geographic, selected: $selected, level: $level, name: $name, example: $example, displayName: $displayName, fullExampleWithPlusSign: $fullExampleWithPlusSign, displayNameNoCountryCode: $displayNameNoCountryCode, e164Key: $e164Key)';
   }
 
   @override
@@ -338,6 +355,8 @@ class _$CountryModelImpl implements _CountryModel {
             (identical(other.e164Sc, e164Sc) || other.e164Sc == e164Sc) &&
             (identical(other.geographic, geographic) ||
                 other.geographic == geographic) &&
+            (identical(other.selected, selected) ||
+                other.selected == selected) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.example, example) || other.example == example) &&
@@ -361,6 +380,7 @@ class _$CountryModelImpl implements _CountryModel {
       countryCode,
       e164Sc,
       geographic,
+      selected,
       level,
       name,
       example,
@@ -392,6 +412,7 @@ abstract class _CountryModel implements CountryModel {
       @JsonKey(name: 'iso2_cc') final String countryCode,
       @JsonKey(name: 'e164_sc') final int e164Sc,
       @JsonKey(name: 'geographic') final bool geographic,
+      final bool selected,
       @JsonKey(name: 'level') final int level,
       @JsonKey(name: 'name') final String name,
       @JsonKey(name: 'example') final String example,
@@ -419,6 +440,8 @@ abstract class _CountryModel implements CountryModel {
   @override
   @JsonKey(name: 'geographic')
   bool get geographic;
+  @override
+  bool get selected;
   @override
   @JsonKey(name: 'level')
   int get level;

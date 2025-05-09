@@ -15,6 +15,7 @@ class CountryModel with _$CountryModel {
     @JsonKey(name: 'iso2_cc') @Default('') String countryCode,
     @JsonKey(name: 'e164_sc') @Default(-1) int e164Sc,
     @JsonKey(name: 'geographic') @Default(false) bool geographic,
+    @Default(false) bool selected,
     @JsonKey(name: 'level') @Default(-1) int level,
     @JsonKey(name: 'name') @Default('') String name,
     @JsonKey(name: 'example') @Default('') String example,

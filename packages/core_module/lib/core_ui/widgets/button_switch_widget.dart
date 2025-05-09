@@ -44,7 +44,7 @@ class ButtonSwitchWidget extends StatelessWidget {
       borderColor: borderColor ?? colorScheme.onInverseSurface,
       borderWidth: borderWidth ?? 1,
       borderRadius: borderRadius ?? 10,
-      height: height,
+      height: height ?? 55.dp(),
       width: width ?? appDimen.screenWidth,
       color: backgroundColor ?? colorScheme.onInverseSurface,
       padding: EdgeInsets.all(padding ?? 1.dp()),

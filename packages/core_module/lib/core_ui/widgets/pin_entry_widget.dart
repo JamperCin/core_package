@@ -5,7 +5,7 @@ import 'package:core_module/core/def/global_def.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 class PinEntryWidget extends StatelessWidget {
-  final RxString pin;
+  String pin = "";
   final int codeLength;
   final bool boxDecor;
   final Color? textColor;
@@ -25,55 +25,53 @@ class PinEntryWidget extends StatelessWidget {
     this.borderColor,
     this.filledColor,
     this.fontSize,
-  }) : pin = ''.obs;
+  });
 
   @override
   Widget build(BuildContext context) {
     FocusNode focusNode = FocusNode();
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Obx(
-      () => PinFieldAutoFill(
-        decoration: boxDecor
-            ? BoxLooseDecoration(
-                textStyle: textStyle ??
-                    TextStyle(
-                      fontSize: fontSize ?? 20.dp(),
-                      color: textColor ?? colorScheme.inverseSurface,
-                    ),
-                bgColorBuilder:
-                    FixedColorBuilder(filledColor ?? colorScheme.surface),
-                strokeColorBuilder: focusNode.hasFocus
-                    ? FixedColorBuilder(colorScheme.primary)
-                    : FixedColorBuilder(
-                        borderColor ?? colorScheme.inverseSurface),
-              )
-            : UnderlineDecoration(
-                textStyle: textStyle ??
-                    TextStyle(
-                      fontSize: fontSize ?? 20.dp(),
-                      color: textColor ?? colorScheme.inverseSurface,
-                    ),
-                colorBuilder: focusNode.hasFocus
-                    ? FixedColorBuilder(colorScheme.primary)
-                    : FixedColorBuilder(
-                        borderColor ?? colorScheme.inverseSurface),
-                bgColorBuilder:
-                    FixedColorBuilder(filledColor ?? colorScheme.surface),
-              ),
-        currentCode: pin.value,
-        codeLength: codeLength,
-        focusNode: focusNode,
-        autoFocus: true,
-        onCodeSubmitted: onCodeSubmitted,
-        onCodeChanged: (code) {
-          pin.value = code!;
-          if (code.length == (codeLength)) {
-            focusNode.unfocus();
-            if (onCodeSubmitted != null) onCodeSubmitted!(code);
-          }
-        },
+    return PinFieldAutoFill(
+      decoration: boxDecor
+          ? BoxLooseDecoration(
+        textStyle: textStyle ??
+            TextStyle(
+              fontSize: fontSize ?? 20.dp(),
+              color: textColor ?? colorScheme.inverseSurface,
+            ),
+        bgColorBuilder:
+        FixedColorBuilder(filledColor ?? colorScheme.surface),
+        strokeColorBuilder: focusNode.hasFocus
+            ? FixedColorBuilder(colorScheme.primary)
+            : FixedColorBuilder(
+            borderColor ?? colorScheme.inverseSurface),
+      )
+          : UnderlineDecoration(
+        textStyle: textStyle ??
+            TextStyle(
+              fontSize: fontSize ?? 20.dp(),
+              color: textColor ?? colorScheme.inverseSurface,
+            ),
+        colorBuilder: focusNode.hasFocus
+            ? FixedColorBuilder(colorScheme.primary)
+            : FixedColorBuilder(
+            borderColor ?? colorScheme.inverseSurface),
+        bgColorBuilder:
+        FixedColorBuilder(filledColor ?? colorScheme.surface),
       ),
+      currentCode: pin,
+      codeLength: codeLength,
+      focusNode: focusNode,
+      autoFocus: true,
+      onCodeSubmitted: onCodeSubmitted,
+      onCodeChanged: (code) {
+        pin = code!;
+        if (code.length == (codeLength)) {
+          focusNode.unfocus();
+          if (onCodeSubmitted != null) onCodeSubmitted!(code);
+        }
+      },
     );
   }
 }
