@@ -7,6 +7,7 @@ class PinEntryWidget extends StatelessWidget {
   final RxString pin;
   final int codeLength;
   final bool boxDecor;
+  final TextStyle? textStyle;
   final Function(String)? onCodeSubmitted;
 
   PinEntryWidget({
@@ -14,6 +15,7 @@ class PinEntryWidget extends StatelessWidget {
     this.codeLength = 4,
     this.boxDecor = true,
     this.onCodeSubmitted,
+    this.textStyle,
   }) : pin = ''.obs;
 
   @override
@@ -25,15 +27,17 @@ class PinEntryWidget extends StatelessWidget {
       () => PinFieldAutoFill(
         decoration: boxDecor
             ? BoxLooseDecoration(
-                textStyle: TextStyle(
-                    fontSize: appDimen.dimen(24), color: Colors.black),
+                textStyle: textStyle ?? TextStyle(
+                  fontSize: appDimen.dimen(24),
+                  color: colorScheme.inverseSurface,
+                ),
                 strokeColorBuilder: focusNode.hasFocus
                     ? FixedColorBuilder(colorScheme.primary)
                     : FixedColorBuilder(colorScheme.inverseSurface),
               )
             : UnderlineDecoration(
-                textStyle: TextStyle(
-                    fontSize: appDimen.dimen(24), color: Colors.black),
+                textStyle: textStyle ?? TextStyle(
+                    fontSize: appDimen.dimen(24), color: colorScheme.inverseSurface),
                 colorBuilder: FixedColorBuilder(Colors.black.withOpacity(0.3)),
               ),
         currentCode: pin.value,
