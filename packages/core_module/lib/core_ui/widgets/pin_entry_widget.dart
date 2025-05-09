@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
@@ -7,6 +8,10 @@ class PinEntryWidget extends StatelessWidget {
   final RxString pin;
   final int codeLength;
   final bool boxDecor;
+  final Color? textColor;
+  final double? fontSize;
+  final Color? borderColor;
+  final Color? filledColor;
   final TextStyle? textStyle;
   final Function(String)? onCodeSubmitted;
 
@@ -16,6 +21,10 @@ class PinEntryWidget extends StatelessWidget {
     this.boxDecor = true,
     this.onCodeSubmitted,
     this.textStyle,
+    this.textColor,
+    this.borderColor,
+    this.filledColor,
+    this.fontSize,
   }) : pin = ''.obs;
 
   @override
@@ -27,18 +36,30 @@ class PinEntryWidget extends StatelessWidget {
       () => PinFieldAutoFill(
         decoration: boxDecor
             ? BoxLooseDecoration(
-                textStyle: textStyle ?? TextStyle(
-                  fontSize: appDimen.dimen(24),
-                  color: colorScheme.inverseSurface,
-                ),
+                textStyle: textStyle ??
+                    TextStyle(
+                      fontSize: fontSize ?? 20.dp(),
+                      color: textColor ?? colorScheme.inverseSurface,
+                    ),
+                bgColorBuilder:
+                    FixedColorBuilder(filledColor ?? colorScheme.surface),
                 strokeColorBuilder: focusNode.hasFocus
                     ? FixedColorBuilder(colorScheme.primary)
-                    : FixedColorBuilder(colorScheme.inverseSurface),
+                    : FixedColorBuilder(
+                        borderColor ?? colorScheme.inverseSurface),
               )
             : UnderlineDecoration(
-                textStyle: textStyle ?? TextStyle(
-                    fontSize: appDimen.dimen(24), color: colorScheme.inverseSurface),
-                colorBuilder: FixedColorBuilder(Colors.black.withOpacity(0.3)),
+                textStyle: textStyle ??
+                    TextStyle(
+                      fontSize: fontSize ?? 20.dp(),
+                      color: textColor ?? colorScheme.inverseSurface,
+                    ),
+                colorBuilder: focusNode.hasFocus
+                    ? FixedColorBuilder(colorScheme.primary)
+                    : FixedColorBuilder(
+                        borderColor ?? colorScheme.inverseSurface),
+                bgColorBuilder:
+                    FixedColorBuilder(filledColor ?? colorScheme.surface),
               ),
         currentCode: pin.value,
         codeLength: codeLength,
