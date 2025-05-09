@@ -68,9 +68,9 @@ class PinEntryWidget extends StatelessWidget {
       onCodeChanged: (code) {
         pin = code!;
         if (code.length == (codeLength)) {
-          focusNode.unfocus();
-          FocusScope.of(context).unfocus();
+
           if (onCodeSubmitted != null) onCodeSubmitted!(code);
+          FocusScope.of(context).unfocus();
         }
       },
     );
