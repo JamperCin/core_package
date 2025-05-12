@@ -291,7 +291,7 @@ class TextFieldWidget extends StatelessWidget {
                 )
               : suffixIcon,
           hintText: hintText,
-          hintStyle: hintStyle ?? textTheme.labelSmall?.copyWith(color: colorScheme.surfaceBright),
+          hintStyle: hintStyle ?? textTheme.labelSmall?.copyWith(color: colorScheme.inverseSurface),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: BorderSide(
