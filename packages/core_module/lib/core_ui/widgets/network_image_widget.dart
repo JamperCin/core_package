@@ -67,11 +67,12 @@ class NetworkImageWidget extends StatelessWidget {
     if (url == null || url!.isEmpty) {
       return GestureDetector(
         onTap: onTap,
-        child: placeHolderWidget ?? AssetImageWidget(
-          asset: isCircular ?  icProfileCircle : (placeholder ?? icProfile),
-          height: newHeight * 2,
-          width: newWidth * 2,
-        ),
+        child: placeHolderWidget ??
+            AssetImageWidget(
+              asset: isCircular ? icProfileCircle : (placeholder ?? icProfile),
+              height: newHeight * 2,
+              width: newWidth * 2,
+            ),
       );
     }
 
@@ -117,11 +118,17 @@ class NetworkImageWidget extends StatelessWidget {
       placeholder: (context, url) => Shimmer.fromColors(
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,
-        child: placeHolderWidget ?? AssetImageWidget(
-          asset: placeholder ?? icProfile,
-          height: newHeight,
-          width: newWidth,
-        ),
+        child: placeholder != null
+            ? AssetImageWidget(
+                asset: placeholder!,
+                height: newHeight,
+                width: newWidth,
+              )
+            : placeHolderWidget ??
+                ContainerWidget(
+                  height: newHeight,
+                  width: newWidth,
+                ),
       ),
       errorWidget: (context, url, error) => Icon(
         Icons.error,
