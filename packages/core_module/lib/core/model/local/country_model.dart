@@ -1,3 +1,4 @@
+import 'package:core_module/core/model/local/base_object.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'country_model.g.dart';
@@ -8,7 +9,7 @@ part 'country_model.freezed.dart';
 ///command @command [dart run build_runner build --delete-conflicting-outputs]
 
 @freezed
-class CountryModel with _$CountryModel {
+class CountryModel extends BaseObject with _$CountryModel {
   const factory CountryModel({
     @JsonKey(name: 'e164_cc') @Default('') String phoneCode,
     @Default('') String? nameLocalized,
