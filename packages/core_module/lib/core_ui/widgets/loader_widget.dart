@@ -116,7 +116,7 @@ class LoaderWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        color: colorScheme.inverseSurface,
+        color: Colors.black,
       ),
       padding: EdgeInsets.all(appDimen.dimen(15)),
       child: CupertinoActivityIndicator(
