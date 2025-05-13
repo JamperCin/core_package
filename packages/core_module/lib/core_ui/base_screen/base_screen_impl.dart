@@ -167,7 +167,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
       elevation: appBarElevation(),
       toolbarHeight: appBarHeight(),
       backgroundColor: appBarBackgroundColor(context),
-      leading: appBarLeadingIcon(context),
+      leading: Navigator.canPop(context) ? appBarLeadingIcon(context) : null,
       surfaceTintColor: appBarBackgroundColor(context),
       title: appBarTitleWidget(context) ??
           Text(
