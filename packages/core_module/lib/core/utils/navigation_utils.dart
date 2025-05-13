@@ -14,16 +14,18 @@ class NavUtils {
   NavUtils._({this.loginScreen, this.homePage});
 
   factory NavUtils({String? loginScreen, String? homePage}) {
-    return _navUtils ??= NavUtils._(loginScreen: loginScreen, homePage: homePage,);
+    return _navUtils ??= NavUtils._(
+      loginScreen: loginScreen,
+      homePage: homePage,
+    );
   }
-
 
   void fireEvent(Event event) {
     //iterate through the event action
     switch (event.action ?? EventAction.NAV_TO) {
       case EventAction.LOG_OUT:
-        if(loginScreen != null) {
-          Get.offAllNamed('/$loginScreen');
+        if (loginScreen != null) {
+          Get.offAllNamed('/$loginScreen', arguments: event.model);
         }
         break;
       case EventAction.NAV_TO:
@@ -33,7 +35,7 @@ class NavUtils {
             preventDuplicates: false,
             routeName: '${event.target?.toStringShort()}',
             transition: event.transition ?? Transition.cupertino,
-
+            arguments: event.model,
           )?.then((value) {
             if (event.call != null) {
               event.call!();
@@ -52,13 +54,13 @@ class NavUtils {
         }
         break;
       case EventAction.NAV_HOME:
-        if (homePage != null ) {
-          Get.offAllNamed('/$homePage');
+        if (homePage != null) {
+          Get.offAllNamed('/$homePage',arguments: event.model);
         }
         break;
       case EventAction.NAV_OFF:
         if (event.target != null) {
-          Get.offAll(() => event.target!);
+          Get.offAll(() => event.target!, arguments: event.model);
         } else {
           // SnackBarApi.snackBarInfo("No target defined");
         }
@@ -85,7 +87,7 @@ class NavUtils {
         break;
     }
 
-    if (event.target != null ) {
+    if (event.target != null) {
       event.target!.setModel(event.model ?? BaseObject());
     }
   }
@@ -116,9 +118,10 @@ class NavUtils {
     ));
   }
 
-  void fireTargetHome() {
+  void fireTargetHome({BaseObject? model}) {
     fireEvent(Event(
       target: null,
+      model: model,
       action: EventAction.NAV_HOME,
     ));
   }
