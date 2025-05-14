@@ -47,13 +47,13 @@ extension HexColor on Color {
       '${blue.toRadixString(16).padLeft(2, '0')}';
 
 
-  String getClosestColorName(Color inputColor) {
+  String getClosestColorName() {
     String closestColorName = '';
     double minDistance = double.infinity;
 
     for (var entry in _namedColors.entries) {
       final namedColor = entry.value;
-      double distance = _colorDistance(inputColor, namedColor);
+      double distance = _colorDistance(this, namedColor);
       if (distance < minDistance) {
         minDistance = distance;
         closestColorName = entry.key;
