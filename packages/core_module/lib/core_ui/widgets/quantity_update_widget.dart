@@ -34,8 +34,8 @@ class QuantityUpdateWidget extends StatelessWidget {
         IconButtonWidget.withContainer(
           icon: Icons.remove,
           iconSize: iconSize,
-          height: buttonSize ?? (iconSize ?? 0 + 6.dp()),
-          width: buttonSize ?? (iconSize ?? 0 + 6.dp()),
+          height: buttonSize ?? (iconSize ?? 0 + 10.dp()),
+          width: buttonSize ?? (iconSize ?? 0 + 10.dp()),
           onTap: () {
             if (quantity.value >= 1) {
               quantity.value--;
@@ -43,15 +43,15 @@ class QuantityUpdateWidget extends StatelessWidget {
             }
           },
         ),
-        SizedBox(width: appDimen.dimen(2)),
+        SizedBox(width: appDimen.dimen(10)),
         Obx(() => Text("${quantity.value}",
             style: textStyle ?? textTheme.bodyMedium)),
-        SizedBox(width: appDimen.dimen(2)),
+        SizedBox(width: appDimen.dimen(10)),
         IconButtonWidget.withContainer(
           backgroundColor: backgroundColor ?? colorScheme.outlineVariant,
           icon: Icons.add,
-          height: buttonSize ?? (iconSize ?? 0 + 6.dp()),
-          width: buttonSize ?? (iconSize ?? 0 + 6.dp()),
+          height: buttonSize ?? (iconSize ?? 0 + 10.dp()),
+          width: buttonSize ?? (iconSize ?? 0 + 10.dp()),
           iconSize: iconSize,
           iconColor: iconColor ?? colorScheme.tertiary,
           onTap: () {
