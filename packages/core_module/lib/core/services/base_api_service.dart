@@ -182,7 +182,9 @@ class BaseApiService {
             ? parser != null
                 ? parser(json as Map<String, dynamic>)
                 : json as Map<String, dynamic>
-            : json;
+            : parser != null
+                ? parser(json)
+                : json;
       } else {
         String error = getObject('error', json) ??
             getObject('error_msg', json) ??

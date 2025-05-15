@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
@@ -57,11 +58,11 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
               flex: 0,
               child: Icon(
                 Icons.location_pin,
-                size: appDimen.dimen(6),
+                size: 20.dp(),
                 color: Colors.black,
               ),
             ),
-            SizedBox(width: appDimen.dimen(1)),
+            SizedBox(width: 10.dp()),
             Expanded(
               child: RichText(
                   maxLines: 4,
@@ -77,7 +78,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
                     TextSpan(
                       text: item.description,
                       style: textTheme.labelSmall
-                          ?.copyWith(fontSize: appDimen.dimen(2)),
+                          ?.copyWith(fontSize: 12.dp()),
                     )
                   ])),
             ),
@@ -85,7 +86,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
               Align(
                 alignment: Alignment.centerRight,
                 child: LoaderWidget.withIndicator(
-                  radius: appDimen.dimen(1),
+                  radius: 10.dp(),
                   color: colorScheme.inverseSurface,
                 ),
               )
@@ -138,7 +139,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: EdgeInsets.all(appDimen.dimen(1)),
+            padding: EdgeInsets.all(appDimen.dimen(10)),
             child: Row(
               children: [
                 // AssetImageWidget(
@@ -147,7 +148,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
                 //   asset: icNavigate,
                 // ),
                 Icon(Icons.navigation_outlined, size: appDimen.dimen(10)),
-                SizedBox(width: appDimen.dimen(2)),
+                SizedBox(width: appDimen.dimen(20)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +163,7 @@ class PlacesSearchDelegate extends BaseSearchStandard<LocationSearchModel> {
                 ),
                 if (isLoadingCurrentAddress.value)
                   LoaderWidget.withIndicator(
-                    radius: appDimen.dimen(1),
+                    radius: appDimen.dimen(10),
                     color: colorScheme.inverseSurface,
                   )
               ],
