@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
@@ -7,6 +8,7 @@ class QuantityUpdateWidget extends StatelessWidget {
   final Function(int)? onTap;
   final RxInt quantity;
   final double? iconSize;
+  final double? buttonSize;
   final Color? backgroundColor;
   final Color? iconColor;
   final TextStyle? textStyle;
@@ -19,6 +21,7 @@ class QuantityUpdateWidget extends StatelessWidget {
     this.textStyle,
     this.backgroundColor,
     this.iconColor,
+    this.buttonSize,
   });
 
   @override
@@ -31,6 +34,8 @@ class QuantityUpdateWidget extends StatelessWidget {
         IconButtonWidget.withContainer(
           icon: Icons.remove,
           iconSize: iconSize,
+          height: buttonSize ?? (iconSize ?? 0 + 6.dp()),
+          width: buttonSize ?? (iconSize ?? 0 + 6.dp()),
           onTap: () {
             if (quantity.value >= 1) {
               quantity.value--;
@@ -45,6 +50,8 @@ class QuantityUpdateWidget extends StatelessWidget {
         IconButtonWidget.withContainer(
           backgroundColor: backgroundColor ?? colorScheme.outlineVariant,
           icon: Icons.add,
+          height: buttonSize ?? (iconSize ?? 0 + 6.dp()),
+          width: buttonSize ?? (iconSize ?? 0 + 6.dp()),
           iconSize: iconSize,
           iconColor: iconColor ?? colorScheme.tertiary,
           onTap: () {
