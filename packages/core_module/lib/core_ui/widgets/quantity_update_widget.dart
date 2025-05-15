@@ -6,8 +6,20 @@ import 'package:core_module/core_ui/widgets/icon_button_widget.dart';
 class QuantityUpdateWidget extends StatelessWidget {
   final Function(int)? onTap;
   final RxInt quantity;
+  final double? iconSize;
+  final Color? backgroundColor;
+  final Color? iconColor;
+  final TextStyle? textStyle;
 
-  const QuantityUpdateWidget({super.key, this.onTap, required this.quantity});
+  const QuantityUpdateWidget({
+    super.key,
+    this.onTap,
+    required this.quantity,
+    this.iconSize,
+    this.textStyle,
+    this.backgroundColor,
+    this.iconColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +30,7 @@ class QuantityUpdateWidget extends StatelessWidget {
       children: [
         IconButtonWidget.withContainer(
           icon: Icons.remove,
+          iconSize: iconSize,
           onTap: () {
             if (quantity.value >= 1) {
               quantity.value--;
@@ -26,12 +39,14 @@ class QuantityUpdateWidget extends StatelessWidget {
           },
         ),
         SizedBox(width: appDimen.dimen(2)),
-        Obx(() => Text("${quantity.value}", style: textTheme.bodyMedium)),
+        Obx(() => Text("${quantity.value}",
+            style: textStyle ?? textTheme.bodyMedium)),
         SizedBox(width: appDimen.dimen(2)),
         IconButtonWidget.withContainer(
-          backgroundColor: colorScheme.outlineVariant,
+          backgroundColor: backgroundColor ?? colorScheme.outlineVariant,
           icon: Icons.add,
-          iconColor: colorScheme.tertiary,
+          iconSize: iconSize,
+          iconColor: iconColor ?? colorScheme.tertiary,
           onTap: () {
             quantity.value++;
             if (onTap != null) onTap!(quantity.value);

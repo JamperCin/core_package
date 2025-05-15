@@ -119,7 +119,7 @@ class IconButtonWidget extends StatelessWidget {
                     : Icon(
                         icon ?? Icons.arrow_back_rounded,
                         color: iconColor ?? colorScheme.inverseSurface,
-                        size: appDimen.dimen(iconSize ?? 5),
+                        size: appDimen.dimen(iconSize ?? 16),
                       ))),
       );
     }
@@ -132,7 +132,7 @@ class IconButtonWidget extends StatelessWidget {
           width: borderWidth ?? 1,
           color: borderColor ?? colorScheme.inverseSurface,
         ),
-        padding: padding ?? EdgeInsets.all(appDimen.dimen(iconPadding ?? 2.0)),
+        padding: padding ?? EdgeInsets.all(appDimen.dimen(iconPadding ?? 5)),
         shape: shape ?? const CircleBorder(),
       ),
       icon: child ??
