@@ -14,6 +14,7 @@ class ButtonSwitchWidget extends StatelessWidget {
   final double? borderRadius;
   final Color? backgroundColor;
   final Color? selectedColor;
+  final Color? selectedButtonColor;
   final Color? unSelectedTextColor;
   final Color? borderColor;
   final double? borderWidth;
@@ -33,7 +34,10 @@ class ButtonSwitchWidget extends StatelessWidget {
     this.selectedColor,
     this.unSelectedTextColor,
     this.onTap,
-    this.textStyle, this.height, this.width,
+    this.textStyle,
+    this.height,
+    this.width,
+    this.selectedButtonColor,
   });
 
   @override
@@ -49,7 +53,7 @@ class ButtonSwitchWidget extends StatelessWidget {
       color: backgroundColor ?? colorScheme.onInverseSurface,
       padding: EdgeInsets.all(padding ?? 1.dp()),
       child: Obx(
-        ()=> Row(
+        () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [...items.map((e) => _childWidget(context, e))],
         ),
@@ -79,15 +83,14 @@ class ButtonSwitchWidget extends StatelessWidget {
     );
 
     final buttonWidget = ButtonWidget(
-      backgroundColor: selectedColor ?? colorScheme.tertiary,
+      backgroundColor: selectedButtonColor ?? colorScheme.surfaceBright,
       text: model.value,
       borderRadius: borderRadius ?? 10,
       textColor: selectedColor ?? colorScheme.surface,
       onTap: () {
         onTap?.call(model);
-        items.value = items
-            .map((e) => e.copyWith(selected: e.key == model.key))
-            .toList();
+        items.value =
+            items.map((e) => e.copyWith(selected: e.key == model.key)).toList();
       },
     );
 

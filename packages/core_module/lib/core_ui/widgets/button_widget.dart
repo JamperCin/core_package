@@ -100,7 +100,7 @@ class ButtonWidget extends StatelessWidget {
               color: borderColor ?? backgroundColor ?? colorScheme.primary,
             ),
           ),
-          shape: WidgetStateProperty.all(
+          shape: textTheme.style?.shape ?? WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(borderRadius ?? 10),
@@ -140,13 +140,6 @@ class ButtonWidget extends StatelessWidget {
             ],
           )
         : _buttonText(context);
-
-    /*Text(
-            text,
-            style: style ??
-                textTheme.style?.textStyle
-                    ?.resolve(<WidgetState>{})?.copyWith(color: textColor),
-          );*/
   }
 
   Widget _buttonText(BuildContext context) {
