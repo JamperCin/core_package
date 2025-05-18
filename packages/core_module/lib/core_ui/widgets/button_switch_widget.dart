@@ -10,14 +10,16 @@ import '../../core/def/global_def.dart';
 
 class ButtonSwitchWidget extends StatelessWidget {
   final RxList<DictionaryModel> items;
-  final double? padding;
+  final EdgeInsets? padding;
   final double? borderRadius;
   final Color? backgroundColor;
   final Color? selectedColor;
   final Color? selectedButtonColor;
   final Color? unSelectedTextColor;
   final Color? borderColor;
+  final bool withOutline;
   final double? borderWidth;
+  final double? fontSize;
   final double? height;
   final double? width;
   final TextStyle? textStyle;
@@ -37,28 +39,61 @@ class ButtonSwitchWidget extends StatelessWidget {
     this.textStyle,
     this.height,
     this.width,
-    this.selectedButtonColor,
-  });
+    this.selectedButtonColor, this.fontSize,
+  }) : withOutline = false;
+
+  const ButtonSwitchWidget.withOutline({
+    super.key,
+    required this.items,
+    this.padding,
+    this.borderRadius,
+    this.backgroundColor,
+    this.borderColor,
+    this.borderWidth,
+    this.selectedColor,
+    this.unSelectedTextColor,
+    this.onTap,
+    this.textStyle,
+    this.height,
+    this.width,
+    this.selectedButtonColor, this.fontSize,
+  }) : withOutline = true;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return ContainerWidget(
-      borderColor: borderColor ?? colorScheme.onInverseSurface,
-      borderWidth: borderWidth ?? 1,
-      borderRadius: borderRadius ?? 10,
-      height: height ?? 55.dp(),
-      width: width ?? appDimen.screenWidth,
-      color: backgroundColor ?? colorScheme.onInverseSurface,
-      padding: EdgeInsets.all(padding ?? 1.dp()),
-      child: Obx(
-        () => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [...items.map((e) => _childWidget(context, e))],
-        ),
-      ),
-    );
+    return withOutline
+        ? ContainerWidget(
+            borderColor: borderColor ?? colorScheme.primary,
+            borderWidth: borderWidth ?? 1,
+            borderRadius: borderRadius ?? 0,
+            height: height ?? 50.dp(),
+            width: width ?? appDimen.screenWidth,
+            color: backgroundColor ?? Colors.transparent,
+            padding: padding ?? EdgeInsets.zero,
+            child: Obx(
+              () => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [...items.map((e) => _childWithOutline(context, e))],
+              ),
+            ),
+          )
+        : ContainerWidget(
+            borderColor: borderColor ?? colorScheme.onInverseSurface,
+            borderWidth: borderWidth ?? 1,
+            borderRadius: borderRadius ?? 10,
+            height: height ?? 55.dp(),
+            width: width ?? appDimen.screenWidth,
+            color: backgroundColor ?? colorScheme.onInverseSurface,
+            padding: padding ?? EdgeInsets.all(1.dp()),
+            child: Obx(
+              () => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [...items.map((e) => _childWidget(context, e))],
+              ),
+            ),
+          );
   }
 
   Widget _childWidget(BuildContext context, DictionaryModel model) {
@@ -85,6 +120,7 @@ class ButtonSwitchWidget extends StatelessWidget {
     final buttonWidget = ButtonWidget(
       backgroundColor: selectedButtonColor ?? colorScheme.surfaceBright,
       text: model.value,
+      height: height ?? 55.dp(),
       borderRadius: borderRadius ?? 10,
       textColor: selectedColor ?? colorScheme.surface,
       onTap: () {
@@ -98,5 +134,37 @@ class ButtonSwitchWidget extends StatelessWidget {
       flex: 1,
       child: (model.selected ? buttonWidget : textWidget),
     );
+  }
+
+  Widget _childWithOutline(BuildContext context, DictionaryModel model) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    final buttonWithOutlineWidget = ContainerWidget(
+      borderColor: selectedButtonColor ??
+          (model.selected ? colorScheme.primary : Colors.transparent),
+      color: selectedButtonColor ??
+          (model.selected ? colorScheme.primary : Colors.transparent),
+      height: height ?? 50.dp(),
+      width: appDimen.screenWidth,
+      borderRadius: 0,
+      onTap: () {
+        onTap?.call(model);
+        items.value =
+            items.map((e) => e.copyWith(selected: e.key == model.key)).toList();
+      },
+      child: Center(
+          child: Text(
+        model.value,
+        style: textTheme.bodyMedium?.copyWith(
+          fontSize: fontSize,
+          color: model.selected
+              ? (selectedColor ?? colorScheme.surface)
+              : (unSelectedTextColor ?? colorScheme.inverseSurface),
+        ),
+      )),
+    );
+
+    return Flexible(flex: 1, child: buttonWithOutlineWidget);
   }
 }

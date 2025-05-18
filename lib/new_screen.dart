@@ -1,11 +1,13 @@
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
+import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
@@ -51,7 +53,10 @@ class NewScreen extends BaseScreenStandard {
             },
             text: "Intro Scrren",
           ),
-          FileImagePickerWidget(url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",),
+          FileImagePickerWidget(
+            url:
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
+          ),
           CheckboxWidget(
             onChange: (v) {},
             text: "Check the Terms and Conditions",
@@ -88,14 +93,25 @@ class NewScreen extends BaseScreenStandard {
             },
           ),
           SizedBox(height: 20),
-          ButtonWidget.withOutLine(onTap: (){
-            PlacesPickerWidget.searchPlaces(context:  context,onSearch: (loc){
-              print("Loc -> ${loc.toJson().toString()}");
-            });
-          }, text: "Click me",),
+          ButtonWidget.withOutLine(
+            onTap: () {
+              PlacesPickerWidget.searchPlaces(
+                  context: context,
+                  onSearch: (loc) {
+                    print("Loc -> ${loc.toJson().toString()}");
+                  });
+            },
+            text: "Click me",
+          ),
+         // SizedBox(height: 20),
+         // ShimmerWidget.withGrid(),
           SizedBox(height: 20),
-          ShimmerWidget.withGrid(),
-
+          ButtonSwitchWidget.withOutline(
+            items: [
+              DictionaryModel(key: "Phone", value: "Phone", selected: true),
+              DictionaryModel(key: "Email", value: "Email"),
+            ].obs,
+          )
         ],
       ),
     );

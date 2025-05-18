@@ -67,8 +67,8 @@ ThemeData lightMode = ThemeData(
     error: redColor,
 
     ///Surface --> [surface] and [inverseSurface] should be two contrasting colors
-    surface: darkSurfaceColor,
-    inverseSurface: whiteColor,
+    surface: whiteColor,
+    inverseSurface: darkSurfaceColor,
     surfaceDim: darkColor,
     surfaceBright: dividerColor,
 
