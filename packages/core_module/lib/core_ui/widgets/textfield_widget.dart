@@ -29,6 +29,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
   final Color? focusColor;
+  final Color? countryDividerColor;
   final Color? countryDropDownIconColor;
   final Color? counterColor;
   final Color? unFocusColor;
@@ -93,6 +94,7 @@ class TextFieldWidget extends StatelessWidget {
   })  : obscureText = null,
         hasCountryPicker = false,
         inputFormatters = null,
+        countryDividerColor = null,
         pickerRightMargin = null,
         countrySearchTextStyle = null,
         countryTextStyle = null,
@@ -150,7 +152,7 @@ class TextFieldWidget extends StatelessWidget {
     this.countryPickerType,
     this.prefixIcon,
     this.counterColor,
-    this.counterStyle,
+    this.counterStyle, this.countryDividerColor,
   })  : obscureText = null,
         keyboardType = TextInputType.phone,
         inputFormatters = [FilteringTextInputFormatter.digitsOnly],
@@ -195,6 +197,7 @@ class TextFieldWidget extends StatelessWidget {
         countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
         countryWidgetWidth = null,
+        countryDividerColor = null,
         countrySearchHintText = null,
         countryWidgetTextStyle = null,
         countrySearchTextStyle = null,
@@ -364,6 +367,7 @@ class TextFieldWidget extends StatelessWidget {
                     countryPickerType:
                         countryPickerType ?? CountryPickerType.modalStyle,
                     searchHint: countrySearchHintText,
+                    dividerColor: countryDividerColor,
                     phoneCodeTextStyle: phoneCodeTextStyle,
                     modalTitleTextStyle: modalTitleTextStyle,
                   );
