@@ -1,4 +1,6 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/enum/country_picker_type.dart';
+import 'package:core_module/core/extensions/color_extension.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
@@ -10,6 +12,7 @@ import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
+import 'package:core_module/core_ui/widgets/pin_entry_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
@@ -47,19 +50,42 @@ class NewScreen extends BaseScreenStandard {
           // ShimmerWidget.withList(length: 5),
           TextButtonWidget.withTextOnly(
             onTap: () {
-              navUtils.fireLogOut();
+              snackBarSnippet.showCountdownSnackBar(context,
+                message: "Now we are ministering the widget tree",
+                // showProgressIndicator: true,
+              );
             },
             text: "Intro Scrren",
           ),
-          FileImagePickerWidget(url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",),
+          FileImagePickerWidget(
+            url:
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
+          ),
           CheckboxWidget(
-            onChange: (v) {},
+            checkColor: HexColor.fromHex("0D4A59"),
+            onChange: (v) {
+              debugPrint(
+                  "COLOR ${HexColor.fromHex("0D4A59").getClosestColorName()}");
+            },
             text: "Check the Terms and Conditions",
           ),
-          TextFieldWidget(
-            hintText: 'Enter password',
-            labelText: 'Password',
-            maxLength: 10,
+          TextFieldWidget.withPhoneNumber(
+            hintText: 'Enter phone number',
+            labelText: 'Phone Number',
+            hasCountryPicker: true,
+            countryWidgetHintText: "+1",
+            countryPickerType: CountryPickerType.modalStyle,
+            onCountrySelected: (c) {
+              print("SE --- ${c?.toJson().toString()}");
+            },
+          ),
+          SizedBox(height: 20),
+          PinEntryWidget(
+            onCodeSubmitted: (d) {
+              print("Code is over here => $d");
+            },
+            codeLength: 6,
+            boxDecor: false,
           ),
           SizedBox(height: 20),
           TabBarWidget(
@@ -88,14 +114,18 @@ class NewScreen extends BaseScreenStandard {
             },
           ),
           SizedBox(height: 20),
-          ButtonWidget.withOutLine(onTap: (){
-            PlacesPickerWidget.searchPlaces(context:  context,onSearch: (loc){
-              print("Loc -> ${loc.toJson().toString()}");
-            });
-          }, text: "Click me",),
+          ButtonWidget.withOutLine(
+            onTap: () {
+              PlacesPickerWidget.searchPlaces(
+                  context: context,
+                  onSearch: (loc) {
+                    print("Loc -> ${loc.toJson().toString()}");
+                  });
+            },
+            text: "Click me",
+          ),
           SizedBox(height: 20),
           ShimmerWidget.withGrid(),
-
         ],
       ),
     );

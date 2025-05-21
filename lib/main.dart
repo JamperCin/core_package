@@ -3,9 +3,11 @@ import 'package:core_module/core/app/app_style.dart';
 import 'package:core_module/core/app/app_theme.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
+import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module_package/login_screen.dart';
@@ -59,6 +61,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final RxList<DictionaryModel> _items = <DictionaryModel>[
+    DictionaryModel(key: "key1", value: "value1"),
+    DictionaryModel(key: "key2", value: "value2", selected: true),
+    DictionaryModel(key: "key3", value: "value3"),
+    DictionaryModel(key: "key4", value: "value4"),
+  ].obs;
 
   void _incrementCounter() {
     // PlacesPickerWidget.searchPlaces(
@@ -98,11 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Padding(
-          padding:  EdgeInsets.all(20.dp()),
+          padding: EdgeInsets.all(20.dp()),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               Text(
+              Text(
                 "counter counts here",
                 style: labelSmallTextLightModeStyle,
               ),
@@ -118,7 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   navUtils.fireTargetHome();
                 },
-              )
+              ),
+              SizedBox(height: 20.dp()),
+              ButtonSwitchWidget(
+                items: _items,
+                onTap: (model) {
+                  print("model --> ${model.value}");
+                },
+              ),
             ],
           ),
         ),
