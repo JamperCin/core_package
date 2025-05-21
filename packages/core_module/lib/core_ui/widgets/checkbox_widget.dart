@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ class CheckboxWidget extends StatelessWidget {
   final TextStyle? style;
   final Color? activeColor;
   final Color? checkColor;
+  final double? scaleSize;
   final Color? focusColor;
   final Color? checkedValue;
   final Color? unCheckedValue;
@@ -28,7 +30,7 @@ class CheckboxWidget extends StatelessWidget {
     this.checkColor,
     this.focusColor,
     this.checkedValue,
-    this.unCheckedValue,
+    this.unCheckedValue, this.scaleSize,
   });
 
   @override
@@ -46,23 +48,26 @@ class CheckboxWidget extends StatelessWidget {
         children: [
           Flexible(
             flex: 0,
-            child: Checkbox.adaptive(
-              activeColor: activeColor ?? colorScheme.primary,
-              checkColor: checkColor ?? colorScheme.tertiary,
-              focusColor: focusColor ?? colorScheme.secondary,
-              side: BorderSide(
-                color: isChecked.value
-                    ? (checkedValue ?? colorScheme.primary)
-                    : (unCheckedValue ?? colorScheme.inverseSurface),
-                width: 1,
+            child: Transform.scale(
+              scale: scaleSize ?? 1.5,
+              child: Checkbox.adaptive(
+                activeColor: activeColor ?? colorScheme.primary,
+                checkColor: checkColor ?? colorScheme.tertiary,
+                focusColor: focusColor ?? colorScheme.secondary,
+                side: BorderSide(
+                  color: isChecked.value
+                      ? (checkedValue ?? colorScheme.primary)
+                      : (unCheckedValue ?? colorScheme.inverseSurface),
+                  width: 1,
+                ),
+                value: isChecked.value,
+                onChanged: (value) {
+                  if (enable) {
+                    isChecked.value = value!;
+                    onChange(value);
+                  }
+                },
               ),
-              value: isChecked.value,
-              onChanged: (value) {
-                if (enable) {
-                  isChecked.value = value!;
-                  onChange(value);
-                }
-              },
             ),
           ),
           if (text.isNotEmpty)
