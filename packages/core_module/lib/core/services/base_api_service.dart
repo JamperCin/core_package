@@ -193,7 +193,13 @@ class BaseApiService {
           snackBarSnippet.snackBarError(error);
         }
 
-        return null;
+        return json is Map
+            ? parser != null
+            ? parser(json as Map<String, dynamic>)
+            : json as Map<String, dynamic>
+            : parser != null
+            ? parser(json)
+            : json;
       }
     } catch (e) {
       debugPrint("Error $e");
