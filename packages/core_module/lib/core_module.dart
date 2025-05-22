@@ -15,6 +15,7 @@ export 'package:get/get.dart';
 export 'package:uuid/uuid.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:shared_preferences/shared_preferences.dart';
+export 'package:flutter_animator/flutter_animator.dart';
 
 class CoreModule {
   static CoreModule? _instance;
