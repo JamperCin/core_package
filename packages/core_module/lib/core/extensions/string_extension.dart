@@ -10,4 +10,7 @@ extension StringExtension on String {
     return '*' * (length - numberOfLength) + substring(length - numberOfLength);
   }
 
+  String toDecimalPlaces({int dec = 2}) {
+    return toDouble().toStringAsFixed(dec);
+  }
 }

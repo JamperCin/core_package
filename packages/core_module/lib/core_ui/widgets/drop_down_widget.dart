@@ -14,10 +14,12 @@ class DropDownWidget<T> extends StatelessWidget {
   final double? horizontalPadding;
   final double? underlineThickness;
   final double? iconSize;
+  final double? borderRadius;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Color? borderColor;
   final Color? iconColor;
+  final Color? backgroundColor;
   final Color? underlineColor;
   final TextStyle? textStyle;
 
@@ -36,7 +38,7 @@ class DropDownWidget<T> extends StatelessWidget {
     this.iconColor,
     this.underlineColor,
     this.elevation,
-    this.underlineThickness, this.onItemSelected,
+    this.underlineThickness, this.onItemSelected, this.borderRadius, this.backgroundColor,
   });
 
   @override
@@ -49,6 +51,8 @@ class DropDownWidget<T> extends StatelessWidget {
           EdgeInsets.symmetric(horizontal: horizontalPadding ?? 10.dp()),
       height: height ?? 40.dp(),
       margin: margin ?? EdgeInsets.only(right: 5.dp()),
+      borderRadius: borderRadius ?? 10.dp(),
+      color: backgroundColor ?? colorScheme.surface,
       borderColor: borderColor ?? colorScheme.primary,
       child: Obx(
         () => DropdownButton<T>(
