@@ -4,4 +4,10 @@ extension StringExtension on String {
     return  double.parse(this);
   }
 
+
+  String maskNumber({int numberOfLength = 4}) {
+    if (length <= numberOfLength) return this;
+    return '*' * (length - numberOfLength) + substring(length - numberOfLength);
+  }
+
 }
