@@ -229,21 +229,31 @@ class BaseApiService {
   ///and retrieving the list from the 'data' param
   Future<List<T>> getListRequest<T>({
     required String api,
-    required String key,
-    String? objectKey,
+    String key = 'data',
+    String? secondaryKey,
     bool showToast = false,
     bool print = true,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(Map<String, dynamic>) parser,
     Map<String, dynamic>? param,
+    Map<String, String>? headers,
   }) async {
     final results = await getRequest<List<T>>(
             api: api,
             param: param,
             print: print,
             showToast: showToast,
+            headers: headers,
             parser: (json) {
-              final listMap = json[objectKey ?? 'data'][key] as List;
-              return [...listMap.map((e) => fromJson(e))];
+              final objectWithList = (json[key] != null && json[key] is List) ? json[key] as List : null;
+              if(objectWithList != null) {
+                return [...objectWithList.map((e) => parser(e))];
+              }
+
+              if(secondaryKey != null && json[key] != null && json[key][secondaryKey] != null){
+                final inDepthObjectWithList = json[key][secondaryKey]  is List ? json[key][secondaryKey]  as List : null;
+                return (inDepthObjectWithList != null) ?  [...inDepthObjectWithList.map((e) => parser(e))] : [];
+              }
+              return [];
             }) ??
         [];
     return results;
