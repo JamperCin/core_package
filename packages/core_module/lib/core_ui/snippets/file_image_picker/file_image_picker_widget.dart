@@ -15,6 +15,8 @@ import '../../widgets/container_widget.dart';
 class FileImagePickerWidget extends StatelessWidget {
   RxBool isFileUploading = false.obs;
   String? url;
+  String? api;
+  String? host;
   String? cameraAsset;
   double? radius;
   double? containerSize;
@@ -23,12 +25,14 @@ class FileImagePickerWidget extends StatelessWidget {
   Color? buttonBackgroundColor;
   Color? borderColor;
   Color? iconColor;
-  Future<String> Function(File)? parser;
+  Future<String?> Function(File)? parser;
+  String Function(dynamic)? apiParser;
   Function(String)? onFileUploaded;
 
   FileImagePickerWidget({
     super.key,
     this.url,
+    this.api,
     this.radius,
     this.cameraAsset,
     this.iconColor,
@@ -39,6 +43,7 @@ class FileImagePickerWidget extends StatelessWidget {
     this.parser,
     this.containerSize,
     this.onFileUploaded,
+    this.apiParser,
   });
 
   @override
@@ -168,9 +173,15 @@ class FileImagePickerWidget extends StatelessWidget {
     debugPrint("File == ${file.path}");
     isFileUploading.value = true;
     File newFile = File(file.path);
-    url = parser != null  ? await parser!(newFile) : await FileUploadApiService().uploadFile(newFile);
+    url = parser != null
+        ? await parser!(newFile)
+        : await FileUploadApiService().uploadFile<String>(
+            newFile,
+            parser: apiParser,
+            api: api,
+          );
     isFileUploading.value = false;
-    if(onFileUploaded != null && url != null && url!.isNotEmpty) {
+    if (onFileUploaded != null && url != null && url!.isNotEmpty) {
       onFileUploaded!(url ?? '');
     }
   }

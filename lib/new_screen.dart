@@ -3,6 +3,7 @@ import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/core/services/file_upload_service/file_upload_api_services.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
@@ -51,9 +52,20 @@ class NewScreen extends BaseScreenStandard {
             onTap: () {
               navUtils.fireLogOut();
             },
-            text: "Intro Scrren",
+            text: "Intro Screen",
           ),
           FileImagePickerWidget(
+            // parser: (file) async{
+            //   final upload =  FileUploadApiService().uploadFile<String>(
+            //     file,
+            //     parser: (json) {
+            //       return json['data']["url"] as String;
+            //     },
+            //   );
+            //
+            //   return upload;
+            // },
+            apiParser: (json) => json['data']["url"] as String,
             url:
                 "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
           ),
@@ -103,8 +115,8 @@ class NewScreen extends BaseScreenStandard {
             },
             text: "Click me",
           ),
-         // SizedBox(height: 20),
-         // ShimmerWidget.withGrid(),
+          // SizedBox(height: 20),
+          // ShimmerWidget.withGrid(),
           SizedBox(height: 20),
           ButtonSwitchWidget.withOutline(
             items: [

@@ -18,6 +18,7 @@ class DropDownWidget<T> extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final Color? borderColor;
+  final Color? dropDownColor;
   final Color? iconColor;
   final Color? backgroundColor;
   final Color? underlineColor;
@@ -38,7 +39,11 @@ class DropDownWidget<T> extends StatelessWidget {
     this.iconColor,
     this.underlineColor,
     this.elevation,
-    this.underlineThickness, this.onItemSelected, this.borderRadius, this.backgroundColor,
+    this.underlineThickness,
+    this.onItemSelected,
+    this.borderRadius,
+    this.backgroundColor,
+    this.dropDownColor,
   });
 
   @override
@@ -70,9 +75,10 @@ class DropDownWidget<T> extends StatelessWidget {
             height: underlineThickness ?? 0,
             color: underlineColor ?? Colors.transparent,
           ),
+          dropdownColor: dropDownColor,
           onChanged: (T? newValue) {
             selectedItem.value = newValue as T;
-            if(onItemSelected != null)onItemSelected!(selectedItem.value);
+            if (onItemSelected != null) onItemSelected!(selectedItem.value);
           },
           items: list.map<DropdownMenuItem<T>>((T value) {
             return DropdownMenuItem<T>(

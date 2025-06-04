@@ -16,22 +16,20 @@ class FileUploadApiService extends BaseApiService
   }
 
   @override
-  Future<String> uploadFile<T>(
+  Future<T?> uploadFile<T>(
     File file, {
     MediaType? mediaType,
     String? host,
     String? api,
     T Function(dynamic)? parser,
   }) async {
-    final url = await _apiService?.postMultiPartRequest<String>(
-          api: api ?? config.getFileUploadApi(),
-          file: file,
-          host: host,
-          parser: (json) {
-            return json['data']['url'] as String;
-          },
-        ) ??
-        "";
+    T? url = await _apiService?.postMultiPartRequest<T>(
+      api: api ?? config.getFileUploadApi(),
+      file: file,
+      host: host,
+      mediaType: mediaType,
+      parser: parser,
+    );
 
     return url;
   }
