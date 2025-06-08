@@ -45,13 +45,13 @@ class NetworkImageWidget extends StatelessWidget {
     this.radius,
     this.fit,
     this.heroTag,
-    this.borderRadius,
     this.childOnOverlay,
     this.setOverlay = false,
     this.url,
     this.placeHolderWidget,
   })  : isCircular = true,
         height = 0,
+        borderRadius = null,
         width = 0;
 
   @override
@@ -69,7 +69,9 @@ class NetworkImageWidget extends StatelessWidget {
         onTap: onTap,
         child: placeHolderWidget ??
             AssetImageWidget(
-              asset: isCircular ? icProfileCircle : (placeholder ?? icProfile),
+              asset: isCircular
+                  ? (placeholder ?? icProfileCircle)
+                  : (placeholder ?? icProfile),
               height: newHeight * 2,
               width: newWidth * 2,
             ),

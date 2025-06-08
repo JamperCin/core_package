@@ -28,6 +28,12 @@ class FileImagePickerWidget extends StatelessWidget {
   Future<String?> Function(File)? parser;
   String Function(dynamic)? apiParser;
   Function(String)? onFileUploaded;
+  final String? placeholder;
+  final String? heroTag;
+  final BoxFit? fit;
+  final Widget? childOnOverlay;
+  final Widget? placeHolderWidget;
+  final bool setOverlay;
 
   FileImagePickerWidget({
     super.key,
@@ -44,6 +50,12 @@ class FileImagePickerWidget extends StatelessWidget {
     this.containerSize,
     this.onFileUploaded,
     this.apiParser,
+    this.placeholder,
+    this.heroTag,
+    this.fit,
+    this.childOnOverlay,
+    this.placeHolderWidget,
+    this.setOverlay = false,
   });
 
   @override
@@ -70,6 +82,12 @@ class FileImagePickerWidget extends StatelessWidget {
             child: NetworkImageWidget.withCircular(
               url: url,
               radius: radius ?? 60.dp(),
+              placeholder: placeholder,
+              heroTag: heroTag,
+              fit: fit,
+              placeHolderWidget: placeHolderWidget,
+              childOnOverlay: childOnOverlay,
+              setOverlay: setOverlay,
             ),
           ),
           Align(
