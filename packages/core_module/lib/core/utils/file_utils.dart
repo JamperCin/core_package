@@ -26,15 +26,33 @@ class FileUtils {
 
   Future<List<T>> fetchList<T>({
     required String path,
-    String? objectKey,
+    String? secondaryKey,
     required String key,
     required dynamic Function(dynamic) parser,
   }) async {
     final results = await loadResources<List<T>>(
         path: path,
-        parser: (data) {
-          final listMap = ((objectKey != null ? data[objectKey] : data ) as Map<String, dynamic>)[key] as List;
-          return [...listMap.map((e) => parser(e))];
+        parser: (json) {
+          final objectWithList = (json[key] != null && json[key] is List)
+              ? json[key] as List
+              : null;
+          if (objectWithList != null) {
+            return [...objectWithList.map((e) => parser(e))];
+          }
+
+          if (secondaryKey != null &&
+              json[key] != null &&
+              json[key][secondaryKey] != null) {
+            final inDepthObjectWithList = json[key][secondaryKey] is List
+                ? json[key][secondaryKey] as List
+                : null;
+            return (inDepthObjectWithList != null)
+                ? [...inDepthObjectWithList.map((e) => parser(e))]
+                : [];
+          }
+          return [];
+          // final listMap = ((objectKey != null ? data[objectKey] : data ) as Map<String, dynamic>)[key] as List;
+          // return [...listMap.map((e) => parser(e))];
         });
     return results;
   }
