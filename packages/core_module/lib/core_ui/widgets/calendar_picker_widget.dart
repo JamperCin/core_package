@@ -78,7 +78,7 @@ class CalendarPickerWidget extends StatelessWidget {
               children: [
                 TextButtonWidget(
                   onTap: () => navUtils.fireBack(),
-                  textColor: cancelButtonColor ?? colorScheme.surface,
+                  textColor: cancelButtonColor ?? colorScheme.inverseSurface,
                   text: cancelButtonText,
                   style: cancelButtonTextStyle,
                 ),
@@ -88,7 +88,7 @@ class CalendarPickerWidget extends StatelessWidget {
                     navUtils.fireBack();
                     onSelectDate?.call(_selectedDate.value);
                   },
-                  textColor: okButtonColor ?? colorScheme.surface,
+                  textColor: okButtonColor ?? colorScheme.inverseSurface,
                   text: okButtonText,
                   style: okButtonTextStyle,
                 ),
