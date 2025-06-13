@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: lightMode,
-      darkTheme: darkMode,
+      //darkTheme: darkMode,
       initialRoute: '/',
       getPages: [
         GetPage(name: '/LoginScreen', page: ()=> LoginScreen()),

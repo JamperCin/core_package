@@ -49,7 +49,7 @@ class CheckboxWidget extends StatelessWidget {
           Flexible(
             flex: 0,
             child: Transform.scale(
-              scale: scaleSize ?? 1.5,
+              scale: scaleSize ?? 1.2,
               child: Checkbox.adaptive(
                 activeColor: activeColor ?? colorScheme.primary,
                 checkColor: checkColor ?? colorScheme.tertiary,

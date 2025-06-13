@@ -10,6 +10,7 @@ import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
+import 'package:core_module/core_ui/widgets/calendar_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
@@ -50,10 +51,13 @@ class NewScreen extends BaseScreenStandard {
           // ShimmerWidget.withList(length: 5),
           TextButtonWidget.withTextOnly(
             onTap: () {
-              navUtils.fireLogOut();
+              CalendarPickerWidget.show(context: context,onSelectDate: (date){
+                debugPrint("Date -> $date");
+              },);
             },
             text: "Intro Screen",
           ),
+          CalendarPickerWidget(),
           FileImagePickerWidget(
             // parser: (file) async{
             //   final upload =  FileUploadApiService().uploadFile<String>(

@@ -96,7 +96,7 @@ ThemeData lightMode = ThemeData(
 
     ///Surface
 
-    onSurface: whiteColor,
+    onSurface: darkColor,
     onInverseSurface: darkSurfaceVariant,
 
     ///Inverse surface

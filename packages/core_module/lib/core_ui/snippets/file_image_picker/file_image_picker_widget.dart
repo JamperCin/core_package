@@ -116,6 +116,9 @@ class FileImagePickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(!(parser != null && apiParser != null),
+    'Both parser and apiParser cannot be present at the same time');
+
     return Obx(() => _isFileUploading.value
         ? LoaderWidget.withCircularIndicator(radius: radius ?? 60.dp())
         : _imageWidget(context));
