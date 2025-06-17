@@ -41,3 +41,4 @@ const icUser = "$_rootPath/ic_user.png";
 const icWarn = "$_rootPath/ic_warn.png";
 const icProfileCircle = "$_rootPath/ic_profile_circle.svg";
 const icMobile = "$_rootPath/ic_mobile.svg";
+const icCancel = "$_rootPath/ic_cancel.svg";
