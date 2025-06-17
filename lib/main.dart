@@ -1,14 +1,14 @@
 import 'package:core_module/core/app/app_dimens.dart';
-import 'package:core_module/core/app/app_style.dart';
-import 'package:core_module/core/app/app_theme.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
-import 'package:core_module/core/res/assets_path.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module_package/login_screen.dart';
+import 'package:core_module_package/res/app_style.dart';
+import 'package:core_module_package/res/app_theme.dart';
+import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
 
 import 'new_screen.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-   appDimen = AppDimens(context);
+   appDimen = AppDimens(context, constantMultiplier: 1.75);
 
     return GetMaterialApp(
       title: 'Flutter Demo',

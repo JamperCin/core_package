@@ -1,9 +1,6 @@
-import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
-import 'package:core_module/core/res/assets_path.dart';
-import 'package:core_module/core/services/file_upload_service/file_upload_api_services.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
@@ -12,17 +9,14 @@ import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/calendar_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
-import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
-import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
-import 'package:core_module/core_ui/widgets/textfield_widget.dart';
-import 'package:core_module_package/intro_screen.dart';
 import 'package:flutter/material.dart';
 
 class NewScreen extends BaseScreenStandard {
+
   @override
   bool showAppBar() {
     return true;
@@ -82,9 +76,9 @@ class NewScreen extends BaseScreenStandard {
             labelText: 'Password',
             maxLength: 10,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TabBarWidget(
-            tabs: [
+            tabs: const [
               Tab(
                 // icon: Icon(Icons.ac_unit_outlined),
                 text: "Summary",
@@ -100,7 +94,7 @@ class NewScreen extends BaseScreenStandard {
             ],
             onTap: (int) {},
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           DropDownWidget<IntroModel>(
             selectedItem: list.first.obs,
             list: list,
@@ -108,7 +102,7 @@ class NewScreen extends BaseScreenStandard {
               return Text(v.mainText);
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ButtonWidget.withOutLine(
             onTap: () {
               PlacesPickerWidget.searchPlaces(
@@ -121,7 +115,7 @@ class NewScreen extends BaseScreenStandard {
           ),
           // SizedBox(height: 20),
           // ShimmerWidget.withGrid(),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ButtonSwitchWidget.withOutline(
             items: [
               DictionaryModel(key: "Phone", value: "Phone", selected: true),
@@ -134,8 +128,8 @@ class NewScreen extends BaseScreenStandard {
   }
 
   final list = [
-    IntroModel(mainText: "2025"),
-    IntroModel(mainText: "2024"),
-    IntroModel(mainText: "2023"),
+    const IntroModel(mainText: "2025"),
+    const IntroModel(mainText: "2024"),
+    const IntroModel(mainText: "2023"),
   ];
 }

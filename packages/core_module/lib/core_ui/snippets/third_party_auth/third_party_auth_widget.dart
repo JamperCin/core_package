@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/src/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 
 import '../../widgets/icon_button_widget.dart';

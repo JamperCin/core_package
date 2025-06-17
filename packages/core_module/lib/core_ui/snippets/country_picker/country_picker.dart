@@ -7,7 +7,7 @@ import 'package:core_module/core_ui/snippets/country_picker/res/country_codes.da
 import 'package:flutter/material.dart';
 
 import '../../../core/enum/country_picker_type.dart';
-import '../../../core/res/assets_path.dart';
+import '../../../src/assets_path.dart';
 import '../../../core/utils/file_utils.dart';
 import '../../widgets/bottom_sheet_widget.dart';
 import '../../widgets/divider_widget.dart';

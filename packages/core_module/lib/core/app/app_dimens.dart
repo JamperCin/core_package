@@ -67,7 +67,7 @@ class AppDimens {
 
   double dimen(double value) {
     double multiplier = _getMultiplier(value);
-    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * (_constantMultiplier ?? 1.9));
+    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * (_constantMultiplier ?? 1.8));
    // debugPrint("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
     return h;
   }
