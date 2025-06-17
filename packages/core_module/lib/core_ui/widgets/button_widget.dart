@@ -97,7 +97,9 @@ class ButtonWidget extends StatelessWidget {
           side: WidgetStateProperty.all(
             BorderSide(
               width: borderWidth ?? 1,
-              color: borderColor ?? backgroundColor ?? colorScheme.primary,
+              color: borderColor ?? (enabled ? (backgroundColor ??
+                  colorScheme.primary) : disabledColor ??
+                  colorScheme.primaryFixed),
             ),
           ),
           shape: textTheme.style?.shape ?? WidgetStateProperty.all(

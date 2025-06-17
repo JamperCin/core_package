@@ -1,8 +1,8 @@
-import 'package:core_module/core/app/app_module_colors.dart';
+import 'package:core_module/src/app_module_colors.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:core_module/core/app/app_style.dart';
+import 'package:core_module/src/app_style.dart';
 
 import '../widgets/Count_down_snack_bar_content.dart';
 

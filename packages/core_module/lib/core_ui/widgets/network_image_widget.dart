@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core_module/core/app/app_module_colors.dart';
+import 'package:core_module/src/app_module_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/src/assets_path.dart';

@@ -1,6 +1,7 @@
-import 'package:core_module/core/app/app_module_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:core_module/core/app/app_style.dart';
+
+import 'app_colors.dart';
+import 'app_style.dart';
 
 
 ThemeData lightMode = ThemeData(
