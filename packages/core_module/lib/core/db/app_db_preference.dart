@@ -61,12 +61,12 @@ class AppDbPreference {
     List<T> list = [];
     try {
       list = MapUtils().stringToObject<List<T>>(
-        getString(key),
+            getString(key),
             (json) {
-          var j = json["list"] as List<dynamic>;
-          return j.map<T>((p) => parser(p)).toList();
-        },
-      ) ??
+              var j = json["list"] as List<dynamic>;
+              return j.map<T>((p) => parser(p)).toList();
+            },
+          ) ??
           [];
     } catch (e) {
       return list;
@@ -75,20 +75,25 @@ class AppDbPreference {
     return list;
   }
 
-  void saveItem<T extends Object>(T item, String key) {
+  void saveItem<T extends Object>({required T item, required String key}) {
     String place = MapUtils().convertEncode(item);
     setString(key, place);
   }
 
-  Future<T?> getItem<T>({required String key, required T Function(dynamic) parser}) async {
+  Future<T> getItem<T>({
+    required String key,
+    required T Function(dynamic) parser,
+    required T defaultValue,
+  }) async {
     try {
       return MapUtils().stringToObject(getString(key), (json) {
-        return parser(json);
-      });
+            return parser(json);
+          }) ??
+          defaultValue;
     } catch (e) {
       debugPrint("Error $e");
     }
-    return null;
+    return defaultValue;
   }
 
   void setToken(String token) {
