@@ -4,7 +4,6 @@ import 'package:core_module/core/model/local/intro_model.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
 import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
-import 'package:core_module/core_ui/snippets/places_search/places_picker_widget.dart';
 import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/calendar_picker_widget.dart';
@@ -105,11 +104,11 @@ class NewScreen extends BaseScreenStandard {
           const SizedBox(height: 20),
           ButtonWidget.withOutLine(
             onTap: () {
-              PlacesPickerWidget.searchPlaces(
-                  context: context,
-                  onSearch: (loc) {
-                    print("Loc -> ${loc.toJson().toString()}");
-                  });
+              // PlacesPickerWidget.searchPlaces(
+              //     context: context,
+              //     onSearch: (loc) {
+              //       print("Loc -> ${loc.toJson().toString()}");
+              //     });
             },
             text: "Click me",
           ),
