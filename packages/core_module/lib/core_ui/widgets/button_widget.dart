@@ -18,7 +18,7 @@ class ButtonWidget extends StatelessWidget {
   final double? assetPadding;
   final double? assetSize;
   final String? asset;
-  final double? borderRadius;
+  double? borderRadius;
   final double? width;
   final double? borderWidth;
   final bool enabled;
@@ -74,6 +74,24 @@ class ButtonWidget extends StatelessWidget {
     final textTheme = Theme.of(context).elevatedButtonTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
+    final WidgetStateProperty<OutlinedBorder?>? shapeDefined;
+    if (borderRadius != null) {
+      shapeDefined = WidgetStateProperty.all(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius!),
+        ),
+      );
+    } else {
+      shapeDefined = textTheme.style?.shape ??
+          WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(borderRadius ?? 10),
+              ),
+            ),
+          );
+    }
+
     if (withOutline) {
       backgroundColor = backgroundColor ?? colorScheme.tertiary;
       borderColor = borderColor ?? colorScheme.primary;
@@ -82,9 +100,21 @@ class ButtonWidget extends StatelessWidget {
           color: textColor ?? borderColor ?? colorScheme.primary);
     }
 
+    final OutlinedBorder? shape = textTheme.style?.shape?.resolve({});
+    // If it's a RoundedRectangleBorder, extract the BorderRadius
+    BorderRadius? radius;
+    if (shape is RoundedRectangleBorder) {
+      radius = shape.borderRadius as BorderRadius?;
+    }
+    if (radius != null) {
+      borderRadius = borderRadius ?? radius.topRight.x;
+    }
+
     return SizedBox(
       width: width ?? appDimen.screenWidth,
-      height: height ?? appDimen.dimen(50),
+      height: height ??
+          textTheme.style?.maximumSize?.resolve(<WidgetState>{})?.height ??
+          55.dp(),
       child: ElevatedButton(
         onPressed: enabled ? onTap : () {},
         style: textTheme.style?.copyWith(
@@ -97,19 +127,13 @@ class ButtonWidget extends StatelessWidget {
           side: WidgetStateProperty.all(
             BorderSide(
               width: borderWidth ?? 1,
-              color: borderColor ?? (enabled ? (backgroundColor ??
-                  colorScheme.primary) : disabledColor ??
-                  colorScheme.primaryFixed),
+              color: borderColor ??
+                  (enabled
+                      ? (backgroundColor ?? colorScheme.primary)
+                      : disabledColor ?? colorScheme.primaryFixed),
             ),
           ),
-          shape: textTheme.style?.shape ?? WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(borderRadius ?? 10),
-                right: Radius.circular(borderRadius ?? 10),
-              ),
-            ),
-          ),
+          shape: shapeDefined,
         ),
         child: child ?? _buttonChild(context),
       ),
@@ -117,7 +141,6 @@ class ButtonWidget extends StatelessWidget {
   }
 
   Widget _buttonChild(BuildContext context) {
-    final textTheme = Theme.of(context).elevatedButtonTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
     return asset != null

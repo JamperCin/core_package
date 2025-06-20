@@ -13,6 +13,7 @@ import 'package:core_module/core_ui/snippets/snack_bar_snippet.dart';
 import 'package:flutter/cupertino.dart';
 export 'package:get/get.dart';
 export 'package:uuid/uuid.dart';
+export 'package:core_module/core/enum/env_type.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_animator/flutter_animator.dart';

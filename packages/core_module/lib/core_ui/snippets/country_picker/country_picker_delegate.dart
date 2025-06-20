@@ -18,8 +18,10 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
   final TextStyle? searchTextStyle;
   final String? searchHint;
   final Color? dividerColor;
+  final BuildContext context;
 
   CountryPickerDelegate({
+    required this.context,
     this.textStyle,
     this.searchTextStyle,
     this.searchHint,
@@ -44,10 +46,10 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
   @override
   TextStyle? get searchFieldStyle =>
       searchTextStyle ??
-      Theme.of(Get.context!)
+      Theme.of(context)
           .textTheme
           .bodyMedium
-          ?.copyWith(color: Theme.of(Get.context!).colorScheme.tertiary);
+          ?.copyWith(color: Theme.of(context).colorScheme.tertiary);
 
   @override
   double cardElevation() {
@@ -123,8 +125,8 @@ class CountryPickerDelegate extends BaseSearchStandard<CountryModel> {
               Expanded(
                 child: Text(
                   CountryLocalizations.of(context)
-                      ?.countryName(countryCode: item.countryCode)
-                      ?.replaceAll(RegExp(r"\s+"), " ") ??
+                          ?.countryName(countryCode: item.countryCode)
+                          ?.replaceAll(RegExp(r"\s+"), " ") ??
                       item.name,
                   style: textStyle ?? textTheme.bodySmall,
                 ),

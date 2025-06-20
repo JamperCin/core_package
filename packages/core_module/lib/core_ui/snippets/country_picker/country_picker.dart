@@ -94,6 +94,7 @@ class CountryPicker {
     showSearch(
       context: context,
       delegate: CountryPickerDelegate(
+          context: context,
           textStyle: textStyle,
           searchHint: searchHint,
           searchTextStyle: searchTextStyle,
@@ -127,7 +128,8 @@ class CountryPicker {
       title: modalSearchTitle ?? 'Search Country',
       height: modalHeight ?? appDimen.screenHeight * 0.8,
       margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
-      titleStyle: modalTitleTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
+      titleStyle: modalTitleTextStyle ??
+          textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
       color: colorScheme.surface,
       subChild: Column(
         children: [
@@ -176,8 +178,10 @@ class CountryPicker {
       borderRadius: 30,
       controller: searchController,
       hintText: searchHint ?? 'Search Country...',
-      hintStyle: searchHintTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
-      style: searchTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      hintStyle: searchHintTextStyle ??
+          textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      style: searchTextStyle ??
+          textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
       backgroundColor: colorScheme.surface,
       borderColor: colorScheme.inverseSurface,
       unFocusColor: colorScheme.inverseSurface,
@@ -257,7 +261,9 @@ class CountryPicker {
                 width: 50,
                 child: Text(
                   '${isRtl ? '' : '+'}${item.phoneCode}${isRtl ? '+' : ''}',
-                  style: phoneCodeTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
+                  style: phoneCodeTextStyle ??
+                      textTheme.bodyMedium
+                          ?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
               SizedBox(width: 10.dp()),
@@ -267,7 +273,9 @@ class CountryPicker {
                           ?.countryName(countryCode: item.countryCode)
                           ?.replaceAll(RegExp(r"\s+"), " ") ??
                       item.name,
-                  style: textStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+                  style: textStyle ??
+                      textTheme.bodySmall
+                          ?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
             ],
