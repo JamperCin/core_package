@@ -49,6 +49,13 @@ class ListViewWidget<T> extends StatelessWidget {
               scrollController.position.maxScrollExtent &&
           isLoadingMore == false) {
         onLoadMore?.call();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        });
       }
     });
   }
@@ -57,6 +64,7 @@ class ListViewWidget<T> extends StatelessWidget {
     return (isLoadingMore ?? false)
         ? Column(
             children: [
+              Gap(20.dp()),
               loader ??
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
