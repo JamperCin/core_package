@@ -69,33 +69,35 @@ class CalendarPickerWidget extends StatelessWidget {
     BottomSheetWidget(
         context: context,
         color: backgroundColor ?? Theme.of(context).colorScheme.surface,
-        child: Column(
-          children: [
-            _singleCalendarWidget(context),
-            SizedBox(height: 20.dp()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButtonWidget(
-                  onTap: () => navUtils.fireBack(),
-                  textColor: cancelButtonColor ?? colorScheme.inverseSurface,
-                  text: cancelButtonText,
-                  style: cancelButtonTextStyle,
-                ),
-                SizedBox(height: 40.dp()),
-                TextButtonWidget(
-                  onTap: () {
-                    navUtils.fireBack();
-                    onSelectDate?.call(_selectedDate.value);
-                  },
-                  textColor: okButtonColor ?? colorScheme.inverseSurface,
-                  text: okButtonText,
-                  style: okButtonTextStyle,
-                ),
-                SizedBox(height: 20.dp()),
-              ],
-            )
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _singleCalendarWidget(context),
+              SizedBox(height: 20.dp()),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButtonWidget(
+                    onTap: () => navUtils.fireBack(),
+                    textColor: cancelButtonColor ?? colorScheme.inverseSurface,
+                    text: cancelButtonText,
+                    style: cancelButtonTextStyle,
+                  ),
+                  SizedBox(height: 40.dp()),
+                  TextButtonWidget(
+                    onTap: () {
+                      navUtils.fireBack();
+                      onSelectDate?.call(_selectedDate.value);
+                    },
+                    textColor: okButtonColor ?? colorScheme.inverseSurface,
+                    text: okButtonText,
+                    style: okButtonTextStyle,
+                  ),
+                  SizedBox(height: 20.dp()),
+                ],
+              )
+            ],
+          ),
         ));
   }
 
