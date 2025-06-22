@@ -1,5 +1,6 @@
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,13 +71,14 @@ class CalendarPickerWidget extends StatelessWidget {
 
     BottomSheetWidget(
       context: context,
-      height: height,
+      height: height ?? appDimen.screenHeight * 0.57,
       color: backgroundColor ?? Theme.of(context).colorScheme.surface,
       child: SingleChildScrollView(
         child: Column(
           children: [
+            Gap(10.dp()),
             _singleCalendarWidget(context),
-            SizedBox(height: 20.dp()),
+            Gap(5.dp()),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -98,7 +100,8 @@ class CalendarPickerWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 20.dp()),
               ],
-            )
+            ),
+            Gap(20.dp()),
           ],
         ),
       ),
