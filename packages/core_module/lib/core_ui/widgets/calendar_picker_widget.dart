@@ -11,6 +11,7 @@ class CalendarPickerWidget extends StatelessWidget {
   final BuildContext? context;
   final Function(DateTime)? onSelectDate;
   final Color? backgroundColor;
+  final double? height;
   final Color? okButtonColor;
   final Color? cancelButtonColor;
   final DateTime? startDate;
@@ -36,8 +37,8 @@ class CalendarPickerWidget extends StatelessWidget {
     this.cancelButtonText = "Cancel",
     this.okButtonTextStyle,
     this.cancelButtonTextStyle,
-  }): context = null;
-
+  })  : context = null,
+        height = null;
 
   CalendarPickerWidget.show({
     super.key,
@@ -50,6 +51,7 @@ class CalendarPickerWidget extends StatelessWidget {
     this.endDate,
     this.currentDate,
     this.numOfYearsBack,
+    this.height,
     this.okButtonText = "OK",
     this.cancelButtonText = "Cancel",
     this.okButtonTextStyle,
@@ -67,38 +69,40 @@ class CalendarPickerWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     BottomSheetWidget(
-        context: context,
-        color: backgroundColor ?? Theme.of(context).colorScheme.surface,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _singleCalendarWidget(context),
-              SizedBox(height: 20.dp()),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButtonWidget(
-                    onTap: () => navUtils.fireBack(),
-                    textColor: cancelButtonColor ?? colorScheme.inverseSurface,
-                    text: cancelButtonText,
-                    style: cancelButtonTextStyle,
-                  ),
-                  SizedBox(height: 40.dp()),
-                  TextButtonWidget(
-                    onTap: () {
-                      navUtils.fireBack();
-                      onSelectDate?.call(_selectedDate.value);
-                    },
-                    textColor: okButtonColor ?? colorScheme.inverseSurface,
-                    text: okButtonText,
-                    style: okButtonTextStyle,
-                  ),
-                  SizedBox(height: 20.dp()),
-                ],
-              )
-            ],
-          ),
-        ));
+      context: context,
+      height: height,
+      color: backgroundColor ?? Theme.of(context).colorScheme.surface,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _singleCalendarWidget(context),
+            SizedBox(height: 20.dp()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButtonWidget(
+                  onTap: () => navUtils.fireBack(),
+                  textColor: cancelButtonColor ?? colorScheme.inverseSurface,
+                  text: cancelButtonText,
+                  style: cancelButtonTextStyle,
+                ),
+                SizedBox(height: 40.dp()),
+                TextButtonWidget(
+                  onTap: () {
+                    navUtils.fireBack();
+                    onSelectDate?.call(_selectedDate.value);
+                  },
+                  textColor: okButtonColor ?? colorScheme.inverseSurface,
+                  text: okButtonText,
+                  style: okButtonTextStyle,
+                ),
+                SizedBox(height: 20.dp()),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _singleCalendarWidget(BuildContext context) {
