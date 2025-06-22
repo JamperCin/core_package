@@ -68,6 +68,7 @@ class CalendarPickerWidget extends StatelessWidget {
 
   void _showSingleCalendar(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     BottomSheetWidget(
       context: context,
@@ -96,7 +97,7 @@ class CalendarPickerWidget extends StatelessWidget {
                   },
                   textColor: okButtonColor ?? colorScheme.inverseSurface,
                   text: okButtonText,
-                  style: okButtonTextStyle,
+                  style: okButtonTextStyle ?? textTheme.bodyLarge,
                 ),
                 SizedBox(height: 20.dp()),
               ],
