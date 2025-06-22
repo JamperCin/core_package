@@ -55,19 +55,24 @@ class ListViewWidget<T> extends StatelessWidget {
 
   Widget _loadingMore(BuildContext context) {
     return (isLoadingMore ?? false)
-        ? loader ??
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LoaderWidget.withIndicator(radius: 20.dp()),
-                Gap(20.dp()),
-                Text(
-                  "Loading more ...",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                )
-              ],
-            )
+        ? Column(
+            children: [
+              loader ??
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LoaderWidget.withIndicator(radius: 20.dp()),
+                      Gap(20.dp()),
+                      Text(
+                        "Loading more ...",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      )
+                    ],
+                  ),
+              Gap(60.dp()),
+            ],
+          )
         : const SizedBox.shrink();
   }
 
