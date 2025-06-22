@@ -78,7 +78,7 @@ class ListViewWidget<T> extends StatelessWidget {
       shrinkWrap: true,
       controller: scrollController,
       padding: padding ??
-          EdgeInsets.symmetric(horizontal: 20.dp(), vertical: 20.dp()),
+          EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
       // itemCount: items.length,
       scrollDirection: Axis.vertical,
       children: withGridView
