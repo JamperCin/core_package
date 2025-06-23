@@ -14,6 +14,7 @@ class TabBarWidget extends StatefulWidget {
   final EdgeInsetsGeometry? indicatorPadding;
   final double? dividerHeight;
   final double? indicatorWeight;
+  final int initialIndex;
 
   const TabBarWidget({
     super.key,
@@ -30,6 +31,7 @@ class TabBarWidget extends StatefulWidget {
     this.indicatorPadding,
     this.dividerHeight,
     this.indicatorWeight,
+    this.initialIndex = 0,
   });
 
   @override
@@ -42,7 +44,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
 
   @override
   void initState() {
-    _tabController = TabController(length: widget.tabs.length, vsync: this);
+    _tabController = TabController(
+      length: widget.tabs.length,
+      vsync: this,
+      initialIndex: widget.initialIndex,
+    );
     super.initState();
   }
 
