@@ -105,6 +105,18 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomBarModel(text: 'Hello Im here', asset: icApple),
   ].obs;
 
+  Future<List<BottomBarModel>> _loadMore() async {
+    await Future.delayed(const Duration(seconds: 2));
+    List<BottomBarModel> bottomBarItems = [
+      BottomBarModel(text: 'Hello Im new in here - 1', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 2', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 3', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 4', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 5', asset: icSuccess),
+   ];
+    return bottomBarItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -123,32 +135,27 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Obx(
-        () => ListViewWidget<BottomBarModel>.withGridView(
-          items: bottomBarItems.value,
-          isLoadingMore: isLoadingMore.value,
-          onLoadMore: () async {
-            isLoadingMore.value = true;
-            await Future.delayed(const Duration(seconds: 2));
-            bottomBarItems.add(
-              BottomBarModel(text: 'Hello Im new in here', asset: icApple),
-            );
-            isLoadingMore.value = false;
-          },
-          parser: (item) {
-            return Column(
-              children: [
-                Text(item.text ?? ''),
-                Gap(20.dp()),
-                AssetImageWidget(
-                  asset: item.asset ?? '',
-                  height: 40.dp(),
-                  width: 40.dp(),
-                )
-              ],
-            );
-          },
-        ),
+      body: ListViewWidget<BottomBarModel>.withGridView(
+        items: bottomBarItems,
+        onLoadMore: _loadMore,
+        parser: (item) {
+          return Column(
+            children: [
+              Text(item.text ?? ''),
+              Gap(20.dp()),
+              AssetImageWidget(
+                asset: item.asset ?? '',
+                height: 40.dp(),
+                width: 40.dp(),
+              )
+            ],
+          );
+        },
+        onRefresh: () async {
+          // implement your pull-to-refresh logic here
+          bottomBarItems.insert(
+              0, BottomBarModel(text: 'Refreshed Item', asset: icPickUp));
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
