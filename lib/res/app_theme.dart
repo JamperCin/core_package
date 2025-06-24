@@ -1,3 +1,5 @@
+import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
@@ -35,11 +37,11 @@ ThemeData lightMode = ThemeData(
       textStyle: normalButtonLightModeStyle,
       disabledForegroundColor: disabledGreenColor,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.horizontal(
-          left: Radius.circular(10),
-          right: Radius.circular(10),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
         ),
       ),
+      maximumSize: Size(appDimen.screenWidth, 55.dp()),
     ),
   ),
   textButtonTheme: TextButtonThemeData(

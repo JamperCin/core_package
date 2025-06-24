@@ -1,9 +1,11 @@
 import 'package:core_module/core/app/app_dimens.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core/model/local/bottom_bar_model.dart';
 import 'package:core_module/core_module.dart';
+import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
-import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
+import 'package:core_module/core_ui/widgets/list_view_widget.dart';
 import 'package:core_module_package/login_screen.dart';
 import 'package:core_module_package/res/app_style.dart';
 import 'package:core_module_package/res/app_theme.dart';
@@ -15,7 +17,7 @@ import 'new_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.delayed(const Duration(seconds: 1));
-  await  CoreModule().init(
+  await CoreModule().init(
     envPath: 'assets/data/env.json',
     homePageScreen: 'NewScreen',
     loginScreen: 'LoginScreen',
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-   appDimen = AppDimens(context, constantMultiplier: 1.75);
+    appDimen = AppDimens(context, constantMultiplier: 1.75);
 
     return GetMaterialApp(
       title: 'Flutter Demo',
@@ -39,8 +41,8 @@ class MyApp extends StatelessWidget {
       //darkTheme: darkMode,
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/LoginScreen', page: ()=> LoginScreen()),
-        GetPage(name: '/NewScreen', page: ()=> NewScreen()),
+        GetPage(name: '/LoginScreen', page: () => LoginScreen()),
+        GetPage(name: '/NewScreen', page: () => NewScreen()),
       ],
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -75,6 +77,34 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  RxBool isLoadingMore = false.obs;
+  RxList<BottomBarModel> bottomBarItems = [
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+  ].obs;
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -93,33 +123,31 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Padding(
-          padding:  EdgeInsets.all(20.dp()),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-               Text(
-                "counter counts here",
-                style: labelSmallTextLightModeStyle,
-              ),
-              ShimmerWidget(
-                child: Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ),
-              ButtonWidget.withOutLine(
-                text: 'Click Here ',
-                asset: icApple,
-                onTap: () {
-                  navUtils.fireTargetHome();
-                },
-              )
-            ],
-          ),
+      body: Obx(
+        () => ListViewWidget<BottomBarModel>.withGridView(
+          items: bottomBarItems.value,
+          isLoadingMore: isLoadingMore.value,
+          onLoadMore: () async {
+            isLoadingMore.value = true;
+            await Future.delayed(const Duration(seconds: 2));
+            bottomBarItems.add(
+              BottomBarModel(text: 'Hello Im new in here', asset: icApple),
+            );
+            isLoadingMore.value = false;
+          },
+          parser: (item) {
+            return Column(
+              children: [
+                Text(item.text ?? ''),
+                Gap(20.dp()),
+                AssetImageWidget(
+                  asset: item.asset ?? '',
+                  height: 40.dp(),
+                  width: 40.dp(),
+                )
+              ],
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
