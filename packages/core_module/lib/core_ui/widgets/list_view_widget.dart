@@ -12,6 +12,8 @@ class ListViewWidget<T> extends StatelessWidget {
   final RefreshCallback? onRefresh;
   final Widget? separator;
   final Widget? loader;
+  final bool? primary;
+  final bool? shrinkWrap;
   final EdgeInsets? padding;
   final bool? isLoadingMore;
   final ScrollController scrollController = ScrollController();
@@ -24,7 +26,8 @@ class ListViewWidget<T> extends StatelessWidget {
     this.isLoadingMore,
     this.separator,
     this.onLoadMore,
-    this.loader, this.onRefresh,
+    this.loader,
+    this.onRefresh,
   }) {
     _scrollListener();
     withGridView = false;
@@ -38,7 +41,8 @@ class ListViewWidget<T> extends StatelessWidget {
     this.isLoadingMore,
     this.separator,
     this.onLoadMore,
-    this.loader, this.onRefresh,
+    this.loader,
+    this.onRefresh,
   }) {
     _scrollListener();
     withGridView = true;
@@ -90,8 +94,8 @@ class ListViewWidget<T> extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: onRefresh ?? () async {},
       child: ListView(
-        primary: false,
-        shrinkWrap: true,
+        primary: primary,
+        shrinkWrap: shrinkWrap ?? false,
         controller: scrollController,
         padding: padding ??
             EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
