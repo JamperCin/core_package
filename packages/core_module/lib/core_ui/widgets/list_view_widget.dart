@@ -8,8 +8,7 @@ class ListViewWidget<T> extends StatefulWidget {
   final RxList<T> items;
   final Widget Function(T) parser;
   final Future<List<T>> Function()? onLoadMore;
-  final RefreshCallback? onRefresh;
-  final Widget? separator;
+  final Future<List<T>> Function()? onRefresh;
   final Widget? loader;
   final bool? primary;
   final bool? shrinkWrap;
@@ -22,7 +21,6 @@ class ListViewWidget<T> extends StatefulWidget {
     required this.parser,
     this.onLoadMore,
     this.onRefresh,
-    this.separator,
     this.loader,
     this.primary,
     this.shrinkWrap,
@@ -36,7 +34,6 @@ class ListViewWidget<T> extends StatefulWidget {
     required this.parser,
     this.onLoadMore,
     this.onRefresh,
-    this.separator,
     this.loader,
     this.primary,
     this.shrinkWrap,
@@ -88,7 +85,7 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   }
 
   Widget _loadingMore(BuildContext context) {
-    return (isLoadingMore.value ?? false)
+    return (isLoadingMore.value)
         ? Column(
       children: [
         Gap(20.dp()),
@@ -151,7 +148,12 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: widget.onRefresh ?? () async {},
+      onRefresh: () async {
+        if (widget.onRefresh == null) return;
+        final results = await widget.onRefresh?.call();
+        if (results == null || results.isEmpty) return;
+        widget.items.value = results;
+      },
       child: Obx(
         ()=> ListView(
           controller: scrollController,

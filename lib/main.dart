@@ -6,6 +6,7 @@ import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/list_view_widget.dart';
+import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module_package/login_screen.dart';
 import 'package:core_module_package/res/app_style.dart';
 import 'package:core_module_package/res/app_theme.dart';
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       BottomBarModel(text: 'Hello Im new in here - 3', asset: icSuccess),
       BottomBarModel(text: 'Hello Im new in here - 4', asset: icSuccess),
       BottomBarModel(text: 'Hello Im new in here - 5', asset: icSuccess),
-   ];
+    ];
     return bottomBarItems;
   }
 
@@ -135,27 +136,71 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: ListViewWidget<BottomBarModel>.withGridView(
-        items: bottomBarItems,
-        onLoadMore: _loadMore,
-        parser: (item) {
-          return Column(
-            children: [
-              Text(item.text ?? ''),
-              Gap(20.dp()),
-              AssetImageWidget(
-                asset: item.asset ?? '',
-                height: 40.dp(),
-                width: 40.dp(),
-              )
+      body: Column(
+        children: [
+          TabBarWidget(
+            tabs: const [
+              Tab(text: "Available Books"),
+              Tab(text: "Purchased Books"),
             ],
-          );
-        },
-        onRefresh: () async {
-          // implement your pull-to-refresh logic here
-          bottomBarItems.insert(
-              0, BottomBarModel(text: 'Refreshed Item', asset: icPickUp));
-        },
+            onTap: (index) {
+              isLoadingMore.value = index == 0;
+            },
+          ),
+          Expanded(
+            child: Obx(
+              () => isLoadingMore.value
+                  ? ListViewWidget<BottomBarModel>(
+                      items: bottomBarItems,
+                      onLoadMore: _loadMore,
+                      parser: (item) {
+                        return Column(
+                          children: [
+                            Text(item.text ?? ''),
+                            Gap(20.dp()),
+                            AssetImageWidget(
+                              asset: item.asset ?? '',
+                              height: 40.dp(),
+                              width: 40.dp(),
+                            )
+                          ],
+                        );
+                      },
+                      onRefresh: () async {
+                        // implement your pull-to-refresh logic here
+                        bottomBarItems.insert(
+                            0,
+                            BottomBarModel(
+                                text: 'Refreshed Item', asset: icPickUp));
+                      },
+                    )
+                  : ListViewWidget<BottomBarModel>.withGridView(
+                      items: bottomBarItems,
+                      onLoadMore: _loadMore,
+                      parser: (item) {
+                        return Column(
+                          children: [
+                            Text(item.text ?? ''),
+                            Gap(20.dp()),
+                            AssetImageWidget(
+                              asset: item.asset ?? '',
+                              height: 40.dp(),
+                              width: 40.dp(),
+                            )
+                          ],
+                        );
+                      },
+                      onRefresh: () async {
+                        // implement your pull-to-refresh logic here
+                        bottomBarItems.insert(
+                            0,
+                            BottomBarModel(
+                                text: 'Refreshed Item', asset: icPickUp));
+                      },
+                    ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
