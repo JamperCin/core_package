@@ -27,7 +27,7 @@ class ListViewWidget<T> extends StatelessWidget {
     this.separator,
     this.onLoadMore,
     this.loader,
-    this.onRefresh,
+    this.onRefresh, this.primary, this.shrinkWrap,
   }) {
     _scrollListener();
     withGridView = false;
@@ -42,7 +42,7 @@ class ListViewWidget<T> extends StatelessWidget {
     this.separator,
     this.onLoadMore,
     this.loader,
-    this.onRefresh,
+    this.onRefresh, this.primary, this.shrinkWrap,
   }) {
     _scrollListener();
     withGridView = true;
