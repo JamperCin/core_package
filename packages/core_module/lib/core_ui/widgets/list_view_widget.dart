@@ -9,6 +9,7 @@ class ListViewWidget<T> extends StatelessWidget {
   bool withGridView = false;
   final Widget Function(T) parser;
   final Function()? onLoadMore;
+  final RefreshCallback? onRefresh;
   final Widget? separator;
   final Widget? loader;
   final EdgeInsets? padding;
@@ -23,7 +24,7 @@ class ListViewWidget<T> extends StatelessWidget {
     this.isLoadingMore,
     this.separator,
     this.onLoadMore,
-    this.loader,
+    this.loader, this.onRefresh,
   }) {
     _scrollListener();
     withGridView = false;
@@ -37,7 +38,7 @@ class ListViewWidget<T> extends StatelessWidget {
     this.isLoadingMore,
     this.separator,
     this.onLoadMore,
-    this.loader,
+    this.loader, this.onRefresh,
   }) {
     _scrollListener();
     withGridView = true;
@@ -86,20 +87,23 @@ class ListViewWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      primary: false,
-      shrinkWrap: true,
-      controller: scrollController,
-      padding: padding ??
-          EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
-      // itemCount: items.length,
-      scrollDirection: Axis.vertical,
-      children: withGridView
-          ? _withGridView(context)
-          : [
-              ...items.map((e) => parser(e)),
-              _loadingMore(context),
-            ],
+    return RefreshIndicator(
+      onRefresh: onRefresh ?? () async {},
+      child: ListView(
+        primary: false,
+        shrinkWrap: true,
+        controller: scrollController,
+        padding: padding ??
+            EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
+        // itemCount: items.length,
+        scrollDirection: Axis.vertical,
+        children: withGridView
+            ? _withGridView(context)
+            : [
+                ...items.map((e) => parser(e)),
+                _loadingMore(context),
+              ],
+      ),
     );
   }
 
