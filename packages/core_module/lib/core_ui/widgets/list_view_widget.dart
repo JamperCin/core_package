@@ -21,8 +21,7 @@ class ListViewWidget<T> extends StatefulWidget {
     this.onRefresh,
     this.loader,
     this.padding,
-    this.withGridView = false,
-  });
+  }) : withGridView = false;
 
   const ListViewWidget.withGridView({
     super.key,
