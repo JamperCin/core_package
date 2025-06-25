@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   RxBool isLoadingMore = false.obs;
-  RxList<BottomBarModel> bottomBarItems = [
+  List<BottomBarModel> bottomBarItems = [
     BottomBarModel(text: 'Hello Im here', asset: icApple),
     BottomBarModel(text: 'Hello Im here', asset: icApple),
     BottomBarModel(text: 'Hello Im here', asset: icApple),
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomBarModel(text: 'Hello Im here', asset: icApple),
     BottomBarModel(text: 'Hello Im here', asset: icApple),
     BottomBarModel(text: 'Hello Im here', asset: icApple),
-  ].obs;
+  ];
 
   Future<List<BottomBarModel>> _loadMore() async {
     await Future.delayed(const Duration(seconds: 2));
@@ -151,9 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Obx(
               () => isLoadingMore.value
                   ? ListViewWidget<BottomBarModel>(
-                      items: bottomBarItems,
+                      list: bottomBarItems,
                       onLoadMore: _loadMore,
-                      parser: (item) {
+                      listItemWidget: (item) {
                         return Column(
                           children: [
                             Text(item.text ?? ''),
@@ -165,19 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             )
                           ],
                         );
-                      },
-                      onRefresh: () async {
-                        // implement your pull-to-refresh logic here
-                        bottomBarItems.insert(
-                            0,
-                            BottomBarModel(
-                                text: 'Refreshed Item', asset: icPickUp));
                       },
                     )
                   : ListViewWidget<BottomBarModel>.withGridView(
-                      items: bottomBarItems,
+                      list: bottomBarItems,
                       onLoadMore: _loadMore,
-                      parser: (item) {
+                      listItemWidget: (item) {
                         return Column(
                           children: [
                             Text(item.text ?? ''),
@@ -190,13 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         );
                       },
-                      onRefresh: () async {
-                        // implement your pull-to-refresh logic here
-                        bottomBarItems.insert(
-                            0,
-                            BottomBarModel(
-                                text: 'Refreshed Item', asset: icPickUp));
-                      },
+
                     ),
             ),
           ),

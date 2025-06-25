@@ -5,38 +5,32 @@ import 'package:core_module/core_ui/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class ListViewWidget<T> extends StatefulWidget {
-  final RxList<T> items;
-  final Widget Function(T) parser;
+  final List<T> list;
+  final Widget Function(T) listItemWidget;
   final Future<List<T>> Function()? onLoadMore;
   final Future<List<T>> Function()? onRefresh;
   final Widget? loader;
-  final bool? primary;
-  final bool? shrinkWrap;
   final EdgeInsets? padding;
   final bool withGridView;
 
   const ListViewWidget({
     super.key,
-    required this.items,
-    required this.parser,
+    required this.list,
+    required this.listItemWidget,
     this.onLoadMore,
     this.onRefresh,
     this.loader,
-    this.primary,
-    this.shrinkWrap,
     this.padding,
     this.withGridView = false,
   });
 
   const ListViewWidget.withGridView({
     super.key,
-    required this.items,
-    required this.parser,
+    required this.list,
+    required this.listItemWidget,
     this.onLoadMore,
     this.onRefresh,
     this.loader,
-    this.primary,
-    this.shrinkWrap,
     this.padding,
   }) : withGridView = true;
 
@@ -47,10 +41,12 @@ class ListViewWidget<T> extends StatefulWidget {
 class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   final ScrollController scrollController = ScrollController();
   final RxBool isLoadingMore = false.obs;
+  RxList<T> items = <T>[].obs;
 
   @override
   void initState() {
     super.initState();
+    items = widget.list.obs;
     scrollController.addListener(_scrollListener);
   }
 
@@ -63,7 +59,7 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
       final results  = await widget.onLoadMore?.call();
       isLoadingMore.value = false;
       if (results == null || results.isEmpty) return;
-      widget.items.value = [...widget.items.value, ...results];
+      items.value = [...items.value, ...results];
     }
   }
 
@@ -114,10 +110,10 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
     final emptyPlaceHolder =
     Flexible(flex: 1, child: SizedBox(width: appDimen.screenWidth));
 
-    for (int i = 0; i < widget.items.length; i++) {
+    for (int i = 0; i < items.length; i++) {
       Widget widgetItem = Flexible(
         flex: 1,
-        child: widget.parser(widget.items[i]),
+        child: widget.listItemWidget(items[i]),
       );
       rows.add(widgetItem);
 
@@ -132,7 +128,7 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
         ));
         column.add(Gap(8.dp()));
         rows = [];
-      } else if (i == widget.items.length - 1 && widget.items.length % 2 != 0) {
+      } else if (i == items.length - 1 && items.length % 2 != 0) {
         column.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [widgetItem, Gap(8.dp()), emptyPlaceHolder],
@@ -152,20 +148,18 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
         if (widget.onRefresh == null) return;
         final results = await widget.onRefresh?.call();
         if (results == null || results.isEmpty) return;
-        widget.items.value = results;
+        items.value = results;
       },
       child: Obx(
         ()=> ListView(
           controller: scrollController,
-          primary: widget.primary,
-          shrinkWrap: widget.shrinkWrap ?? false,
           padding: widget.padding ??
               EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
           scrollDirection: Axis.vertical,
           children: widget.withGridView
               ? _withGridView(context)
               : [
-            ...widget.items.map((e) => widget.parser(e)),
+            ...items.map((e) => widget.listItemWidget(e)),
             _loadingMore(context),
           ],
         ),
