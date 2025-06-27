@@ -72,7 +72,9 @@ class _CountdownSnackBarContentState extends State<CountdownSnackBarContent>
                   child: widget.messageWidget ??
                       Text(
                         widget.message ?? '',
-                        style: widget.messageStyle ?? textTheme.labelMedium,
+                        style: widget.messageStyle ??
+                            textTheme.labelMedium
+                                ?.copyWith(color: colorScheme.surface),
                       ),
                 ),
                 SizedBox(width: 10.dp()),

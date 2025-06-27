@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
 
@@ -54,11 +55,11 @@ class TextButtonWidget extends StatelessWidget {
 
     return TextButton(
       style: TextButton.styleFrom(
-        backgroundColor: backgroundColor ?? Colors.transparent, // Set text color
+        backgroundColor: backgroundColor ?? Colors.transparent,
+        // Set text color
         padding: padding ??
             EdgeInsets.symmetric(
-                horizontal: appDimen.dimen(2),
-                vertical: appDimen.dimen(2)), // Padding
+                horizontal: 10.dp(), vertical: 5.dp()), // Padding
       ),
       onPressed: onTap,
       child: child ??

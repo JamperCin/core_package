@@ -17,16 +17,14 @@ class ShimmerWidget extends StatelessWidget {
     this.child,
     this.height,
     this.width,
-  })
-      : length = null,
+  })  : length = null,
         grid = null;
 
   ShimmerWidget.withList({
     super.key,
     this.length = 5,
     this.child,
-  })
-      : height = null,
+  })  : height = null,
         width = null,
         grid = null;
 
@@ -39,14 +37,18 @@ class ShimmerWidget extends StatelessWidget {
     this.width,
   });
 
-
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     if (grid != null && length != null) {
       height = height ?? appDimen.dimen(150);
       width = width ?? appDimen.dimen(80);
 
-      child = ContainerWidget(width: width, height: height,);
+      child = ContainerWidget(
+        width: width,
+        height: height,
+      );
 
       return SizedBox(
         height: appDimen.screenHeight,
@@ -58,8 +60,7 @@ class ShimmerWidget extends StatelessWidget {
           crossAxisCount: grid!,
           children: List.generate(
               length!,
-                  (index) =>
-                  Padding(
+              (index) => Padding(
                     padding: EdgeInsets.all(5.dp()),
                     child: _shimmer(context),
                   )),
@@ -72,30 +73,44 @@ class ShimmerWidget extends StatelessWidget {
         child: Column(
           children: List<Widget>.generate(
             length!,
-                (int index) =>
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.dp()),
-                  child: ListTile(
-                    leading: ContainerWidget.withCircular(
-                      radius: 70.dp(),
-                    ),
-                    subtitle: Column(
+            (int index) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.dp()),
+              child: ListTile(
+                leading: ContainerWidget.withCircular(
+                  radius: 70.dp(),
+                  color: colorScheme.surfaceContainerHigh,
+                ),
+                subtitle: Column(
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Flexible(child: DividerWidget(height: 6.dp())),
-                            SizedBox(width: 10.dp()),
-                            Flexible(child: DividerWidget(height: 6.dp())),
-                          ],
-                        ),
-                        SizedBox(height: 4.dp()),
-                        DividerWidget(height: 6.dp()),
-                        SizedBox(height: 4.dp()),
-                        DividerWidget(height: 6.dp()),
+                        Flexible(
+                            child: DividerWidget(
+                          height: 6.dp(),
+                          color: colorScheme.surfaceContainerHigh,
+                        )),
+                        SizedBox(width: 10.dp()),
+                        Flexible(
+                            child: DividerWidget(
+                          height: 6.dp(),
+                          color: colorScheme.surfaceContainerHigh,
+                        )),
                       ],
                     ),
-                  ),
+                    SizedBox(height: 4.dp()),
+                    DividerWidget(
+                      height: 6.dp(),
+                      color: colorScheme.surfaceContainerHigh,
+                    ),
+                    SizedBox(height: 4.dp()),
+                    DividerWidget(
+                      height: 6.dp(),
+                      color: colorScheme.surfaceContainerHigh,
+                    ),
+                  ],
                 ),
+              ),
+            ),
           ),
         ),
       );
@@ -106,9 +121,7 @@ class ShimmerWidget extends StatelessWidget {
   }
 
   Widget _shimmer(BuildContext context, {ShimmerDirection? direction}) {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Shimmer.fromColors(
       baseColor: Colors.transparent,

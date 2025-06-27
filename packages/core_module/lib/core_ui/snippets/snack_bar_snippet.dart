@@ -149,6 +149,7 @@ class SnackBarSnippet {
         duration: snackBarDuration,
         padding: padding ?? EdgeInsets.all(5.dp()),
         showCloseIcon: true,
+        closeIconColor: colorScheme.surface,
         backgroundColor: snackBackgroundColor ?? colorScheme.inverseSurface,
         content: CountdownSnackBarContent(
           durationSeconds: durationSeconds,

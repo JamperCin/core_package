@@ -18,6 +18,7 @@ export 'package:carousel_slider/carousel_slider.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_animator/flutter_animator.dart';
 export 'package:shimmer/shimmer.dart';
+export 'package:core_module/src/app_widgets_export_file.dart';
 export 'package:gap/gap.dart';
 
 class CoreModule {

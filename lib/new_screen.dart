@@ -1,3 +1,4 @@
+import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
@@ -12,10 +13,13 @@ import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
 import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
+import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
+import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
 
-class NewScreen extends BaseScreenStandard {
+import 'main.dart';
 
+class NewScreen extends BaseScreenStandard {
   @override
   bool showAppBar() {
     return true;
@@ -39,43 +43,111 @@ class NewScreen extends BaseScreenStandard {
         children: [
           Text(
             "New page here",
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
-          // ShimmerWidget.withList(length: 5),
+          ButtonSwitchWidget(
+            list: [
+              DictionaryModel(
+                  key: "Light", value: "Light Mode", selected: true),
+              DictionaryModel(key: "Dark", value: "Dark Mode"),
+            ],
+            onTap: (d) {
+              isDarkMode.value = d.key == "Dark";
+            },
+          ),
+          ShimmerWidget.withList(length: 1),
+          Gap(20.dp()),
+          TextFieldWidget(
+            hintText: 'Enter First name',
+            labelText: 'First name',
+          ),
+          Gap(20.dp()),
+          TextFieldWidget.withPhoneNumber(
+            hintText: 'Enter phone number',
+            labelText: 'Phone Number',
+            hasCountryPicker: true,
+          ),
+          Gap(20.dp()),
+          TextFieldWidget.withPassword(
+            hintText: 'Enter password',
+            labelText: 'Password',
+          ),
+          Gap(20.dp()),
           TextButtonWidget.withTextOnly(
             onTap: () {
-              CalendarPickerWidget.show(context: context,onSelectDate: (date){
-                debugPrint("Date -> $date");
-              },);
+              CalendarPickerWidget.show(
+                context: context,
+                onSelectDate: (date) {
+                  debugPrint("Date -> $date");
+                },
+              );
             },
-            text: "Intro Screen",
+            text: "show Calendar",
           ),
-          CalendarPickerWidget(),
-          FileImagePickerWidget(
-            // parser: (file) async{
-            //   final upload =  FileUploadApiService().uploadFile<String>(
-            //     file,
-            //     parser: (json) {
-            //       return json['data']["url"] as String;
-            //     },
-            //   );
-            //
-            //   return upload;
-            // },
-            apiParser: (json) => json['data']["url"] as String,
-            url:
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
+          //  CalendarPickerWidget(),
+          ButtonWidget(
+            onTap: () {
+              BottomSheetWidget(
+                context: context,
+                child: ConfirmTransactionLayout(
+                  //displayCancelButton: false,
+                  title: "Confirm Payment",
+                  subTitle:
+                      'Are you sure you want to pay the amount stated below',
+                  onTap: () {
+                    snackBarSnippet.showCountdownSnackBar(context,
+                        message: "Payment Successful");
+                  },
+                ),
+              );
+            },
+            text: 'Confirm Payment',
           ),
+          Gap(20),
+          TextButtonWidget(
+            onTap: () {},
+            text: "show loader",
+          ),
+          Gap(20),
+          CardContainerWidget(child: Text("   data    ")),
+          Gap(20),
           CheckboxWidget(
             onChange: (v) {},
             text: "Check the Terms and Conditions",
           ),
-          TextFieldWidget(
-            hintText: 'Enter password',
-            labelText: 'Password',
-            maxLength: 10,
+          Gap(20),
+          ContainerWidget(
+            child: Text("Go to data"),
           ),
-          const SizedBox(height: 20),
+          Gap(20),
+          DropDownWidget<String>(
+            list: test,
+            initialItem: test[2],
+            onItemSelected: (v) {
+              snackBarSnippet.showCountdownSnackBar(context, message: v);
+            },
+          ),
+          Gap(20),
+          IconButtonWidget.withBorder(),
+          Gap(20),
+          IconTextWidget(
+            text: "show Loader",
+            onTap: () {
+              LoaderWidget()
+                  .showProgressIndicator(context: context, timeOut: 3);
+            },
+          ),
+          Gap(20),
+          SmallButtonWidget(),
+          Gap(20),
+          QuantityUpdateWidget(
+            onTap: (q) {
+              print("Quantity -> $q");
+            },
+          ),
+          Gap(20),
+          PinEntryWidget(),
+          Gap(20),
           TabBarWidget(
             tabs: const [
               Tab(
@@ -93,6 +165,36 @@ class NewScreen extends BaseScreenStandard {
             ],
             onTap: (int) {},
           ),
+          Gap(20),
+          ProfileMenuWidget(onTap: () {}, text: "Profile", asset: icPickUp),
+          Gap(20),
+          PodWidget(podLength: 4, initialIndex: 1, rectPod: false),
+          Gap(20),
+          DayMonthPickerWidget(
+            dayCtrl: TextEditingController(),
+            monthCtrl: TextEditingController(),
+          ),
+          Gap(20),
+          DecoratedContainerWidget(
+            height: 100.dp(),
+            child: Center(child: Text("   data    ")),
+          ),
+          Gap(20),
+          FileImagePickerWidget(
+            apiParser: (json) => json['data']["url"] as String,
+            url:
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
+          ),
+          /* ,
+
+
+          TextFieldWidget(
+            hintText: 'Enter password',
+            labelText: 'Password',
+            maxLength: 10,
+          ),
+          const SizedBox(height: 20),
+
           const SizedBox(height: 20),
           DropDownWidget<IntroModel>(
             selectedItem: list.first.obs,
@@ -113,14 +215,8 @@ class NewScreen extends BaseScreenStandard {
             text: "Click me",
           ),
           // SizedBox(height: 20),
-          // ShimmerWidget.withGrid(),
+          // ShimmerWidget.withGrid(),*/
           const SizedBox(height: 20),
-          ButtonSwitchWidget.withOutline(
-            items: [
-              DictionaryModel(key: "Phone", value: "Phone", selected: true),
-              DictionaryModel(key: "Email", value: "Email"),
-            ].obs,
-          )
         ],
       ),
     );
@@ -131,4 +227,6 @@ class NewScreen extends BaseScreenStandard {
     const IntroModel(mainText: "2024"),
     const IntroModel(mainText: "2023"),
   ];
+
+  final test = ["Nissan", "Toyata", "Benz", "Bugatti"];
 }

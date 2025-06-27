@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_style.dart';
 
-
 ThemeData lightMode = ThemeData(
   dialogBackgroundColor: whiteColor,
   brightness: Brightness.light,
@@ -64,8 +63,10 @@ ThemeData lightMode = ThemeData(
 
     ///primary colors and inverted color
     primary: primaryGreenColor,
+
     ///Secondary colors
     secondary: greyPrimaryColor,
+
     ///Error
     error: redColor,
 
@@ -79,12 +80,11 @@ ThemeData lightMode = ThemeData(
     tertiary: whiteColor,
     //-----TODO : ----------------     Colors to consider
 
-
     inversePrimary: greenFaded,
 
     onPrimary: secondaryGreenColor,
     primaryContainer: orangeQuadColor,
-    primaryFixedDim: orangeXColor,
+    primaryFixedDim: greenTertiaryColor,
     primaryFixed: orangeFadeColor,
 
     ///Secondary colors
@@ -92,7 +92,104 @@ ThemeData lightMode = ThemeData(
     onSecondary: greySecondaryColor,
     secondaryContainer: greyTertiaryColor,
 
+    ///Error
+    onError: redColor,
 
+    ///Surface
+
+    onSurface: darkColor,
+    surfaceContainerLowest: darkSurfaceColor,
+    surfaceContainerLow: darkSurfaceVariant,
+    surfaceContainerHigh: greyPodActiveColor,
+    surfaceContainerHighest: greyTertiaryColor,
+    onInverseSurface: darkSurfaceVariant,
+
+    ///Inverse surface
+
+    ///Green color
+    outline: dividerColor,
+    shadow: greyTertiaryLightColor,
+    outlineVariant: darkBrownColor,
+  ),
+);
+
+ThemeData darkMode = lightMode.copyWith(
+  brightness: Brightness.dark,
+  dialogBackgroundColor: darkColor,
+  textTheme: TextTheme(
+    labelSmall: labelSmallTextLightModeStyle.copyWith(color: whiteColor),
+    labelMedium: labelMediumTextLightModeStyle.copyWith(color: whiteColor),
+    labelLarge: labelLargeTextLightModeStyle.copyWith(color: whiteColor),
+    //
+    bodySmall: bodySmallTextLightModeStyle.copyWith(color: whiteColor),
+    bodyLarge: bodyLargeTextLightModeStyle.copyWith(color: whiteColor),
+    bodyMedium: bodyMediumTextLightModeStyle.copyWith(color: whiteColor),
+
+    displayLarge: displayLargeTextLightModeStyle.copyWith(color: whiteColor),
+    displayMedium: displayMediumTextLightModeStyle.copyWith(color: whiteColor),
+    displaySmall: displaySmallTextLightModeStyle.copyWith(color: whiteColor),
+    //
+    headlineLarge: headingLargeTextLightModeStyle.copyWith(color: whiteColor),
+    headlineMedium: headingMediumTextLightModeStyle.copyWith(color: whiteColor),
+    headlineSmall: headingSmallTextLightModeStyle.copyWith(color: whiteColor),
+    //
+    titleLarge: titleLargeTextLightModeStyle.copyWith(color: whiteColor),
+    titleMedium: titleMediumTextLightModeStyle.copyWith(color: whiteColor),
+    titleSmall: titleSmallTextLightModeStyle.copyWith(color: whiteColor),
+  ),
+  /*elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      elevation: 5.0,
+      backgroundColor: whiteColor,
+      textStyle: normalButtonLightModeStyle,
+      disabledForegroundColor: disabledGreenColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.horizontal(
+          left: Radius.circular(10),
+          right: Radius.circular(10),
+        ),
+      ),
+    ),
+  ),*/
+  colorScheme: ColorScheme(
+    brightness: Brightness.light,
+
+    //-----TODO : ----------------     Colors to consider
+
+    ///primary colors and inverted color
+    primary: primaryGreenColor,
+
+    ///Secondary colors
+    secondary: greyPrimaryColor,
+
+    ///Error
+    error: redColor,
+
+    ///Surface --> [surface] and [inverseSurface] should be two contrasting colors
+    surface: darkColor,
+    inverseSurface: whiteColor,
+    surfaceDim: greyPodActiveColor,
+    surfaceBright: greyPodInactiveColor,
+
+    surfaceContainerLowest: greyPrimaryColor,
+    surfaceContainerLow: darkBrownColor,
+    surfaceContainerHigh: greyPodActiveColor,
+    surfaceContainerHighest: greyPrimaryColor,
+    ///Tertiary colors
+    tertiary: whiteColor,
+    //-----TODO : ----------------     Colors to consider
+
+    inversePrimary: greenFaded,
+
+    onPrimary: secondaryGreenColor,
+    primaryContainer: orangeQuadColor,
+    primaryFixedDim: tertiaryGreenColor,
+    primaryFixed: orangeFadeColor,
+
+    ///Secondary colors
+
+    onSecondary: greySecondaryColor,
+    secondaryContainer: greyTertiaryColor,
 
     ///Error
     onError: redColor,
@@ -104,16 +201,9 @@ ThemeData lightMode = ThemeData(
 
     ///Inverse surface
 
-
     ///Green color
-    outline: greenPrimaryColor,
-    shadow: greyTertiaryLightColor,
+    outline: dividerColor,
+    shadow: darkBrownColor,
     outlineVariant: darkBrownColor,
-
   ),
-);
-
-ThemeData darkMode = lightMode.copyWith(
-  brightness: Brightness.dark,
-  dialogBackgroundColor: darkColor,
 );

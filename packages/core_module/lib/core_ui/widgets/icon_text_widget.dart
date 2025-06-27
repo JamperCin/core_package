@@ -1,3 +1,5 @@
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/src/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
@@ -43,17 +45,17 @@ class IconTextWidget extends StatelessWidget {
           asset != null
               ? AssetImageWidget(
                   asset: asset ?? icProfile,
-                  height: iconSize ?? appDimen.dimen(10),
-                  width: iconSize ?? appDimen.dimen(10),
-                  assetColor: iconColor,
+                  height: iconSize ?? 20.dp(),
+                  width: iconSize ?? 20.dp(),
+                  assetColor: iconColor ,
                 )
               : iconWidget ??
                   Icon(
                     icon ?? Icons.add,
-                    color: iconColor,
-                    size: iconSize ?? appDimen.dimen(10),
+                    color: iconColor ?? colorScheme.inverseSurface,
+                    size: iconSize ?? 20.dp(),
                   ),
-          SizedBox(width: appDimen.dimen(10)),
+          Gap(10.dp()),
           textWidget ??
               Text(
                 text,

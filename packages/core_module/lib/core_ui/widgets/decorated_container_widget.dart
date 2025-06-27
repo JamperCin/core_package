@@ -7,6 +7,8 @@ class DecoratedContainerWidget extends StatelessWidget {
   final List<double>? stops;
   final double? height;
   final double? width;
+  final Alignment? begin;
+  final Alignment? end;
 
   const DecoratedContainerWidget({
     super.key,
@@ -15,6 +17,8 @@ class DecoratedContainerWidget extends StatelessWidget {
     this.stops,
     this.height,
     this.width,
+    this.begin,
+    this.end,
   });
 
   @override
@@ -24,23 +28,21 @@ class DecoratedContainerWidget extends StatelessWidget {
       width: width ?? appDimen.screenWidth,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.bottomLeft,
-          end: Alignment.topCenter,
-          colors:
-              colors ??
+          begin: begin ?? Alignment.topCenter,
+          end: end ?? Alignment.bottomCenter,
+          colors: colors ??
               [
                 Color(0xFFFFFFFF),
                 Color(0xFFFFFFFF),
                 Color(0xFFE9F4F6),
                 Color(0xFFB3E3F3),
               ],
-          stops:
-              stops ??
+          stops: stops ??
               [
                 0.0,
-                0.5, // 30% red
+                0.5,
                 0.7,
-                1.0, // 70% blue
+                1.0,
               ],
         ),
       ),

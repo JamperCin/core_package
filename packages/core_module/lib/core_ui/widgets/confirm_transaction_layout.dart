@@ -17,6 +17,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
   final String buttonTitle;
   final GestureTapCallback? onTap;
   final Widget? child;
+  final bool displayCancelButton;
   final Widget? cancelWidget;
   final TextStyle? titleStyle;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -33,6 +34,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
     this.titleStyle,
     this.subTitleStyle,
     this.buttonStyle,
+    this.displayCancelButton = true,
     this.crossAxisAlignment,
     this.cancelAsset,
     this.cancelAssetColor,
@@ -53,7 +55,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
           padding: EdgeInsets.only(right: 20.dp()),
           child: Align(
             alignment: Alignment.centerRight,
-            child: cancelWidget ??
+            child: displayCancelButton ? (cancelWidget ??
                 ContainerWidget.withCircular(
                   onTap: () => navUtils.fireBack(),
                   color: cancelBackgroundColor ?? colorScheme.primary,
@@ -64,7 +66,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
                     asset: cancelAsset ?? icCancel,
                     assetColor: cancelAssetColor,
                   )),
-                ),
+                )) : const SizedBox.shrink(),
           ),
         ),
         Expanded(
@@ -82,11 +84,12 @@ class ConfirmTransactionLayout extends StatelessWidget {
                 if (subTitle.isNotEmpty)
                   Text(subTitle, style: subTitleStyle ?? textTheme.labelMedium),
                 Gap(20.dp()),
-                child ?? SizedBox.shrink(),
+                child ?? const SizedBox.shrink(),
               ],
             ),
           ),
         ),
+        if(onTap != null)
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.dp()),
           child: ButtonWidget(

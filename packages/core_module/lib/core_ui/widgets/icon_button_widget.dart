@@ -1,3 +1,4 @@
+import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/src/assets_path.dart';
@@ -53,11 +54,14 @@ class IconButtonWidget extends StatelessWidget {
     this.iconColor,
     this.iconPadding,
     this.asset,
+    this.borderRadius,
     this.backgroundColor,
   })  : isContainerButton = false,
         height = null,
-        shape = const RoundedRectangleBorder(),
-        borderRadius = null,
+        shape =  RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+          Radius.circular(borderRadius ?? 5),
+        )),
         width = null;
 
   IconButtonWidget.withCircularBorder({
@@ -105,13 +109,13 @@ class IconButtonWidget extends StatelessWidget {
     if (isContainerButton) {
       return ContainerWidget(
         onTap: onTap,
-        height: height ?? appDimen.dimen(14),
-        width: width ?? appDimen.dimen(14),
-        color: backgroundColor,
+        height: height ?? 22.dp(),
+        width: width ?? 22.dp(),
+        color: backgroundColor ?? colorScheme.surface,
         borderRadius: borderRadius ?? 5,
         padding: padding,
         borderWidth: borderWidth,
-        borderColor: borderColor,
+        borderColor: borderColor ?? colorScheme.surfaceContainerHighest,
         child: Center(
             child: child ??
                 (asset != null
@@ -119,7 +123,7 @@ class IconButtonWidget extends StatelessWidget {
                     : Icon(
                         icon ?? Icons.arrow_back_rounded,
                         color: iconColor ?? colorScheme.inverseSurface,
-                        size: appDimen.dimen(iconSize ?? 16),
+                        size: iconSize ?? 16.dp(),
                       ))),
       );
     }
@@ -132,7 +136,7 @@ class IconButtonWidget extends StatelessWidget {
           width: borderWidth ?? 1,
           color: borderColor ?? colorScheme.inverseSurface,
         ),
-        padding: padding ?? EdgeInsets.all(appDimen.dimen(iconPadding ?? 5)),
+        padding: padding ?? EdgeInsets.all(iconPadding ?? 3.dp()),
         shape: shape ?? const CircleBorder(),
       ),
       icon: child ??
@@ -141,7 +145,7 @@ class IconButtonWidget extends StatelessWidget {
               : Icon(
                   icon ?? Icons.arrow_back_rounded,
                   color: iconColor ?? colorScheme.inverseSurface,
-                  size: appDimen.dimen(iconSize ?? 16),
+                  size: iconSize ?? 18.dp(),
                 )),
     );
   }
@@ -149,8 +153,8 @@ class IconButtonWidget extends StatelessWidget {
   Widget _assetImage(ColorScheme colorScheme) {
     return AssetImageWidget(
       asset: asset ?? icProfile,
-      height: appDimen.dimen(iconSize ?? 16),
-      width: appDimen.dimen(iconSize ?? 16),
+      height: iconSize ?? 18.dp(),
+      width: iconSize ?? 18.dp(),
       assetColor: iconColor,
     );
   }
