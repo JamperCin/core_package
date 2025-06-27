@@ -133,7 +133,7 @@ class NewScreen extends BaseScreenStandard {
           IconButtonWidget.withBorder(),
           Gap(20),
           IconTextWidget(
-            text: "show Loader",
+            text: "show Loader is it good to be a citen of Ghana is always good to serve the lord and get good grades",
             onTap: () {
               LoaderWidget()
                   .showProgressIndicator(context: context, timeOut: 3);

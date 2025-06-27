@@ -56,11 +56,13 @@ class IconTextWidget extends StatelessWidget {
                     size: iconSize ?? 20.dp(),
                   ),
           Gap(10.dp()),
-          textWidget ??
-              Text(
-                text,
-                style: textStyle ?? textTheme.bodySmall,
-              )
+          Expanded(
+            child: textWidget ??
+                Text(
+                  text,
+                  style: textStyle ?? textTheme.bodySmall,
+                ),
+          )
         ],
       ),
     );
