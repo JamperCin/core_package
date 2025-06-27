@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 class NewScreen extends BaseScreenStandard {
+  RxInt currentPodIndex = 0.obs;
+
   @override
   bool showAppBar() {
     return true;
@@ -166,9 +168,18 @@ class NewScreen extends BaseScreenStandard {
             onTap: (int) {},
           ),
           Gap(20),
-          ProfileMenuWidget(onTap: () {}, text: "Profile", asset: icPickUp),
+          ProfileMenuWidget(
+            onTap: () {
+              currentPodIndex.value = currentPodIndex.value + 1;
+            },
+            text: "Profile",
+            asset: icPickUp,
+          ),
           Gap(20),
-          PodWidget(podLength: 4, initialIndex: 1, rectPod: false),
+          PodWidget(
+            podLength: 4,
+            currentIndex: currentPodIndex,
+          ),
           Gap(20),
           DayMonthPickerWidget(
             dayCtrl: TextEditingController(),
