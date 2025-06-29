@@ -98,7 +98,7 @@ class NewScreen extends BaseScreenStandard {
                       'Are you sure you want to pay the amount stated below',
                   onTap: () {
                     snackBarSnippet.showCountdownSnackBar(context,
-                        message: "Payment Successful");
+                        message: "Payment Successful", );
                   },
                 ),
               );

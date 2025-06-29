@@ -74,7 +74,7 @@ ThemeData lightMode = ThemeData(
     surface: whiteColor,
     inverseSurface: darkSurfaceColor,
     surfaceDim: darkColor,
-    surfaceBright: dividerColor,
+    surfaceBright: greyTertiaryColor,
 
     ///Tertiary colors
     tertiary: whiteColor,
