@@ -62,6 +62,7 @@ class NewScreen extends BaseScreenStandard {
           TextFieldWidget(
             hintText: 'Enter First name',
             labelText: 'First name',
+            prefixAsset: icApple,
           ),
           Gap(20.dp()),
           TextFieldWidget.withPhoneNumber(

@@ -59,59 +59,10 @@ class TextFieldWidget extends StatefulWidget {
   final VoidCallback? onTap;
   final Function(CountryModel?)? onCountrySelected;
   final FocusNode? focusNode;
+  final String? prefixAsset;
+  final String? suffixAsset;
 
-  // const TextFieldWidget({
-  //   super.key,
-  //   this.controller,
-  //   this.isEnabled = true,
-  //   this.prefixIcon,
-  //   this.suffixIcon,
-  //   this.width,
-  //   this.borderColor,
-  //   this.focusColor,
-  //   this.borderRadius = 10,
-  //   this.hintText,
-  //   this.style,
-  //   this.hintStyle,
-  //   this.onTap,
-  //   this.labelText = '',
-  //   this.backgroundColor,
-  //   this.labelStyle,
-  //   this.keyboardType = TextInputType.text,
-  //   this.textCapitalization = TextCapitalization.words,
-  //   this.margin,
-  //   this.unFocusColor,
-  //   this.disabledColor,
-  //   this.maxLength,
-  //   this.onChanged,
-  //   this.maxLines,
-  //   this.textAlign,
-  //   this.textInputAction,
-  //   this.focusNode,
-  //   this.height,
-  //   this.counterColor,
-  //   this.counterStyle,
-  //   this.hasCountryPicker = false,
-  //   this.countryDividerColor,
-  //   this.pickerRightMargin,
-  //   this.countrySearchTextStyle,
-  //   this.countryTextStyle,
-  //   this.countryWidgetTextStyle,
-  //   this.countryWidgetWidth,
-  //   this.countryPickerType,
-  //   this.countryDropDownIconSize,
-  //   this.phoneCodeTextStyle,
-  //   this.countryDropDownIconColor,
-  //   this.modalTitleTextStyle,
-  //   this.onCountrySelected,
-  //   this.countrySearchHintText,
-  //   this.countryWidgetHintText,
-  //   this.inputFormatters,
-  //   this.obscuringCharacter = '*',
-  //   this.isPassword = false, this.onFieldSubmitted,
-  // });
-
-  TextFieldWidget({
+  const TextFieldWidget({
     super.key,
     this.controller,
     this.isEnabled = true,
@@ -143,6 +94,8 @@ class TextFieldWidget extends StatefulWidget {
     this.counterColor,
     this.counterStyle,
     this.onFieldSubmitted,
+    this.prefixAsset,
+    this.suffixAsset,
   })  : hasCountryPicker = false,
         inputFormatters = null,
         countryDividerColor = null,
@@ -207,6 +160,8 @@ class TextFieldWidget extends StatefulWidget {
     this.counterStyle,
     this.countryDividerColor,
     this.onFieldSubmitted,
+    this.prefixAsset,
+    this.suffixAsset,
   })  : keyboardType = TextInputType.phone,
         textCapitalization = TextCapitalization.none,
         isPassword = false,
@@ -244,8 +199,9 @@ class TextFieldWidget extends StatefulWidget {
     this.counterStyle,
     this.onFieldSubmitted,
     this.obscuringCharacter = "*",
-  })  :
-        isPassword = true,
+    this.prefixAsset,
+    this.suffixAsset,
+  })  : isPassword = true,
         keyboardType = TextInputType.visiblePassword,
         textCapitalization = TextCapitalization.none,
         hasCountryPicker = false,
@@ -273,10 +229,19 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   late RxBool obscureText;
   final Rx<CountryModel> _selectedCountry = const CountryModel().obs;
   late Widget prefixIcon;
+  Widget? suffixIcon;
 
   @override
   void initState() {
     super.initState();
+
+    assert(!((widget.prefixAsset ?? '').isNotEmpty && widget.prefixIcon != null),
+    'Both prefixAsset and prefixIcon cannot be present at the same time');
+
+    assert(!((widget.suffixAsset ?? '').isNotEmpty && widget.suffixIcon != null),
+    'Both suffixAsset and suffixIcon cannot be present at the same time');
+
+
     obscureText = widget.isPassword ? true.obs : false.obs;
 
     prefixIcon = widget.prefixIcon ?? const SizedBox.shrink();
@@ -284,7 +249,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     if (widget.isPassword) {
       prefixIcon = widget.prefixIcon ??
           AssetImageWidget(
-            asset: icPassword,
+            asset: widget.prefixAsset ?? icPassword,
             width: appDimen.dimen(14),
             height: appDimen.dimen(14),
           );
@@ -293,12 +258,27 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     if (widget.keyboardType == TextInputType.phone) {
       prefixIcon = widget.prefixIcon ??
           AssetImageWidget(
-            asset: icMobile,
+            asset: widget.prefixAsset ?? icMobile,
             width: appDimen.dimen(14),
             height: appDimen.dimen(14),
           );
     }
 
+    if (widget.prefixAsset != null && widget.prefixAsset!.isNotEmpty) {
+      prefixIcon = AssetImageWidget(
+        asset: widget.prefixAsset!,
+        width: appDimen.dimen(14),
+        height: appDimen.dimen(14),
+      );
+    }
+
+    if (widget.suffixAsset != null && widget.suffixAsset!.isNotEmpty) {
+      suffixIcon = AssetImageWidget(
+        asset: widget.suffixAsset!,
+        width: appDimen.dimen(14),
+        height: appDimen.dimen(14),
+      );
+    }
   }
 
   @override
@@ -348,14 +328,15 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       textInputAction: widget.textInputAction ?? TextInputAction.go,
       decoration: InputDecoration(
         prefixIcon: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 5.dp(),vertical: 3.dp()),
+          padding: EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
           child: prefixIcon,
         ),
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: () => obscureText.value = !obscureText.value,
                 child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 6.dp(),vertical: 4.dp()),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 8.dp(), vertical: 6.dp()),
                   child: AssetImageWidget(
                     height: 10.dp(),
                     width: 10.dp(),
@@ -364,7 +345,12 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   ),
                 ),
               )
-            : widget.suffixIcon,
+            : Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
+                child:
+                    suffixIcon ?? widget.suffixIcon ?? const SizedBox.shrink(),
+              ),
         hintText: widget.hintText,
         hintStyle: widget.hintStyle ??
             textTheme.labelSmall?.copyWith(color: colorScheme.inverseSurface),

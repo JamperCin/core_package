@@ -74,7 +74,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       labelColor: widget.labelColor ?? colorScheme.primary,
       labelStyle: widget.labelStyle ?? textTheme.bodyMedium,
       unselectedLabelColor:
-          widget.unselectedLabelColor ?? colorScheme.surfaceBright,
+          widget.unselectedLabelColor ?? colorScheme.surfaceDim,
       unselectedLabelStyle: widget.unselectedLabelStyle ?? textTheme.bodyMedium,
       padding: widget.padding,
       dividerHeight: widget.dividerHeight,
