@@ -67,10 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-     Get.to(()=> NewScreen());
-    });
+    // setState(() {
+    //   _counter++;
+    //  Get.to(()=> NewScreen());
+    // });
+    navUtils.fireTarget(NewScreen(), model: "New Screen");
   }
 
   RxBool isLoadingMore = false.obs;

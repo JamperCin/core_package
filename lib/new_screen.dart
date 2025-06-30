@@ -14,6 +14,7 @@ import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
+import 'package:core_module_package/login_screen.dart';
 import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,14 @@ class NewScreen extends BaseScreenStandard {
   }
 
   @override
+  BaseObject getModel() {
+    return super.getModel();
+  }
+
+  @override
   Widget body(BuildContext context) {
+    debugPrint("Argument --> ${Get.arguments}");
+
     return SingleChildScrollView(
       padding: EdgeInsets.all(24.dp()),
       child: Column(
@@ -69,6 +77,9 @@ class NewScreen extends BaseScreenStandard {
             hintText: 'Enter phone number',
             labelText: 'Phone Number',
             hasCountryPicker: true,
+            onCountrySelected: (c){
+              navUtils.fireTarget(LoginScreen(), model: c);
+            },
           ),
           Gap(20.dp()),
           TextFieldWidget.withPassword(

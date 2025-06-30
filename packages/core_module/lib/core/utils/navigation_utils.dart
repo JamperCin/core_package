@@ -87,8 +87,12 @@ class NavUtils {
         break;
     }
 
-    if (event.target != null) {
-      event.target!.setModel(event.model ?? BaseObject());
+    if (event.target != null ) {
+      if(event.model != null && event.model is BaseObject){
+        event.target!.setModel(event.model as BaseObject);
+      }else{
+        event.target!.setModel(BaseObject());
+      }
     }
   }
 
@@ -99,14 +103,14 @@ class NavUtils {
   void fire(
       {BaseImpl? target,
       EventAction? action,
-      BaseObject? model,
+      Object? model,
       Function? call}) {
     fireEvent(Event(target: target, model: model, action: action, call: call));
   }
 
   fireTarget(
     BaseImpl? target, {
-    BaseObject? model,
+    Object? model,
     Function? call,
     Transition? trans,
   }) {
@@ -118,7 +122,7 @@ class NavUtils {
     ));
   }
 
-  void fireTargetHome({BaseObject? model}) {
+  void fireTargetHome({Object? model}) {
     fireEvent(Event(
       target: null,
       model: model,
@@ -133,7 +137,7 @@ class NavUtils {
     ));
   }
 
-  void fireTargetOff(BaseImpl? target, {BaseObject? model}) {
+  void fireTargetOff(BaseImpl? target, {Object? model}) {
     fireEvent(Event(target: target, model: model, action: EventAction.NAV_OFF));
   }
 
@@ -149,7 +153,7 @@ class NavUtils {
 class Event {
   BaseImpl? target;
   EventAction? action;
-  BaseObject? model;
+  Object? model;
   Function? call;
   Transition? transition;
 
@@ -159,7 +163,7 @@ class Event {
     this.target = target;
   }
 
-  void setModel(BaseObject model) {
+  void setModel(Object model) {
     this.model = model;
   }
 }

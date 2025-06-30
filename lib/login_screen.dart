@@ -1,4 +1,5 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_dec.dart';
 import 'package:core_module/core_ui/snippets/third_party_auth/third_party_auth_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
@@ -19,7 +20,21 @@ class LoginScreen extends BaseScreenDecorated {
   }
 
   @override
+  bool showAppBar() {
+    return true;
+  }
+
+  @override
+  BaseObject getModel() {
+    return super.getModel();
+  }
+
+  @override
   Widget page(BuildContext context) {
+
+    debugPrint("Argument --> ${Get.arguments}");
+    debugPrint("Argument 2. --> ${getModel().toString()}");
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
