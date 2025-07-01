@@ -186,7 +186,10 @@ class ButtonWidget extends StatelessWidget {
             height: 30.dp(),
             width: 30.dp(),
             child: CircularProgressIndicator(
-              color: loaderColor ?? colorScheme.tertiary,
+              color: loaderColor ??
+                  (withOutline
+                      ? colorScheme.inverseSurface
+                      : colorScheme.surface),
               strokeCap: StrokeCap.round,
             ),
           );
@@ -198,7 +201,10 @@ class ButtonWidget extends StatelessWidget {
         text: text,
         style: style ??
             textTheme.style?.textStyle?.resolve(<WidgetState>{})?.copyWith(
-                color: textColor ?? colorScheme.tertiary),
+                color: textColor ??
+                    (withOutline
+                        ? colorScheme.inverseSurface
+                        : colorScheme.surface)),
       ),
     );
   }
