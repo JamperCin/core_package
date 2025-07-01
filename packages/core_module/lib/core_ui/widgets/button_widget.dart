@@ -24,6 +24,9 @@ class ButtonWidget extends StatelessWidget {
   final bool enabled;
   final VoidCallback onTap;
   final bool withOutline;
+  final bool? isLoading;
+  final Widget? loaderWidget;
+  final Color? loaderColor;
 
   ButtonWidget({
     super.key,
@@ -43,8 +46,11 @@ class ButtonWidget extends StatelessWidget {
     this.assetColor,
     this.assetSize,
     this.asset,
+    this.isLoading,
+    this.loaderWidget,
     this.assetBgColor,
     this.assetPadding,
+    this.loaderColor,
   }) : withOutline = false;
 
   ButtonWidget.withOutLine({
@@ -58,6 +64,7 @@ class ButtonWidget extends StatelessWidget {
     this.disabledColor,
     this.height,
     this.width,
+    this.loaderWidget,
     this.borderColor,
     this.textColor,
     this.borderWidth,
@@ -67,6 +74,8 @@ class ButtonWidget extends StatelessWidget {
     this.asset,
     this.assetBgColor,
     this.assetPadding,
+    this.isLoading,
+    this.loaderColor,
   }) : withOutline = true;
 
   @override
@@ -170,6 +179,18 @@ class ButtonWidget extends StatelessWidget {
   Widget _buttonText(BuildContext context) {
     final textTheme = Theme.of(context).elevatedButtonTheme;
     final colorScheme = Theme.of(context).colorScheme;
+
+    if (isLoading != null && isLoading!) {
+      return loaderWidget ??
+          SizedBox(
+            height: 30.dp(),
+            width: 30.dp(),
+            child: CircularProgressIndicator(
+              color: loaderColor ?? colorScheme.tertiary,
+              strokeCap: StrokeCap.round,
+            ),
+          );
+    }
 
     return RichText(
       maxLines: 1,

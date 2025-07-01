@@ -43,6 +43,8 @@ class NewScreen extends BaseScreenStandard {
     return super.getModel();
   }
 
+  RxBool isLoadingMore = false.obs;
+
   @override
   Widget body(BuildContext context) {
     debugPrint("Argument --> ${Get.arguments}");
@@ -77,7 +79,7 @@ class NewScreen extends BaseScreenStandard {
             hintText: 'Enter phone number',
             labelText: 'Phone Number',
             hasCountryPicker: true,
-            onCountrySelected: (c){
+            onCountrySelected: (c) {
               navUtils.fireTarget(LoginScreen(), model: c);
             },
           ),
@@ -99,23 +101,30 @@ class NewScreen extends BaseScreenStandard {
             text: "show Calendar",
           ),
           //  CalendarPickerWidget(),
-          ButtonWidget(
-            onTap: () {
-              BottomSheetWidget(
-                context: context,
-                child: ConfirmTransactionLayout(
-                  //displayCancelButton: false,
-                  title: "Confirm Payment",
-                  subTitle:
-                      'Are you sure you want to pay the amount stated below',
-                  onTap: () {
-                    snackBarSnippet.showCountdownSnackBar(context,
-                        message: "Payment Successful", );
-                  },
-                ),
-              );
-            },
-            text: 'Confirm Payment',
+          Obx(
+            ()=> ButtonWidget(
+              isLoading: isLoadingMore.value,
+              onTap: () async {
+                isLoadingMore.value = !isLoadingMore.value;
+                await Future.delayed(const Duration(seconds: 2));
+                isLoadingMore.value = !isLoadingMore.value;
+
+                /* BottomSheetWidget(
+                  context: context,
+                  child: ConfirmTransactionLayout(
+                    //displayCancelButton: false,
+                    title: "Confirm Payment",
+                    subTitle:
+                        'Are you sure you want to pay the amount stated below',
+                    onTap: () {
+                      snackBarSnippet.showCountdownSnackBar(context,
+                          message: "Payment Successful", );
+                    },
+                  ),
+                );*/
+              },
+              text: 'Confirm Payment',
+            ),
           ),
           Gap(20),
           TextButtonWidget(
@@ -145,7 +154,8 @@ class NewScreen extends BaseScreenStandard {
           IconButtonWidget.withBorder(),
           Gap(20),
           IconTextWidget(
-            text: "show Loader is it good to be a citen of Ghana is always good to serve the lord and get good grades",
+            text:
+                "show Loader is it good to be a citen of Ghana is always good to serve the lord and get good grades",
             onTap: () {
               LoaderWidget()
                   .showProgressIndicator(context: context, timeOut: 3);
