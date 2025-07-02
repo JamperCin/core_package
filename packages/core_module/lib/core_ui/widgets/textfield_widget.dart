@@ -336,7 +336,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 child: prefixIcon,
               )
             : null,
-        suffixIcon: widget.isPassword
+        suffixIcon: widget.isPassword && suffixIcon == null
             ? GestureDetector(
                 onTap: () => obscureText.value = !obscureText.value,
                 child: Padding(

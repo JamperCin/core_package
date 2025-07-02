@@ -87,6 +87,7 @@ class NewScreen extends BaseScreenStandard {
           TextFieldWidget.withPassword(
             hintText: 'Enter password',
             labelText: 'Password',
+            suffixIcon: SizedBox.shrink(),
           ),
           Gap(20.dp()),
           TextButtonWidget.withTextOnly(
