@@ -228,23 +228,25 @@ class TextFieldWidget extends StatefulWidget {
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   late RxBool obscureText;
   final Rx<CountryModel> _selectedCountry = const CountryModel().obs;
-  late Widget prefixIcon;
+  Widget? prefixIcon;
   Widget? suffixIcon;
 
   @override
   void initState() {
     super.initState();
 
-    assert(!((widget.prefixAsset ?? '').isNotEmpty && widget.prefixIcon != null),
-    'Both prefixAsset and prefixIcon cannot be present at the same time');
+    assert(
+        !((widget.prefixAsset ?? '').isNotEmpty && widget.prefixIcon != null),
+        'Both prefixAsset and prefixIcon cannot be present at the same time');
 
-    assert(!((widget.suffixAsset ?? '').isNotEmpty && widget.suffixIcon != null),
-    'Both suffixAsset and suffixIcon cannot be present at the same time');
-
+    assert(
+        !((widget.suffixAsset ?? '').isNotEmpty && widget.suffixIcon != null),
+        'Both suffixAsset and suffixIcon cannot be present at the same time');
 
     obscureText = widget.isPassword ? true.obs : false.obs;
 
-    prefixIcon = widget.prefixIcon ?? const SizedBox.shrink();
+    prefixIcon = widget.prefixIcon;
+    suffixIcon = widget.suffixIcon;
 
     if (widget.isPassword) {
       prefixIcon = widget.prefixIcon ??
@@ -327,10 +329,13 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           textTheme.labelMedium?.copyWith(color: colorScheme.inverseSurface),
       textInputAction: widget.textInputAction ?? TextInputAction.go,
       decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
-          child: prefixIcon,
-        ),
+        prefixIcon: prefixIcon != null
+            ? Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
+                child: prefixIcon,
+              )
+            : null,
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: () => obscureText.value = !obscureText.value,
@@ -345,12 +350,13 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   ),
                 ),
               )
-            : Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
-                child:
-                    suffixIcon ?? widget.suffixIcon ?? const SizedBox.shrink(),
-              ),
+            : suffixIcon != null
+                ? Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 8.dp(), vertical: 6.dp()),
+                    child: suffixIcon,
+                  )
+                : null,
         hintText: widget.hintText,
         hintStyle: widget.hintStyle ??
             textTheme.labelSmall?.copyWith(color: colorScheme.inverseSurface),
