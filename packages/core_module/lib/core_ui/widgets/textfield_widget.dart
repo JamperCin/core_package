@@ -281,6 +281,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         height: appDimen.dimen(14),
       );
     }
+
+    prefixIcon = widget.prefixIcon is SizedBox ? null : prefixIcon;
+
+    debugPrint("suffix -> $suffixIcon");
   }
 
   @override
@@ -350,7 +354,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   ),
                 ),
               )
-            : suffixIcon != null
+            : suffixIcon != null && suffixIcon is! SizedBox
                 ? Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 8.dp(), vertical: 6.dp()),
