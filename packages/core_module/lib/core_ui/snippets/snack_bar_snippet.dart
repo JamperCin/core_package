@@ -1,3 +1,4 @@
+import 'package:core_module/core_module.dart';
 import 'package:core_module/src/app_module_colors.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,11 @@ class SnackBarSnippet {
     SnackStyle? snackStyle,
     double barBlur = 0.3,
     bool isDismissible = true,
+    bool shouldIconPulse = true,
     Curve? forwardAnimationCurve,
     Curve? reverseAnimationCurve,
     Duration? animationDuration,
+    Duration? duration,
     Function(GetSnackBar)? onTap,
   }) {
     Get.snackbar(
@@ -47,9 +50,10 @@ class SnackBarSnippet {
       showProgressIndicator: showProgressIndicator,
       overlayBlur: overlayBlur,
       overlayColor: overlayColor ?? Colors.black.withOpacity(0.5),
-      shouldIconPulse: true,
+      shouldIconPulse: shouldIconPulse,
       barBlur: barBlur,
       onTap: onTap,
+      duration: duration,
       isDismissible: isDismissible,
       snackStyle: snackStyle ?? SnackStyle.FLOATING,
       forwardAnimationCurve: forwardAnimationCurve ?? Curves.easeOutCirc,
@@ -103,22 +107,53 @@ class SnackBarSnippet {
     );
   }
 
-  void snackBarToast(
-    String message, {
-    String title = "",
+  void snackBarToast({
+    String message = '',
+    String title = '',
     Color? bgColor,
-    IconData icon = Icons.notifications,
+    Color? prefixIconColor,
+    Color? suffixIconColor,
+    Color? textColor,
+    double? prefixIconSize,
+    SnackPosition? snackPosition,
+    IconData prefixIcon = Icons.notifications,
+    TextStyle? messageStyle,
+    Color? messageColor,
+    double? suffixIconSize,
+    IconData? suffixIcon,
+    Widget? prefixIconWidget,
+    Widget? suffixIconWidget,
+    bool shouldIconPulse = true,
+    bool persistent = false,
+    Duration? duration,
+    Function()? onSuffixIconOnTap,
   }) {
     snackBar(
       title: title,
-      message: message,
-      icon: icon,
-      backgroundColor: const Color(0xFFFF4D00),
-      textColor: Colors.white,
-      iconColor: Colors.white,
+      iconColor: prefixIconColor ?? Colors.white,
+      backgroundColor: bgColor ?? const Color(0xFFFF4D00),
+      textColor: textColor ?? Colors.white,
       overlayBlur: 0.0,
       barBlur: 0.0,
-      overlayColor: Colors.transparent,
+      shouldIconPulse: shouldIconPulse,
+      icon: prefixIcon,
+      isDismissible: !persistent,
+      duration:
+          persistent ? const Duration(days: 1) : const Duration(seconds: 3),
+      iconWidget: prefixIconWidget,
+      iconSize: prefixIconSize ?? 20.dp(),
+      snackPosition: snackPosition ?? SnackPosition.BOTTOM,
+      titleWidget: title.isEmpty ? const SizedBox.shrink() : null,
+      messageWidget: _SnackToastWidget(
+        message: message,
+        style: messageStyle,
+        messageColor: messageColor,
+        suffixIconColor: suffixIconColor,
+        suffixIconSize: suffixIconSize,
+        suffixIcon: suffixIcon,
+        suffixIconWidget: suffixIconWidget,
+        onSuffixIconOnTap: onSuffixIconOnTap,
+      ),
     );
   }
 
@@ -134,10 +169,12 @@ class SnackBarSnippet {
     Function()? onActionOnTap,
     Function()? onProgressCompletion,
     Color? actionIconColor,
+    Color? closeIconColor,
     double? actionIconSize,
     IconData? actionIcon,
     Widget? messageWidget,
     Widget? actionWidget,
+    bool showCloseIcon = true,
   }) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final snackBarDuration = Duration(seconds: durationSeconds);
@@ -149,8 +186,8 @@ class SnackBarSnippet {
         behavior: SnackBarBehavior.floating,
         duration: snackBarDuration,
         padding: padding ?? EdgeInsets.all(5.dp()),
-        showCloseIcon: true,
-        closeIconColor: colorScheme.surface,
+        showCloseIcon: showCloseIcon,
+        closeIconColor: closeIconColor ?? colorScheme.surface,
         backgroundColor: snackBackgroundColor ?? colorScheme.inverseSurface,
         content: CountdownSnackBarContent(
           durationSeconds: durationSeconds,
@@ -167,6 +204,62 @@ class SnackBarSnippet {
           actionWidget: actionWidget,
         ),
       ),
+    );
+  }
+}
+
+class _SnackToastWidget extends StatelessWidget {
+  final String? message;
+  final TextStyle? style;
+  final Color? messageColor;
+  final Color? suffixIconColor;
+  final double? suffixIconSize;
+  final IconData? suffixIcon;
+  final Widget? suffixIconWidget;
+  final Function()? onSuffixIconOnTap;
+
+  const _SnackToastWidget({
+    Key? key,
+    this.message,
+    this.style,
+    this.messageColor,
+    this.suffixIconColor,
+    this.suffixIconSize,
+    this.suffixIcon,
+    this.suffixIconWidget,
+    this.onSuffixIconOnTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            message ?? '',
+            style: style ??
+                textTheme.bodyMedium
+                    ?.copyWith(color: messageColor ?? Colors.white),
+          ),
+        ),
+        Gap(10.dp()),
+        InkWell(
+          onTap: onSuffixIconOnTap ??
+              () {
+                if (Get.isSnackbarOpen) {
+                  Get.back();
+                }
+              },
+          child: suffixIconWidget ??
+              Icon(
+                suffixIcon ?? Icons.cancel,
+                color: suffixIconColor ?? Colors.white,
+                size: suffixIconSize ?? 20.dp(),
+              ),
+        ),
+      ],
     );
   }
 }

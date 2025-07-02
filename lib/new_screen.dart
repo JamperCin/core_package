@@ -72,7 +72,7 @@ class NewScreen extends BaseScreenStandard {
           TextFieldWidget(
             hintText: 'Enter First name',
             labelText: 'First name',
-           // prefixAsset: icApple,
+            // prefixAsset: icApple,
           ),
           Gap(20.dp()),
           TextFieldWidget.withPhoneNumber(
@@ -102,15 +102,20 @@ class NewScreen extends BaseScreenStandard {
           ),
           //  CalendarPickerWidget(),
           Obx(
-            ()=> ButtonWidget(
+            () => ButtonWidget(
               isLoading: isLoadingMore.value,
               onTap: () async {
-
                 isLoadingMore.value = !isLoadingMore.value;
                 debugPrint("isLoadingMore -> ${isLoadingMore.value}");
                 await Future.delayed(const Duration(seconds: 5));
                 isLoadingMore.value = !isLoadingMore.value;
                 debugPrint("isLoadingMore 2-> ${isLoadingMore.value}");
+
+                snackBarSnippet.snackBarToast(
+                  message: "Payment Successful",
+                  persistent: true,
+                  prefixIcon: Icons.info,
+                );
 
                 /* BottomSheetWidget(
                   context: context,
