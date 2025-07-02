@@ -105,9 +105,12 @@ class NewScreen extends BaseScreenStandard {
             ()=> ButtonWidget(
               isLoading: isLoadingMore.value,
               onTap: () async {
+
                 isLoadingMore.value = !isLoadingMore.value;
-                await Future.delayed(const Duration(seconds: 2));
+                debugPrint("isLoadingMore -> ${isLoadingMore.value}");
+                await Future.delayed(const Duration(seconds: 5));
                 isLoadingMore.value = !isLoadingMore.value;
+                debugPrint("isLoadingMore 2-> ${isLoadingMore.value}");
 
                 /* BottomSheetWidget(
                   context: context,

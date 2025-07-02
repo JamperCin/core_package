@@ -125,7 +125,7 @@ class ButtonWidget extends StatelessWidget {
           textTheme.style?.maximumSize?.resolve(<WidgetState>{})?.height ??
           55.dp(),
       child: ElevatedButton(
-        onPressed: enabled ? onTap : () {},
+        onPressed: (enabled && (isLoading == null || isLoading == false)) ? onTap : () {},
         style: textTheme.style?.copyWith(
           backgroundColor: enabled
               ? (backgroundColor != null
