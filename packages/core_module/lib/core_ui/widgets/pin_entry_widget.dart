@@ -13,6 +13,7 @@ class PinEntryWidget extends StatefulWidget {
   final Color? filledColor;
   final TextStyle? textStyle;
   final Function(String)? onCodeSubmitted;
+  final Function(String)? onCodeChanged;
 
   const PinEntryWidget({
     super.key,
@@ -23,7 +24,7 @@ class PinEntryWidget extends StatefulWidget {
     this.textColor,
     this.borderColor,
     this.filledColor,
-    this.fontSize,
+    this.fontSize, this.onCodeChanged,
   });
 
   @override
@@ -91,6 +92,7 @@ class PinEntryWidgetState extends State<PinEntryWidget> {
       autoFocus: true,
       onCodeSubmitted: widget.onCodeSubmitted,
       onCodeChanged: (code) {
+        widget.onCodeChanged?.call(code ?? '');
         setState(() {
           pin = code ?? "";
         });
@@ -98,6 +100,7 @@ class PinEntryWidgetState extends State<PinEntryWidget> {
           widget.onCodeSubmitted?.call(code);
           FocusScope.of(context).unfocus();
         }
+
       },
     );
   }
