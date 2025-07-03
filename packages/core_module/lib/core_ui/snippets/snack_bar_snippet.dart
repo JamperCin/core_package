@@ -53,7 +53,7 @@ class SnackBarSnippet {
       shouldIconPulse: shouldIconPulse,
       barBlur: barBlur,
       onTap: onTap,
-      duration: duration,
+      duration: duration ?? const Duration(seconds: 3),
       isDismissible: isDismissible,
       snackStyle: snackStyle ?? SnackStyle.FLOATING,
       forwardAnimationCurve: forwardAnimationCurve ?? Curves.easeOutCirc,
@@ -75,7 +75,9 @@ class SnackBarSnippet {
     );
   }
 
-  void snackBarError(String message, {String title = "Error"}) {
+  void snackBarError(String message, {String title = "Error",Color? bgColor,
+    Color? textColor,
+    Color? iconColor,}) {
     snackBar(
       title: title,
       message: message,
@@ -86,24 +88,36 @@ class SnackBarSnippet {
     );
   }
 
-  void snackBarInfo(String message, {String title = "Info"}) {
+  void snackBarInfo(
+    String message, {
+    String title = "Info",
+    Color? bgColor,
+    Color? textColor,
+    Color? iconColor,
+  }) {
     snackBar(
       title: title,
       message: message,
-      backgroundColor: Colors.blue,
-      textColor: Colors.white,
-      iconColor: Colors.white,
+      backgroundColor: bgColor ?? Colors.blue,
+      textColor: textColor ?? Colors.white,
+      iconColor: iconColor ?? Colors.white,
     );
   }
 
-  void snackBarSuccess(String message, {String title = "Success"}) {
+  void snackBarSuccess(
+    String message, {
+    String title = "Success",
+    Color? bgColor,
+    Color? textColor,
+    Color? iconColor,
+  }) {
     snackBar(
       title: title,
       message: message,
       icon: Icons.done,
-      backgroundColor: const Color(0xFF1C6F15),
-      textColor: Colors.white,
-      iconColor: Colors.white,
+      backgroundColor: bgColor ?? const Color(0xFF1C6F15),
+      textColor: textColor ?? Colors.white,
+      iconColor: iconColor ?? Colors.white,
     );
   }
 

@@ -117,6 +117,7 @@ class NewScreen extends BaseScreenStandard {
           TextButtonWidget(
             onTap: (){
               pinKey.currentState?.clearPin();
+              snackBarSnippet.snackBarSuccess("Success");
             },
             text: "Clear Pin",
           ),
@@ -136,6 +137,8 @@ class NewScreen extends BaseScreenStandard {
                   persistent: true,
                   prefixIcon: Icons.info,
                 );
+
+
 
                 /* BottomSheetWidget(
                   context: context,
