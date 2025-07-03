@@ -43,6 +43,11 @@ class NewScreen extends BaseScreenStandard {
     return super.getModel();
   }
 
+  final GlobalKey<PinEntryWidgetState> pinKey = GlobalKey();
+  void clearPinMethod(){
+    pinKey.currentState?.clearPin();
+  }
+
   RxBool isLoadingMore = false.obs;
 
   @override
@@ -69,7 +74,7 @@ class NewScreen extends BaseScreenStandard {
           ),
           ShimmerWidget.withList(length: 1),
           Gap(20.dp()),
-          TextFieldWidget(
+          const TextFieldWidget(
             hintText: 'Enter First name',
             labelText: 'First name',
             // prefixAsset: icApple,
@@ -87,8 +92,8 @@ class NewScreen extends BaseScreenStandard {
           TextFieldWidget.withPassword(
             hintText: 'Enter password',
             labelText: 'Password',
-            suffixIcon: SizedBox.shrink(),
-            prefixIcon: SizedBox.shrink(),
+            suffixIcon: const SizedBox.shrink(),
+            prefixIcon: const SizedBox.shrink(),
           ),
           Gap(20.dp()),
           TextButtonWidget.withTextOnly(
@@ -102,7 +107,20 @@ class NewScreen extends BaseScreenStandard {
             },
             text: "show Calendar",
           ),
-          //  CalendarPickerWidget(),
+          const Gap(20),
+          PinEntryWidget(
+            key: pinKey,
+            boxDecor: false,
+            codeLength: 6,
+          ),
+          const Gap(20),
+          TextButtonWidget(
+            onTap: (){
+              pinKey.currentState?.clearPin();
+            },
+            text: "Clear Pin",
+          ),
+          const Gap(20),
           Obx(
             () => ButtonWidget(
               isLoading: isLoadingMore.value,
@@ -136,23 +154,19 @@ class NewScreen extends BaseScreenStandard {
               text: 'Confirm Payment',
             ),
           ),
-          Gap(20),
-          TextButtonWidget(
-            onTap: () {},
-            text: "show loader",
-          ),
-          Gap(20),
-          CardContainerWidget(child: Text("   data    ")),
-          Gap(20),
+
+          const Gap(20),
+          const CardContainerWidget(child: Text("   data    ")),
+          const Gap(20),
           CheckboxWidget(
             onChange: (v) {},
             text: "Check the Terms and Conditions",
           ),
-          Gap(20),
-          ContainerWidget(
+          const Gap(20),
+          const ContainerWidget(
             child: Text("Go to data"),
           ),
-          Gap(20),
+          const Gap(20),
           DropDownWidget<String>(
             list: test,
             initialItem: test[2],
@@ -160,28 +174,26 @@ class NewScreen extends BaseScreenStandard {
               snackBarSnippet.showCountdownSnackBar(context, message: v);
             },
           ),
-          Gap(20),
+          const Gap(20),
           IconButtonWidget.withBorder(),
-          Gap(20),
+          const Gap(20),
           IconTextWidget(
             text:
                 "show Loader is it good to be a citen of Ghana is always good to serve the lord and get good grades",
             onTap: () {
-              LoaderWidget()
+              const LoaderWidget()
                   .showProgressIndicator(context: context, timeOut: 3);
             },
           ),
-          Gap(20),
-          SmallButtonWidget(),
-          Gap(20),
+          const Gap(20),
+          const SmallButtonWidget(),
+          const Gap(20),
           QuantityUpdateWidget(
             onTap: (q) {
               print("Quantity -> $q");
             },
           ),
-          Gap(20),
-          PinEntryWidget(),
-          Gap(20),
+          const Gap(20),
           TabBarWidget(
             tabs: const [
               Tab(
@@ -199,7 +211,7 @@ class NewScreen extends BaseScreenStandard {
             ],
             onTap: (int) {},
           ),
-          Gap(20),
+          const Gap(20),
           ProfileMenuWidget(
             onTap: () {
               currentPodIndex.value = currentPodIndex.value + 1;
@@ -207,22 +219,22 @@ class NewScreen extends BaseScreenStandard {
             text: "Profile",
             asset: icPickUp,
           ),
-          Gap(20),
+          const Gap(20),
           PodWidget(
             podLength: 4,
             currentIndex: currentPodIndex,
           ),
-          Gap(20),
+          const Gap(20),
           DayMonthPickerWidget(
             dayCtrl: TextEditingController(),
             monthCtrl: TextEditingController(),
           ),
-          Gap(20),
+          const Gap(20),
           DecoratedContainerWidget(
             height: 100.dp(),
-            child: Center(child: Text("   data    ")),
+            child: const Center(child: Text("   data    ")),
           ),
-          Gap(20),
+          const Gap(20),
           FileImagePickerWidget(
             apiParser: (json) => json['data']["url"] as String,
             url:

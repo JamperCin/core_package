@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
-class PinEntryWidget extends StatelessWidget {
-  String pin = "";
+class PinEntryWidget extends StatefulWidget {
   final int codeLength;
   final bool boxDecor;
   final Color? textColor;
@@ -15,7 +14,7 @@ class PinEntryWidget extends StatelessWidget {
   final TextStyle? textStyle;
   final Function(String)? onCodeSubmitted;
 
-  PinEntryWidget({
+  const PinEntryWidget({
     super.key,
     this.codeLength = 4,
     this.boxDecor = true,
@@ -28,48 +27,75 @@ class PinEntryWidget extends StatelessWidget {
   });
 
   @override
+  State<PinEntryWidget> createState() => PinEntryWidgetState();
+}
+
+class PinEntryWidgetState extends State<PinEntryWidget> {
+  String pin = "";
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  /// Method to clear the entered pin externally
+  void clearPin() {
+    setState(() {
+      pin = "";
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    FocusNode focusNode = FocusNode();
     final colorScheme = Theme.of(context).colorScheme;
 
     return PinFieldAutoFill(
-      decoration: boxDecor
+      decoration: widget.boxDecor
           ? BoxLooseDecoration(
-        textStyle: textStyle ??
+        textStyle: widget.textStyle ??
             TextStyle(
-              fontSize: fontSize ?? 20.dp(),
-              color: textColor ?? colorScheme.inverseSurface,
+              fontSize: widget.fontSize ?? 20.dp(),
+              color: widget.textColor ?? colorScheme.inverseSurface,
             ),
-        bgColorBuilder:
-        FixedColorBuilder(filledColor ?? colorScheme.surface),
+        bgColorBuilder: FixedColorBuilder(
+            widget.filledColor ?? colorScheme.surface),
         strokeColorBuilder: focusNode.hasFocus
             ? FixedColorBuilder(colorScheme.primary)
             : FixedColorBuilder(
-            borderColor ?? colorScheme.inverseSurface),
+            widget.borderColor ?? colorScheme.inverseSurface),
       )
           : UnderlineDecoration(
-        textStyle: textStyle ??
+        textStyle: widget.textStyle ??
             TextStyle(
-              fontSize: fontSize ?? 20.dp(),
-              color: textColor ?? colorScheme.inverseSurface,
+              fontSize: widget.fontSize ?? 20.dp(),
+              color: widget.textColor ?? colorScheme.inverseSurface,
             ),
         colorBuilder: focusNode.hasFocus
             ? FixedColorBuilder(colorScheme.primary)
             : FixedColorBuilder(
-            borderColor ?? colorScheme.inverseSurface),
-        bgColorBuilder:
-        FixedColorBuilder(filledColor ?? colorScheme.surface),
+            widget.borderColor ?? colorScheme.inverseSurface),
+        bgColorBuilder: FixedColorBuilder(
+            widget.filledColor ?? colorScheme.surface),
       ),
       currentCode: pin,
-      codeLength: codeLength,
+      codeLength: widget.codeLength,
       focusNode: focusNode,
       autoFocus: true,
-      onCodeSubmitted: onCodeSubmitted,
+      onCodeSubmitted: widget.onCodeSubmitted,
       onCodeChanged: (code) {
-        pin = code!;
-        if (code.length == (codeLength)) {
-
-          if (onCodeSubmitted != null) onCodeSubmitted!(code);
+        setState(() {
+          pin = code ?? "";
+        });
+        if (code != null && code.length == widget.codeLength) {
+          widget.onCodeSubmitted?.call(code);
           FocusScope.of(context).unfocus();
         }
       },
