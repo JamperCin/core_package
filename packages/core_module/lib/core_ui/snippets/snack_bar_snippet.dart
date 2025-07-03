@@ -39,6 +39,7 @@ class SnackBarSnippet {
     Curve? reverseAnimationCurve,
     Duration? animationDuration,
     Duration? duration,
+    EdgeInsets? margin,
     Function(GetSnackBar)? onTap,
   }) {
     Get.snackbar(
@@ -53,6 +54,7 @@ class SnackBarSnippet {
       shouldIconPulse: shouldIconPulse,
       barBlur: barBlur,
       onTap: onTap,
+      margin: margin,
       duration: duration ?? const Duration(seconds: 3),
       isDismissible: isDismissible,
       snackStyle: snackStyle ?? SnackStyle.FLOATING,
@@ -75,9 +77,13 @@ class SnackBarSnippet {
     );
   }
 
-  void snackBarError(String message, {String title = "Error",Color? bgColor,
+  void snackBarError(
+    String message, {
+    String title = "Error",
+    Color? bgColor,
     Color? textColor,
-    Color? iconColor,}) {
+    Color? iconColor,
+  }) {
     snackBar(
       title: title,
       message: message,
@@ -140,6 +146,7 @@ class SnackBarSnippet {
     bool shouldIconPulse = true,
     bool persistent = false,
     Duration? duration,
+    EdgeInsets? margin,
     Function()? onSuffixIconOnTap,
   }) {
     snackBar(
@@ -152,6 +159,7 @@ class SnackBarSnippet {
       shouldIconPulse: shouldIconPulse,
       icon: prefixIcon,
       isDismissible: !persistent,
+      margin: margin ?? EdgeInsets.symmetric(vertical: 20.dp(), horizontal: 16.dp()),
       duration:
           persistent ? const Duration(days: 1) : const Duration(seconds: 3),
       iconWidget: prefixIconWidget,
