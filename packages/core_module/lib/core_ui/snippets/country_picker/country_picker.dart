@@ -131,12 +131,20 @@ class CountryPicker {
       titleStyle: modalTitleTextStyle ??
           textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
       color: colorScheme.surface,
-      subChild: Column(
-        children: [
-          _searchFieldWidget(),
-          SizedBox(height: 16.dp()),
-          SizedBox(
-              height: appDimen.screenHeight * 0.7,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.dp(), vertical: 16.dp()),
+        child: Column(
+          children: [
+            DividerWidget(width: 70.dp(), height: 1.dp()),
+            Gap(5.dp()),
+            Text(modalSearchTitle ?? 'Search Country',
+                style: modalTitleTextStyle ??
+                    textTheme.bodyMedium
+                        ?.copyWith(color: colorScheme.inverseSurface)),
+            Gap(10.dp()),
+            _searchFieldWidget(),
+            Gap(16.dp()),
+            Expanded(
               child: Obx(
                 () => FutureBuilder(
                   future: filteredList.value,
@@ -153,8 +161,10 @@ class CountryPicker {
                     }
                   },
                 ),
-              ))
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
