@@ -86,7 +86,7 @@ class NewScreen extends BaseScreenStandard {
             labelText: 'Phone Number',
             hasCountryPicker: true,
             defaultCountryCode: 'GH',
-            countryPickerDecorationStyle: CountryPickerDecorationStyle.split,
+            countryPickerDecorationStyle: CountryPickerDecorationStyle.continuous,
             onCountrySelected: (c) {
               debugPrint("Country -> ${c.toString()}");
              // navUtils.fireTarget(LoginScreen(), model: c);

@@ -2,6 +2,7 @@ import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
 import 'package:core_module/core/utils/file_utils.dart';
 import 'package:core_module/core_module.dart';
+import 'package:core_module/src/app_module_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -442,9 +443,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
     if (widget.countryPickerDecorationStyle ==
         CountryPickerDecorationStyle.continuous) {
-      prefixIcon = Obx(
-        () => SizedBox(
-          child: InkWell(
+      prefixIcon = SizedBox(
+        width: 110.dp(),
+        child: Obx(
+          () => InkWell(
             onTap: () async {
               CountryPicker(
                 context,
@@ -466,7 +468,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               children: [
                 SizedBox(
                   // the conditional 50 prevents irregularities caused by the flags in RTL mode
-                  width: 70.dp(),
+                  width: 85.dp(),
                   child: FutureBuilder(
                     future: FileUtils.countryCodeToEmoji(
                         _selectedCountry.value.countryCode),
