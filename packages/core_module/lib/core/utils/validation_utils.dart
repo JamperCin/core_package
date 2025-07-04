@@ -20,7 +20,7 @@ class ValidationUtils {
         .hasMatch(email);
   }
 
-  bool isValidPhone(String phone, {String regex = r'^(?:233[1-9][0-9]{8}|[1-9][0-9]{8})$'}) {
+  bool isValidPhone(String phone, {String regex = r'^(?:233(?:0\d{9}|[1-9]\d{8})|0\d{9}|[1-9]\d{8})$'}) {
     return RegExp(regex).hasMatch(phone); //r"^(?:[+0])?[0-9]{9}"
   }
 
