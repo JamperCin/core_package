@@ -1,4 +1,5 @@
 import 'package:core_module/core/def/global_def.dart';
+import 'package:core_module/core/enum/country_picker_type.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
@@ -84,8 +85,11 @@ class NewScreen extends BaseScreenStandard {
             hintText: 'Enter phone number',
             labelText: 'Phone Number',
             hasCountryPicker: true,
+            defaultCountryCode: 'GH',
+            countryPickerDecorationStyle: CountryPickerDecorationStyle.split,
             onCountrySelected: (c) {
-              navUtils.fireTarget(LoginScreen(), model: c);
+              debugPrint("Country -> ${c.toString()}");
+             // navUtils.fireTarget(LoginScreen(), model: c);
             },
           ),
           Gap(20.dp()),
@@ -200,7 +204,7 @@ class NewScreen extends BaseScreenStandard {
           TabBarWidget(
             tabs: const [
               Tab(
-                // icon: Icon(Icons.ac_unit_outlined),
+                 //icon: Icon(Icons.ac_unit_outlined),
                 text: "Summary",
               ),
               Tab(

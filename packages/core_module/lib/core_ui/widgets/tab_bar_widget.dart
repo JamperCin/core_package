@@ -42,6 +42,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  TabController get tabController => _tabController;
+
   @override
   void initState() {
     _tabController = TabController(
@@ -64,11 +66,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
     final textTheme = Theme.of(context).textTheme;
 
     return TabBar(
-      physics:
-          widget.tabBarScrollable ? null : const NeverScrollableScrollPhysics(),
+      //physics: widget.tabBarScrollable ? null : const NeverScrollableScrollPhysics(),
       controller: _tabController,
       onTap: widget.onTap,
       tabs: widget.tabs,
+      isScrollable: widget.tabBarScrollable,
       indicatorColor: widget.indicatorColor ?? colorScheme.primary,
       dividerColor: widget.dividerColor ?? colorScheme.surfaceBright,
       labelColor: widget.labelColor ?? colorScheme.primary,

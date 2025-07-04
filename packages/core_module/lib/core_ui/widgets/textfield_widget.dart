@@ -1,5 +1,7 @@
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
+import 'package:core_module/core/utils/file_utils.dart';
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 
 import '../../core/enum/country_picker_type.dart';
 import '../snippets/country_picker/country_picker.dart';
+import '../snippets/country_picker/res/country_codes.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
@@ -36,6 +39,7 @@ class TextFieldWidget extends StatefulWidget {
   final Color? disabledColor;
   final String? hintText;
   final CountryPickerType? countryPickerType;
+  final CountryPickerDecorationStyle? countryPickerDecorationStyle;
   final String? countryWidgetHintText;
   final String? countrySearchHintText;
   final TextStyle? phoneCodeTextStyle;
@@ -59,6 +63,9 @@ class TextFieldWidget extends StatefulWidget {
   final VoidCallback? onTap;
   final Function(CountryModel?)? onCountrySelected;
   final FocusNode? focusNode;
+
+  ///Sample is GH, EU, etc
+  final String? defaultCountryCode;
   final String? prefixAsset;
   final String? suffixAsset;
 
@@ -102,11 +109,13 @@ class TextFieldWidget extends StatefulWidget {
         pickerRightMargin = null,
         countrySearchTextStyle = null,
         countryTextStyle = null,
+        defaultCountryCode = null,
         countryWidgetTextStyle = null,
         countryWidgetWidth = null,
         countryPickerType = null,
         countryDropDownIconSize = null,
         phoneCodeTextStyle = null,
+        countryPickerDecorationStyle = null,
         countryDropDownIconColor = null,
         modalTitleTextStyle = null,
         isPassword = false,
@@ -153,7 +162,9 @@ class TextFieldWidget extends StatefulWidget {
     this.textInputAction,
     this.focusNode,
     this.height,
+    this.defaultCountryCode,
     this.phoneCodeTextStyle,
+    this.countryPickerDecorationStyle,
     this.countryPickerType,
     this.prefixIcon,
     this.counterColor,
@@ -168,7 +179,7 @@ class TextFieldWidget extends StatefulWidget {
         inputFormatters = [FilteringTextInputFormatter.digitsOnly],
         obscuringCharacter = "*";
 
-  TextFieldWidget.withPassword({
+  const TextFieldWidget.withPassword({
     super.key,
     this.controller,
     this.isEnabled = true,
@@ -207,10 +218,12 @@ class TextFieldWidget extends StatefulWidget {
         hasCountryPicker = false,
         inputFormatters = null,
         pickerRightMargin = null,
+        defaultCountryCode = null,
         modalTitleTextStyle = null,
         countryDropDownIconSize = null,
         countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
+        countryPickerDecorationStyle = null,
         countryWidgetWidth = null,
         countryDividerColor = null,
         countrySearchHintText = null,
@@ -401,9 +414,99 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     );
   }
 
+  ///Check if default country code is set and apply it to the selected country
+  Future<CountryModel?> _initDefaultCountry() async {
+    final countryList = await FileUtils().fetchListWithPreList<CountryModel>(
+      listMap: countryCodes,
+      parser: (json) {
+        return CountryModel.fromJson(json);
+      },
+    );
+    return countryList.firstWhereOrNull(
+        (element) => element.countryCode == widget.defaultCountryCode);
+  }
+
   Widget _buildTextFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final bool isRtl = Directionality.of(context) == TextDirection.rtl;
+
+    if (widget.defaultCountryCode != null) {
+      _initDefaultCountry().then((country) {
+        if (country != null) {
+          _selectedCountry.value = country;
+          widget.onCountrySelected?.call(country);
+        }
+      });
+    }
+
+    if (widget.countryPickerDecorationStyle ==
+        CountryPickerDecorationStyle.continuous) {
+      prefixIcon = Obx(
+        () => SizedBox(
+          child: InkWell(
+            onTap: () async {
+              CountryPicker(
+                context,
+                onCountrySelected: (country) {
+                  _selectedCountry.value = country ?? const CountryModel();
+                  widget.onCountrySelected?.call(country);
+                },
+                searchTextStyle: widget.countrySearchTextStyle,
+                textStyle: widget.countryTextStyle,
+                countryPickerType:
+                    widget.countryPickerType ?? CountryPickerType.modalStyle,
+                searchHint: widget.countrySearchHintText,
+                dividerColor: widget.countryDividerColor,
+                phoneCodeTextStyle: widget.phoneCodeTextStyle,
+                modalTitleTextStyle: widget.modalTitleTextStyle,
+              );
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  // the conditional 50 prevents irregularities caused by the flags in RTL mode
+                  width: 70.dp(),
+                  child: FutureBuilder(
+                    future: FileUtils.countryCodeToEmoji(
+                        _selectedCountry.value.countryCode),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      String data = snapshot.hasData
+                          ? snapshot.data!
+                          : CountryModel.worldWide.countryCode;
+                      return Row(
+                        children: [
+                          Text(
+                            data == CountryModel.worldWide.countryCode
+                                ? '\uD83C\uDF0D'
+                                : data,
+                            style: textTheme.bodyMedium,
+                          ),
+                          Gap(5.dp()),
+                          if (_selectedCountry.value.phoneCode.isNotEmpty)
+                            Text(
+                              '${isRtl ? '' : '+'}${_selectedCountry.value.phoneCode}${isRtl ? '+' : ''}',
+                              style: widget.style ?? textTheme.bodyMedium,
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_drop_down_outlined,
+                  size: widget.countryDropDownIconSize ?? 30.dp(),
+                  color: widget.countryDropDownIconColor ??
+                      colorScheme.surfaceBright,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      return _buildTextField(context);
+    }
 
     return Row(
       children: [
