@@ -20,8 +20,8 @@ class ValidationUtils {
         .hasMatch(email);
   }
 
-  bool isValidPhone(String phone) {
-    return RegExp(r"^(?:[+0])?[0-9]{9}").hasMatch(phone);
+  bool isValidPhone(String phone, {String regex = r'^(?:233[1-9][0-9]{8}|[1-9][0-9]{8})$'}) {
+    return RegExp(regex).hasMatch(phone); //r"^(?:[+0])?[0-9]{9}"
   }
 
   bool isStrongPassword(String password,{String regex = r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"}) {
