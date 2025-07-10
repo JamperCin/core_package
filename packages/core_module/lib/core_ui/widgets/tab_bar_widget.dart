@@ -35,10 +35,10 @@ class TabBarWidget extends StatefulWidget {
   });
 
   @override
-  State<TabBarWidget> createState() => _TabBarWidgetState();
+  State<TabBarWidget> createState() => TabBarWidgetState();
 }
 
-class _TabBarWidgetState extends State<TabBarWidget>
+class TabBarWidgetState extends State<TabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
