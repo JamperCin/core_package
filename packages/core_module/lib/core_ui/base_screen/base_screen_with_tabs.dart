@@ -9,7 +9,6 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
     return 0;
   }
 
-  int tabCount();
 
   List<Widget> tabs();
 
@@ -102,7 +101,7 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
     pageController = PageController(initialPage: initialIndex());
 
     tabController = TabController(
-      length: tabCount(),
+      length: tabs().length,
       vsync: vsync,
       initialIndex: initialIndex(),
     );
