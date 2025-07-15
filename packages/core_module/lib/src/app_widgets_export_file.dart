@@ -32,3 +32,6 @@ export 'package:core_module/core_ui/widgets/textfield_widget.dart';
 export 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
 export 'package:core_module/core/model/remote/base_response_model.dart';
 export 'package:core_module/core/model/local/base_object.dart';
+export 'package:core_module/core_ui/base_screen/base_screen_stateful_standard.dart';
+export 'package:core_module/core_ui/base_screen/base_screen_stateful_dec.dart';
+export 'package:core_module/core_ui/base_screen/base_screen_with_tabs.dart';

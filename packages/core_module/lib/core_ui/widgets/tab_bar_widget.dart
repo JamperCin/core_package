@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatefulWidget {
   final List<Widget> tabs;
+  final TabController? controller;
   final Function(int)? onTap;
   final bool tabBarScrollable;
   final Color? indicatorColor;
@@ -31,7 +32,7 @@ class TabBarWidget extends StatefulWidget {
     this.indicatorPadding,
     this.dividerHeight,
     this.indicatorWeight,
-    this.initialIndex = 0,
+    this.initialIndex = 0,  this.controller,
   });
 
   @override
@@ -42,11 +43,10 @@ class TabBarWidgetState extends State<TabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  TabController get tabController => _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(
+    _tabController = widget.controller ?? TabController(
       length: widget.tabs.length,
       vsync: this,
       initialIndex: widget.initialIndex,

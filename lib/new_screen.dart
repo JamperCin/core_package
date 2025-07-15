@@ -3,18 +3,9 @@ import 'package:core_module/core/enum/country_picker_type.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/dictionary_model.dart';
 import 'package:core_module/core/model/local/intro_model.dart';
+import 'package:core_module/core/utils/navigation_utils.dart';
 import 'package:core_module/core_module.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
-import 'package:core_module/core_ui/snippets/file_image_picker/file_image_picker_widget.dart';
-import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
-import 'package:core_module/core_ui/widgets/button_widget.dart';
-import 'package:core_module/core_ui/widgets/calendar_picker_widget.dart';
-import 'package:core_module/core_ui/widgets/checkbox_widget.dart';
-import 'package:core_module/core_ui/widgets/drop_down_widget.dart';
-import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
-import 'package:core_module/core_ui/widgets/text_button_widget.dart';
-import 'package:core_module/core_ui/widgets/textfield_widget.dart';
-import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module_package/login_screen.dart';
 import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
@@ -130,17 +121,18 @@ class NewScreen extends BaseScreenStandard {
             () => ButtonWidget(
               isLoading: isLoadingMore.value,
               onTap: () async {
-                isLoadingMore.value = !isLoadingMore.value;
-                debugPrint("isLoadingMore -> ${isLoadingMore.value}");
-                await Future.delayed(const Duration(seconds: 5));
-                isLoadingMore.value = !isLoadingMore.value;
-                debugPrint("isLoadingMore 2-> ${isLoadingMore.value}");
-
-                snackBarSnippet.snackBarToast(
-                  message: "Payment Successful",
-                  persistent: true,
-                  prefixIcon: Icons.info,
-                );
+                NavUtils().fireTarget(LoginScreen());
+                // isLoadingMore.value = !isLoadingMore.value;
+                // debugPrint("isLoadingMore -> ${isLoadingMore.value}");
+                // await Future.delayed(const Duration(seconds: 5));
+                // isLoadingMore.value = !isLoadingMore.value;
+                // debugPrint("isLoadingMore 2-> ${isLoadingMore.value}");
+                //
+                // snackBarSnippet.snackBarToast(
+                //   message: "Payment Successful",
+                //   persistent: true,
+                //   prefixIcon: Icons.info,
+                // );
 
 
 

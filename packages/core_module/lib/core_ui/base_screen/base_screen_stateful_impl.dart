@@ -1,15 +1,13 @@
-import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core/extensions/int_extension.dart';
-import 'package:core_module/core_ui/widgets/icon_button_widget.dart';
+import 'package:core_module/core_ui/base_screen/base_impl.dart';
+import 'package:core_module/core_ui/base_screen/base_screen_stateful.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../core/app/app_dimens.dart';
-import '../../core/model/local/base_object.dart';
-import 'BaseScreen.dart';
-import 'base_impl.dart';
+import '../../core/def/global_def.dart';
+import '../../core_module.dart';
 
-abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
+abstract class BaseScreenStatefulImpl extends BaseScreenStateful implements BaseImpl {
   BaseObject baseObject = BaseObject();
   late BuildContext mContext;
 
@@ -24,17 +22,17 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   }
 
   @override
-  bool? resizeToAvoidBottomInset() {
-   return  null;
-  }
-
-  @override
   TextStyle? appBarTitleStyle(BuildContext context) {
     return textTheme.bodyMedium?.copyWith(
       color: colorScheme.inverseSurface,
       fontSize: 17.dp(),
       fontWeight: FontWeight.w600,
     );
+  }
+
+  @override
+  bool? resizeToAvoidBottomInset() {
+    return  null;
   }
 
   @override
@@ -50,7 +48,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
 
   @override
   IconThemeData? iconThemeData() {
-    return null;
+   return null;
   }
 
   @override
@@ -88,7 +86,7 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
 
   @override
   double appBarHeight() {
-    return appDimen.dimen(60);
+    return 60.dp();
   }
 
   @override
@@ -179,13 +177,12 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
     return true;
   }
 
-
-
   @override
   PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
       elevation: appBarElevation(),
-      toolbarHeight: appBarHeight(),iconTheme: iconThemeData(),
+      iconTheme: iconThemeData(),
+      toolbarHeight: appBarHeight(),
       backgroundColor: appBarBackgroundColor(context),
       leading: Navigator.canPop(context) ? appBarLeadingIcon(context) : null,
       surfaceTintColor: appBarBackgroundColor(context),
