@@ -80,16 +80,13 @@ class AppDbPreference {
     setString(key, place);
   }
 
-  Future<T> getItem<T>({
+  T getItem<T>({
     required String key,
     required T Function(dynamic) parser,
     required T defaultValue,
-  }) async {
+  })  {
     try {
-      return MapUtils().stringToObject(getString(key), (json) {
-            return parser(json);
-          }) ??
-          defaultValue;
+      return MapUtils().stringToObject<T>(getString(key), parser) ?? defaultValue;
     } catch (e) {
       debugPrint("Error $e");
     }
