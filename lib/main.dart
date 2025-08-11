@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/LoginScreen', page: () => LoginScreen()),
           GetPage(name: '/NewScreen', page: () => NewScreen()),
         ],
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: NewScreen(),
       ),
     );
   }
@@ -126,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           TabBarWidget(
             tabs: const [
               Tab(text: "Available Books"),
+
               Tab(text: "Purchased Books"),
             ],
             onTap: (index) {

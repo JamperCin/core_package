@@ -1,12 +1,8 @@
-import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/enum/country_picker_type.dart';
-import 'package:core_module/core/extensions/int_extension.dart';
-import 'package:core_module/core/model/local/dictionary_model.dart';
-import 'package:core_module/core/model/local/intro_model.dart';
-import 'package:core_module/core/utils/navigation_utils.dart';
 import 'package:core_module/core_module.dart';
-import 'package:core_module/core_ui/base_screen/base_screen_standard.dart';
+import 'package:core_module_package/apple_screen.dart';
+import 'package:core_module_package/bag_screen.dart';
 import 'package:core_module_package/login_screen.dart';
+import 'package:core_module_package/pick_up_screen.dart';
 import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +42,7 @@ class NewScreen extends BaseScreenStandard {
   Widget body(BuildContext context) {
     debugPrint("Argument --> ${Get.arguments}");
 
-    return SingleChildScrollView(
+    /*return SingleChildScrollView(
       padding: EdgeInsets.all(24.dp()),
       child: Column(
         children: [
@@ -136,7 +132,7 @@ class NewScreen extends BaseScreenStandard {
 
 
 
-                /* BottomSheetWidget(
+                *//* BottomSheetWidget(
                   context: context,
                   child: ConfirmTransactionLayout(
                     //displayCancelButton: false,
@@ -148,7 +144,7 @@ class NewScreen extends BaseScreenStandard {
                           message: "Payment Successful", );
                     },
                   ),
-                );*/
+                );*//*
               },
               text: 'Confirm Payment',
             ),
@@ -239,41 +235,27 @@ class NewScreen extends BaseScreenStandard {
             url:
                 "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
           ),
-          /* ,
-
-
-          TextFieldWidget(
-            hintText: 'Enter password',
-            labelText: 'Password',
-            maxLength: 10,
-          ),
-          const SizedBox(height: 20),
-
-          const SizedBox(height: 20),
-          DropDownWidget<IntroModel>(
-            selectedItem: list.first.obs,
-            list: list,
-            builder: (v) {
-              return Text(v.mainText);
-            },
-          ),
-          const SizedBox(height: 20),
-          ButtonWidget.withOutLine(
-            onTap: () {
-              // PlacesPickerWidget.searchPlaces(
-              //     context: context,
-              //     onSearch: (loc) {
-              //       print("Loc -> ${loc.toJson().toString()}");
-              //     });
-            },
-            text: "Click me",
-          ),
-          // SizedBox(height: 20),
-          // ShimmerWidget.withGrid(),*/
           const SizedBox(height: 20),
         ],
       ),
-    );
+    );*/
+
+    return Obx(() {
+      BottomBarModel model = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+
+      switch (model.text) {
+        case "Apple":
+          return AppleScreen();
+        case "Bag":
+          return BagScreen();
+        case "PickUp":
+          return PickUpScreen();
+        case "Books":
+          return LoginScreen();
+        default:
+          return LoginScreen();
+      }
+    });
   }
 
   final list = [
@@ -283,4 +265,83 @@ class NewScreen extends BaseScreenStandard {
   ];
 
   final test = ["Nissan", "Toyata", "Benz", "Bugatti"];
+
+  ///List of menu for the bottom navigation bar
+  RxList<BottomBarModel> bottomBarMenuList = [
+    BottomBarModel(
+      asset: icApple,
+      text: 'Apple',
+      isSelected: true,
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icBag,
+      text: 'Bag',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icPickUp,
+      text: 'PickUp',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icProfileCircle,
+      text: 'Books',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+  ].obs;
+
+  void onBottomMenuOnClick(BottomBarModel model) {
+    var mod = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+    if(mod == model) return;
+
+    bottomBarMenuList.value = bottomBarMenuList.value
+        .map((e) => e.copyWith(isSelected: e.text == model.text))
+        .toList();
+
+    mod = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+    mod.key?.currentState?.forward();
+  }
+
+  @override
+  Widget bottomNavigationBar(BuildContext context) {
+    return CardContainerWidget(
+      color: colorScheme.onSecondary,
+      padding: EdgeInsets.only(
+        bottom: appDimen.dimen(20),
+        top: appDimen.dimen(8),
+        right: appDimen.dimen(5),
+        left: appDimen.dimen(5),
+      ),
+      margin: EdgeInsets.zero,
+      elevation: 5,
+      child: Obx(
+            () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ...bottomBarMenuList.value.map((model) {
+                  return BottomAppBarWidget(
+                    activeColor: colorScheme.secondary,
+                    inActiveColor: colorScheme.primary,
+                    model: model,
+                    style: textTheme.labelMedium?.copyWith(fontSize: appDimen.dimen(10)),
+                    onTap: () {
+                      onBottomMenuOnClick(model);
+                    },
+                  );
+                })
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

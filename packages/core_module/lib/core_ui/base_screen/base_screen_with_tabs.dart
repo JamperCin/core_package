@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
   late TabController tabController;
   late PageController pageController;
+  bool _tabsInitialized = false;
 
   int initialIndex() {
     return 0;
@@ -69,6 +70,11 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
 
   @override
   PreferredSizeWidget? appBarBottomWidget(BuildContext context) {
+    // ✅ Prevent crash if tabs are not ready yet
+    if (!_tabsInitialized){
+     return null;
+    }
+
     return TabBar(
       physics: isTabScrollable() ? null : const NeverScrollableScrollPhysics(),
       controller: tabController,
@@ -105,7 +111,9 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
       vsync: vsync,
       initialIndex: initialIndex(),
     );
+    _tabsInitialized = true;
   }
+
 
   @override
   void dispose(SingleTickerProviderStateMixin<StatefulWidget> vsync) {
@@ -115,11 +123,10 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
 
   @override
   Widget body(BuildContext context) {
-    // return TabBarView(
-    //   physics: const AlwaysScrollableScrollPhysics(),
-    //   controller: tabController,
-    //   children: tabsViews(),
-    // );
+    if(!_tabsInitialized){
+      return const SizedBox.shrink();
+    }
+
     return PageView(
       controller: pageController,
       onPageChanged: (index) {

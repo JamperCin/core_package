@@ -1,10 +1,7 @@
-import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core_ui/base_screen/base_impl.dart';
 import 'package:core_module/core_ui/base_screen/base_screen_stateful.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/app/app_dimens.dart';
-import '../../core/def/global_def.dart';
 import '../../core_module.dart';
 
 abstract class BaseScreenStatefulImpl extends BaseScreenStateful implements BaseImpl {
