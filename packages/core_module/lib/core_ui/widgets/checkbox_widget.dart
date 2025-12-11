@@ -1,4 +1,3 @@
-import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +14,7 @@ class CheckboxWidget extends StatelessWidget {
   final Color? checkedValue;
   final Color? unCheckedValue;
   final Function(bool) onChange;
-  final GestureDetector? onTextClick;
+  final GestureTapCallback? onTextClick;
 
   const CheckboxWidget({
     super.key,
@@ -75,9 +74,7 @@ class CheckboxWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: GestureDetector(
-                onTap: () {
-                  if (onTextClick != null) onTextClick!;
-                },
+                onTap: onTextClick,
                 child: Text(text, style: style ?? textTheme.labelMedium),
               ),
             ),

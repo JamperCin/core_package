@@ -38,6 +38,7 @@ class AppDimens {
   //y=0.1x+0.4 Linear quadratic formula : Assume
   // y=mx+c (a linear relationship).
   double _getMultiplier(double value) {
+    double ratio = screenWidth / screenHeight;  
     double addValue = 0.5;
     if(value <= 20){
       addValue = 0.5;

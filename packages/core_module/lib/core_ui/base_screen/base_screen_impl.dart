@@ -185,7 +185,8 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
       elevation: appBarElevation(),
-      toolbarHeight: appBarHeight(),iconTheme: iconThemeData(),
+      toolbarHeight: appBarHeight(),
+      iconTheme: iconThemeData(),
       backgroundColor: appBarBackgroundColor(context),
       leading: Navigator.canPop(context) ? appBarLeadingIcon(context) : null,
       surfaceTintColor: appBarBackgroundColor(context),

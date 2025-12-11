@@ -1,10 +1,6 @@
-import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core_ui/widgets/text_button_widget.dart';
 
-import 'divider_widget.dart';
 
 class ListItemWidget extends StatelessWidget {
   final List<String> items;

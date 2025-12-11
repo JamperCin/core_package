@@ -1,14 +1,5 @@
-import 'package:core_module/core/app/app_dimens.dart';
-import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/extensions/int_extension.dart';
-import 'package:core_module/core/model/local/bottom_bar_model.dart';
 import 'package:core_module/core_module.dart';
-import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
-import 'package:core_module/core_ui/widgets/button_widget.dart';
-import 'package:core_module/core_ui/widgets/list_view_widget.dart';
-import 'package:core_module/core_ui/widgets/tab_bar_widget.dart';
 import 'package:core_module_package/login_screen.dart';
-import 'package:core_module_package/res/app_style.dart';
 import 'package:core_module_package/res/app_theme.dart';
 import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';

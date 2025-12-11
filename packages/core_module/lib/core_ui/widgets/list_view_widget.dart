@@ -1,7 +1,4 @@
-import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core_module.dart';
-import 'package:core_module/core_ui/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 
 class ListViewWidget<T> extends StatefulWidget {
@@ -12,6 +9,8 @@ class ListViewWidget<T> extends StatefulWidget {
   final Widget? loader;
   final EdgeInsets? padding;
   final bool withGridView;
+  final Color? refreshIndicatorColor;
+  final Color? refreshIndicatorBackgroundColor;
 
   const ListViewWidget({
     super.key,
@@ -21,6 +20,8 @@ class ListViewWidget<T> extends StatefulWidget {
     this.onRefresh,
     this.loader,
     this.padding,
+    this.refreshIndicatorColor,
+    this.refreshIndicatorBackgroundColor,
   }) : withGridView = false;
 
   const ListViewWidget.withGridView({
@@ -31,6 +32,8 @@ class ListViewWidget<T> extends StatefulWidget {
     this.onRefresh,
     this.loader,
     this.padding,
+    this.refreshIndicatorColor,
+    this.refreshIndicatorBackgroundColor,
   }) : withGridView = true;
 
   @override
@@ -50,19 +53,20 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   }
 
   Future<void> _scrollListener() async {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent &&
+    if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent &&
         (isLoadingMore.value == false)) {
       isLoadingMore.value = true;
       _scrollToLoadingMore();
 
-      final results  = await widget.onLoadMore?.call();
+      final results = await widget.onLoadMore?.call();
       isLoadingMore.value = false;
       if (results == null || results.isEmpty) return;
       items.value = [...items.value, ...results];
     }
   }
 
-  void _scrollToLoadingMore(){
+  void _scrollToLoadingMore() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
@@ -82,23 +86,23 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   Widget _loadingMore(BuildContext context) {
     return (isLoadingMore.value)
         ? Column(
-      children: [
-        Gap(20.dp()),
-        widget.loader ??
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LoaderWidget.withIndicator(radius: 20.dp()),
-                Gap(20.dp()),
-                Text(
-                  "Loading more ...",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-        Gap(60.dp()),
-      ],
-    )
+            children: [
+              Gap(20.dp()),
+              widget.loader ??
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LoaderWidget.withIndicator(radius: 20.dp()),
+                      Gap(20.dp()),
+                      Text(
+                        "Loading more ...",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+              Gap(60.dp()),
+            ],
+          )
         : const SizedBox.shrink();
   }
 
@@ -107,7 +111,7 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
     List<Widget> column = [];
 
     final emptyPlaceHolder =
-    Flexible(flex: 1, child: SizedBox(width: appDimen.screenWidth));
+        Flexible(flex: 1, child: SizedBox(width: appDimen.screenWidth));
 
     for (int i = 0; i < items.length; i++) {
       Widget widgetItem = Flexible(
@@ -143,6 +147,9 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      color: widget.refreshIndicatorColor ??
+          Theme.of(context).colorScheme.inverseSurface,
+      backgroundColor: widget.refreshIndicatorBackgroundColor,
       onRefresh: () async {
         if (widget.onRefresh == null) return;
         final results = await widget.onRefresh?.call();
@@ -150,7 +157,7 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
         items.value = results;
       },
       child: Obx(
-        ()=> ListView(
+        () => ListView(
           controller: scrollController,
           padding: widget.padding ??
               EdgeInsets.symmetric(horizontal: 5.dp(), vertical: 10.dp()),
@@ -158,12 +165,11 @@ class _ListViewWidgetState<T> extends State<ListViewWidget<T>> {
           children: widget.withGridView
               ? _withGridView(context)
               : [
-            ...items.map((e) => widget.listItemWidget(e)),
-            _loadingMore(context),
-          ],
+                  ...items.map((e) => widget.listItemWidget(e)),
+                  _loadingMore(context),
+                ],
         ),
       ),
     );
   }
 }
-
