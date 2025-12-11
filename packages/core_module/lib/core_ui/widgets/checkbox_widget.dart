@@ -16,6 +16,7 @@ class CheckboxWidget extends StatelessWidget {
   final Function(bool) onChange;
   final GestureTapCallback? onTextClick;
 
+
   const CheckboxWidget({
     super.key,
     this.text = '',
