@@ -1,4 +1,6 @@
 
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/widgets/list_item_widget.dart';
@@ -31,7 +33,7 @@ class DayMonthPickerWidget extends StatelessWidget {
                   .textTheme
                   .labelMedium
                   ?.copyWith(fontWeight: FontWeight.w400)),
-        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
+        if (labelText.isNotEmpty) Gap(5.dp()),
         Row(
           children: [
             _textField(
@@ -75,7 +77,7 @@ class DayMonthPickerWidget extends StatelessWidget {
           controller: ctrl,
           suffixIcon: Icon(
             Icons.keyboard_arrow_down_rounded,
-            size: appDimen.dimen(10),
+            size: 20.dp(),
             color: colorScheme.inverseSurface,
           )),
     );

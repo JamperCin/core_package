@@ -20,12 +20,12 @@ class ValidationUtils {
         .hasMatch(email);
   }
 
-  bool isValidPhone(String phone) {
-    return RegExp(r"^(?:[+0])?[0-9]{9}").hasMatch(phone);
+  bool isValidPhone(String phone, {String regex = r'^(?:233(?:0\d{9}|[1-9]\d{8})|0\d{9}|[1-9]\d{8})$'}) {
+    return RegExp(regex).hasMatch(phone); //r"^(?:[+0])?[0-9]{9}"
   }
 
-  bool isStrongPassword(String password) {
-    return RegExp(r"^(?=.*\d).{8,}").hasMatch(password);
+  bool isStrongPassword(String password,{String regex = r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"}) {
+    return RegExp(regex).hasMatch(password);
   }
 
   String _getStringData(TextEditingController editingController) {

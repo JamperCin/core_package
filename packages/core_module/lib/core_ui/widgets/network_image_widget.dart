@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core_module/core/app/app_module_colors.dart';
+import 'package:core_module/src/app_module_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/src/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 import 'package:core_module/core_ui/widgets/container_widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -45,13 +45,13 @@ class NetworkImageWidget extends StatelessWidget {
     this.radius,
     this.fit,
     this.heroTag,
-    this.borderRadius,
     this.childOnOverlay,
     this.setOverlay = false,
     this.url,
     this.placeHolderWidget,
   })  : isCircular = true,
         height = 0,
+        borderRadius = null,
         width = 0;
 
   @override
@@ -69,7 +69,9 @@ class NetworkImageWidget extends StatelessWidget {
         onTap: onTap,
         child: placeHolderWidget ??
             AssetImageWidget(
-              asset: isCircular ? icProfileCircle : (placeholder ?? icProfile),
+              asset: isCircular
+                  ? (placeholder ?? icProfileCircle)
+                  : (placeholder ?? icProfile),
               height: newHeight * 2,
               width: newWidth * 2,
             ),

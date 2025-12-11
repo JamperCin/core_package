@@ -1,9 +1,10 @@
+import 'package:core_module/core/extensions/int_extension.dart';
+import 'package:core_module/core_module.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/snippets/ui_snippet.dart';
 
-class PodWidget extends StatelessWidget {
+class PodWidget extends StatefulWidget {
   final int podLength;
   final RxInt currentIndex;
   final Function(int)? onTap;
@@ -26,65 +27,66 @@ class PodWidget extends StatelessWidget {
   });
 
   @override
+  State<PodWidget> createState() => _PodWidgetState();
+}
+
+class _PodWidgetState extends State<PodWidget> {
+
+  void _handleTap(int index) {
+    widget.currentIndex.value = index;
+    widget.onTap?.call(index);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    if (currentIndex.value > podLength) {
-      currentIndex.value = 0;
-    }
-    List<Widget> list = [];
-    for (int i = 0; i < podLength; i++) {
-      list.add(Obx(
-        () => AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          child: InkWell(
-            onTap: () {
-              if (onTap != null) {
-                onTap!(i);
-              }
-            },
-            child: rectPod
-                ? Container(
-                    width: currentIndex.value == i
-                        ? appDimen.dimen(24)
-                        : appDimen.dimen(16),
-                    height: currentIndex.value == i
-                        ? appDimen.dimen(5)
-                        : appDimen.dimen(4),
-                    margin: EdgeInsets.only(right: appDimen.dimen(5)),
-                    decoration: deco(
-                      color: currentIndex.value == i
-                          ? activeColor ?? colorScheme.primary
-                          : inActiveColor ?? colorScheme.secondary,
-                      opacity: 0.2,
-                      context: context,
-                    ),
-                  )
-                : Container(
-                    width: currentIndex.value == i
-                        ? podSize ?? appDimen.dimen(12)
-                        : podInActiveSize ?? appDimen.dimen(6),
-                    margin: EdgeInsets.only(right: appDimen.dimen(6)),
-                    height: currentIndex.value == i
-                        ? podSize ?? appDimen.dimen(12)
-                        : podInActiveSize ?? appDimen.dimen(6),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: currentIndex.value == i
-                          ? activeColor ?? colorScheme.primary
-                          : inActiveColor ?? colorScheme.secondary,
-                    ),
-                  ),
-          ),
-        ),
-      ));
-    }
-
-    ///return row
     return FittedBox(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: list,
+      child: Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(widget.podLength, (i) {
+            final isActive = widget.currentIndex.value == i;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              margin: EdgeInsets.only(right: appDimen.dimen(6)),
+              child: InkWell(
+                onTap: () => _handleTap(i),
+                child: widget.rectPod
+                    ? Container(
+                        width: isActive ? 30.dp() : 20.dp(),
+                        height: isActive
+                            ? widget.podSize ?? 4.dp()
+                            : widget.podInActiveSize ?? 2.dp(),
+                        decoration: deco(
+                          color: isActive
+                              ? widget.activeColor ?? colorScheme.primary
+                              : widget.inActiveColor ?? colorScheme.outline,
+                          borderColor: isActive
+                              ? widget.activeColor ?? colorScheme.primary
+                              : widget.inActiveColor ?? colorScheme.outline,
+                          opacity: 0.2,
+                          context: context,
+                        ),
+                      )
+                    : Container(
+                        width: isActive
+                            ? widget.podSize ?? appDimen.dimen(12)
+                            : widget.podInActiveSize ?? appDimen.dimen(6),
+                        height: isActive
+                            ? widget.podSize ?? appDimen.dimen(12)
+                            : widget.podInActiveSize ?? appDimen.dimen(6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isActive
+                              ? widget.activeColor ?? colorScheme.primary
+                              : widget.inActiveColor ?? colorScheme.outline,
+                        ),
+                      ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

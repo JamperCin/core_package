@@ -59,6 +59,7 @@ class LoaderWidget extends StatelessWidget {
     Widget? child,
     bool autoDismiss = true,
     double? radius,
+    int? timeOut,
   }) async {
     Loader.show(
       context,
@@ -78,7 +79,7 @@ class LoaderWidget extends StatelessWidget {
     );
 
     if (autoDismiss) {
-      await Future.delayed(Duration(seconds: config.getTimeOut()));
+      await Future.delayed(Duration(seconds: timeOut ?? config.getTimeOut()));
       hideProgress();
     }
   }

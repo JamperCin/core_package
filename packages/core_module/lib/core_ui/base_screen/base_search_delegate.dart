@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:core_module/core/app/app_style.dart';
+import 'package:core_module/src/app_style.dart';
 import 'package:core_module/core/def/global_def.dart';
 
 abstract class BaseSearchDelegate<T> extends SearchDelegate<T> {

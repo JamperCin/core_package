@@ -7,7 +7,7 @@ import 'package:core_module/core_ui/snippets/country_picker/res/country_codes.da
 import 'package:flutter/material.dart';
 
 import '../../../core/enum/country_picker_type.dart';
-import '../../../core/res/assets_path.dart';
+import '../../../src/assets_path.dart';
 import '../../../core/utils/file_utils.dart';
 import '../../widgets/bottom_sheet_widget.dart';
 import '../../widgets/divider_widget.dart';
@@ -94,6 +94,7 @@ class CountryPicker {
     showSearch(
       context: context,
       delegate: CountryPickerDelegate(
+          context: context,
           textStyle: textStyle,
           searchHint: searchHint,
           searchTextStyle: searchTextStyle,
@@ -127,14 +128,23 @@ class CountryPicker {
       title: modalSearchTitle ?? 'Search Country',
       height: modalHeight ?? appDimen.screenHeight * 0.8,
       margin: modalMargin ?? EdgeInsets.symmetric(horizontal: 16.dp()),
-      titleStyle: modalTitleTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
+      titleStyle: modalTitleTextStyle ??
+          textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
       color: colorScheme.surface,
-      subChild: Column(
-        children: [
-          _searchFieldWidget(),
-          SizedBox(height: 16.dp()),
-          SizedBox(
-              height: appDimen.screenHeight * 0.7,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.dp(), vertical: 16.dp()),
+        child: Column(
+          children: [
+            DividerWidget(width: 70.dp(), height: 1.dp()),
+            Gap(5.dp()),
+            Text(modalSearchTitle ?? 'Search Country',
+                style: modalTitleTextStyle ??
+                    textTheme.bodyMedium
+                        ?.copyWith(color: colorScheme.inverseSurface)),
+            Gap(10.dp()),
+            _searchFieldWidget(),
+            Gap(16.dp()),
+            Expanded(
               child: Obx(
                 () => FutureBuilder(
                   future: filteredList.value,
@@ -151,8 +161,10 @@ class CountryPicker {
                     }
                   },
                 ),
-              ))
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -176,8 +188,10 @@ class CountryPicker {
       borderRadius: 30,
       controller: searchController,
       hintText: searchHint ?? 'Search Country...',
-      hintStyle: searchHintTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
-      style: searchTextStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      hintStyle: searchHintTextStyle ??
+          textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+      style: searchTextStyle ??
+          textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
       backgroundColor: colorScheme.surface,
       borderColor: colorScheme.inverseSurface,
       unFocusColor: colorScheme.inverseSurface,
@@ -257,7 +271,9 @@ class CountryPicker {
                 width: 50,
                 child: Text(
                   '${isRtl ? '' : '+'}${item.phoneCode}${isRtl ? '+' : ''}',
-                  style: phoneCodeTextStyle ?? textTheme.bodyMedium?.copyWith(color: colorScheme.inverseSurface),
+                  style: phoneCodeTextStyle ??
+                      textTheme.bodyMedium
+                          ?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
               SizedBox(width: 10.dp()),
@@ -267,7 +283,9 @@ class CountryPicker {
                           ?.countryName(countryCode: item.countryCode)
                           ?.replaceAll(RegExp(r"\s+"), " ") ??
                       item.name,
-                  style: textStyle ?? textTheme.bodySmall?.copyWith(color: colorScheme.inverseSurface),
+                  style: textStyle ??
+                      textTheme.bodySmall
+                          ?.copyWith(color: colorScheme.inverseSurface),
                 ),
               ),
             ],

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class CountdownSnackBarContent extends StatefulWidget {
   final int durationSeconds;
   final Function()? onActionOnTap;
+  final Function()? onProgressCompletion;
   final Color? progressFilledColor;
   final Color? progressUnfilledFilledColor;
-
   final Color? actionIconColor;
   final double? actionIconSize;
   final IconData? actionIcon;
@@ -29,6 +29,7 @@ class CountdownSnackBarContent extends StatefulWidget {
     this.actionIconSize,
     this.messageWidget,
     this.actionIcon,
+    this.onProgressCompletion,
   });
 
   @override
@@ -63,6 +64,10 @@ class _CountdownSnackBarContentState extends State<CountdownSnackBarContent>
     return AnimatedBuilder(
       animation: _controller,
       builder: (_, __) {
+        if (_controller.isCompleted) {
+          widget.onProgressCompletion?.call();
+        }
+
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -72,7 +77,9 @@ class _CountdownSnackBarContentState extends State<CountdownSnackBarContent>
                   child: widget.messageWidget ??
                       Text(
                         widget.message ?? '',
-                        style: widget.messageStyle ?? textTheme.labelMedium,
+                        style: widget.messageStyle ??
+                            textTheme.labelMedium
+                                ?.copyWith(color: colorScheme.surface),
                       ),
                 ),
                 SizedBox(width: 10.dp()),

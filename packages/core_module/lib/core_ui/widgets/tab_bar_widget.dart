@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class TabBarWidget extends StatefulWidget {
   final List<Widget> tabs;
+  final TabController? controller;
   final Function(int)? onTap;
   final bool tabBarScrollable;
   final Color? indicatorColor;
@@ -14,6 +15,7 @@ class TabBarWidget extends StatefulWidget {
   final EdgeInsetsGeometry? indicatorPadding;
   final double? dividerHeight;
   final double? indicatorWeight;
+  final int initialIndex;
 
   const TabBarWidget({
     super.key,
@@ -30,19 +32,25 @@ class TabBarWidget extends StatefulWidget {
     this.indicatorPadding,
     this.dividerHeight,
     this.indicatorWeight,
+    this.initialIndex = 0,  this.controller,
   });
 
   @override
-  State<TabBarWidget> createState() => _TabBarWidgetState();
+  State<TabBarWidget> createState() => TabBarWidgetState();
 }
 
-class _TabBarWidgetState extends State<TabBarWidget>
+class TabBarWidgetState extends State<TabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+
   @override
   void initState() {
-    _tabController = TabController(length: widget.tabs.length, vsync: this);
+    _tabController = widget.controller ?? TabController(
+      length: widget.tabs.length,
+      vsync: this,
+      initialIndex: widget.initialIndex,
+    );
     super.initState();
   }
 
@@ -58,17 +66,17 @@ class _TabBarWidgetState extends State<TabBarWidget>
     final textTheme = Theme.of(context).textTheme;
 
     return TabBar(
-      physics:
-          widget.tabBarScrollable ? null : const NeverScrollableScrollPhysics(),
+      //physics: widget.tabBarScrollable ? null : const NeverScrollableScrollPhysics(),
       controller: _tabController,
       onTap: widget.onTap,
       tabs: widget.tabs,
+      isScrollable: widget.tabBarScrollable,
       indicatorColor: widget.indicatorColor ?? colorScheme.primary,
       dividerColor: widget.dividerColor ?? colorScheme.surfaceBright,
       labelColor: widget.labelColor ?? colorScheme.primary,
       labelStyle: widget.labelStyle ?? textTheme.bodyMedium,
       unselectedLabelColor:
-          widget.unselectedLabelColor ?? colorScheme.surfaceBright,
+          widget.unselectedLabelColor ?? colorScheme.surfaceDim,
       unselectedLabelStyle: widget.unselectedLabelStyle ?? textTheme.bodyMedium,
       padding: widget.padding,
       dividerHeight: widget.dividerHeight,

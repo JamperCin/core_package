@@ -27,7 +27,7 @@ class BottomAppBarWidget extends StatelessWidget {
     const double defaultSize = 20;
 
     return InkWell(
-      splashColor: Colors.transparent, //colorScheme.secondaryFixed,
+      splashColor: Colors.transparent,
       onTap: onTap,
       child: BounceIn(
         key: model.key,

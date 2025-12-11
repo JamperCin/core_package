@@ -1,12 +1,11 @@
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
 import 'package:core_module/core_ui/widgets/icon_button_widget.dart';
 
-class QuantityUpdateWidget extends StatelessWidget {
+class QuantityUpdateWidget extends StatefulWidget {
   final Function(int)? onTap;
-  final RxInt quantity;
+  final int initialQuantity;
   final double? iconSize;
   final double? buttonSize;
   final Color? backgroundColor;
@@ -16,13 +15,33 @@ class QuantityUpdateWidget extends StatelessWidget {
   const QuantityUpdateWidget({
     super.key,
     this.onTap,
-    required this.quantity,
+    this.initialQuantity = 1,
     this.iconSize,
     this.textStyle,
     this.backgroundColor,
     this.iconColor,
     this.buttonSize,
   });
+
+  @override
+  State<QuantityUpdateWidget> createState() => _QuantityUpdateWidgetState();
+}
+
+class _QuantityUpdateWidgetState extends State<QuantityUpdateWidget> {
+  late int quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.initialQuantity < 0 ? 0 : widget.initialQuantity;
+  }
+
+  void _updateQuantity(int delta) {
+    setState(() {
+      quantity = (quantity + delta).clamp(0, 999999); // Prevent negative quantity
+    });
+    widget.onTap?.call(quantity);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,31 +52,26 @@ class QuantityUpdateWidget extends StatelessWidget {
       children: [
         IconButtonWidget.withContainer(
           icon: Icons.remove,
-          height: buttonSize ?? 22.dp(),
-          width: buttonSize ?? 22.dp(),
-          iconSize: iconSize ?? 20.dp(),
-          onTap: () {
-            if (quantity.value >= 1) {
-              quantity.value--;
-              if (onTap != null) onTap!(quantity.value);
-            }
-          },
+          height: widget.buttonSize ?? 22.dp(),
+          width: widget.buttonSize ?? 22.dp(),
+          iconSize: widget.iconSize ?? 20.dp(),
+          onTap: () => _updateQuantity(-1),
         ),
         SizedBox(width: 13.dp()),
-        Obx(() => Text("${quantity.value}",
-            style: textStyle ?? textTheme.bodyMedium)),
+        Text(
+          "$quantity",
+          style: widget.textStyle ?? textTheme.bodyMedium,
+        ),
         SizedBox(width: 13.dp()),
         IconButtonWidget.withContainer(
-          backgroundColor: backgroundColor ?? colorScheme.outlineVariant,
+          backgroundColor:
+          widget.backgroundColor ?? colorScheme.inverseSurface,
           icon: Icons.add,
-          height: buttonSize ?? 22.dp(),
-          width: buttonSize ?? 22.dp(),
-          iconSize: iconSize ?? 20.dp(),
-          iconColor: iconColor ?? colorScheme.tertiary,
-          onTap: () {
-            quantity.value++;
-            if (onTap != null) onTap!(quantity.value);
-          },
+          height: widget.buttonSize ?? 22.dp(),
+          width: widget.buttonSize ?? 22.dp(),
+          iconSize: widget.iconSize ?? 20.dp(),
+          iconColor: widget.iconColor ?? colorScheme.surface,
+          onTap: () => _updateQuantity(1),
         ),
       ],
     );

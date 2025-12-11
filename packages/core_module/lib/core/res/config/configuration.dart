@@ -9,19 +9,19 @@ class Configuration {
   late Map<String, dynamic> _envMap;
 
   ///Configuration private fields to be consumed
-  String _userType = "";
-  String _defaultEnv = "";
-  String _defaultEnvScheme = "";
-  String _googleApi = "";
-  String _appStoreId = "";
-  String _googleEnv = "";
-  String _googlePlayLink = "";
-  String _appleStoreLink = "";
-  String _privacyPolicy = "";
-  String _fileUploadApi = "";
-  String _termsAndConditions = "";
-  int _networkTimeOut = 0;
-  int _smsTimer = 0;
+  String? _userType;
+  String? _defaultEnv;
+  String? _defaultEnvScheme;
+  String? _googleApi;
+  String? _appStoreId;
+  String? _googleEnv;
+  String? _googlePlayLink;
+  String? _appleStoreLink;
+  String? _privacyPolicy;
+  String? _fileUploadApi;
+  String? _termsAndConditions;
+  int? _networkTimeOut = 0;
+  int? _smsTimer = 0;
 
   Configuration._(this._envPath, {EnvType? defaultEnv}) {
     _fileUtils = FileUtils();
@@ -61,17 +61,17 @@ class Configuration {
 
   Future<String> _fetchEnvironment({EnvType? type}) async {
     Map<String, dynamic> map = await _fetchEnvMap(type: type);
-    return map['host'] as String;
+    return map.containsKey('host') ? map['host'] as String : '';
   }
 
   Future<String> _fetchEnvironmentScheme({EnvType? type}) async {
     Map<String, dynamic> map = await _fetchEnvMap(type: type);
-    final isHttpsScheme = map['https'] as bool;
+    final isHttpsScheme = map.containsKey('https') ? map['https'] as bool : true;
     return isHttpsScheme ? "https" : "http";
   }
 
   Future<Map<String, dynamic>> _fetchEnvMap({EnvType? type}) async {
-    final result = _envMap['env'];
+    final result = _envMap.containsKey('env') ? _envMap['env'] : {};
     String envType = (type ?? EnvType.production).name;
     Map<String, dynamic> map = result.where((e) => e['name'] == envType).first;
     return map;
@@ -84,61 +84,61 @@ class Configuration {
   }
 
   Map<String, dynamic> fetchEnv({String? envKey}) {
-    final result = _envMap['env'];
+    final result = _envMap.containsKey('env') ? _envMap['env'] : {};
     String envType = envKey ?? EnvType.production.name;
     Map<String, dynamic> map = result.where((e) => e['name'] == envType).first;
     return map;
   }
 
   String getEnvironment() {
-    return _defaultEnv;
+    return _defaultEnv ?? '';
   }
 
   String getEnvironmentScheme() {
-    return _defaultEnvScheme;
+    return _defaultEnvScheme ?? 'https';
   }
 
   String getFileUploadApi(){
-    return _fileUploadApi;
+    return _fileUploadApi ?? '';
   }
 
   String getGoogleEnvironment() {
-    return _googleEnv;
+    return _googleEnv ?? 'maps.googleapis.com';
   }
 
   String getUserType() {
-    return _userType;
+    return _userType ?? '';
   }
 
   String getAppStoreId() {
-    return _appStoreId;
+    return _appStoreId ?? '';
   }
 
   String getGoogleApiKey() {
-    return _googleApi;
+    return _googleApi ?? '';
   }
 
   String getGooglePlayStoreLink() {
-    return _googlePlayLink;
+    return _googlePlayLink ?? '';
   }
 
   String getAppleStoreLink() {
-    return _appleStoreLink;
+    return _appleStoreLink ?? '';
   }
 
   String getPrivacyPolicyLink() {
-    return _privacyPolicy;
+    return _privacyPolicy ?? '';
   }
 
   String getTermsAndConditionsLink() {
-    return _termsAndConditions;
+    return _termsAndConditions ?? '';
   }
 
   int getSmsTimer() {
-    return _smsTimer;
+    return _smsTimer ?? 60;
   }
 
   int getTimeOut() {
-    return _networkTimeOut;
+    return _networkTimeOut ?? 30;
   }
 }

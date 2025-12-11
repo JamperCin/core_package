@@ -3,5 +3,10 @@ class Assets {
   Assets._();
 
   static const String dataEnv = 'assets/data/env.json';
+  static const String imagesIcApple = 'assets/images/ic_apple.svg';
+  static const String imagesIcBag = 'assets/images/ic_bag.svg';
+  static const String imagesIcPickUp = 'assets/images/ic_pick_up.svg';
+  static const String imagesIcProfileCircle = 'assets/images/ic_profile_circle.svg';
+  static const String imagesIcSuccess = 'assets/images/ic_success.svg';
 
 }

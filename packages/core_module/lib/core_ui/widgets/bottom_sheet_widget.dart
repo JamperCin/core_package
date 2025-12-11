@@ -46,7 +46,7 @@ class BottomSheetWidget extends StatelessWidget {
       isScrollControlled: true,
       Container(
         decoration: BoxDecoration(
-          color: color ?? colorScheme.tertiary,
+          color: color ?? colorScheme.surface,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(borderRadius ?? 10),
             topRight: Radius.circular(borderRadius ?? 10),

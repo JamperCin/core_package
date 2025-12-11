@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/src/assets_path.dart';
 
 class AssetImageWidget extends StatelessWidget {
   String asset;

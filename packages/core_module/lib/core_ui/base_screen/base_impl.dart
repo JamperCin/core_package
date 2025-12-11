@@ -10,9 +10,5 @@ abstract class BaseImpl extends Widget {
   ///Get the current Model of this page
   BaseObject getModel();
 
-  @override
-  Element createElement() {
-    // TODO: implement createElement
-    throw UnimplementedError();
-  }
+
 }

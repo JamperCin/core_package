@@ -1,19 +1,23 @@
 import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:core_module/core/model/local/country_model.dart';
+import 'package:core_module/core/utils/file_utils.dart';
+import 'package:core_module/core_module.dart';
+import 'package:core_module/src/app_module_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/res/assets_path.dart';
+import 'package:core_module/src/assets_path.dart';
 import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
 
 import '../../core/enum/country_picker_type.dart';
 import '../snippets/country_picker/country_picker.dart';
+import '../snippets/country_picker/res/country_codes.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final bool isEnabled;
-  Widget? prefixIcon;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool hasCountryPicker;
   final double borderRadius;
@@ -24,7 +28,7 @@ class TextFieldWidget extends StatelessWidget {
   final double? countryDropDownIconSize;
   final int? maxLength;
   final ValueChanged<String>? onChanged;
-  ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onFieldSubmitted;
   final int? maxLines;
   final Color? borderColor;
   final Color? backgroundColor;
@@ -36,6 +40,7 @@ class TextFieldWidget extends StatelessWidget {
   final Color? disabledColor;
   final String? hintText;
   final CountryPickerType? countryPickerType;
+  final CountryPickerDecorationStyle? countryPickerDecorationStyle;
   final String? countryWidgetHintText;
   final String? countrySearchHintText;
   final TextStyle? phoneCodeTextStyle;
@@ -51,16 +56,21 @@ class TextFieldWidget extends StatelessWidget {
   final TextStyle? countrySearchTextStyle;
   final TextStyle? countryTextStyle;
   final TextStyle? counterStyle;
-  TextInputType? keyboardType;
-  TextCapitalization? textCapitalization;
-  List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
+  final List<TextInputFormatter>? inputFormatters;
   final EdgeInsetsGeometry? margin;
-  RxBool? obscureText;
+  final bool isPassword;
   final VoidCallback? onTap;
   final Function(CountryModel?)? onCountrySelected;
   final FocusNode? focusNode;
 
-  TextFieldWidget({
+  ///Sample is GH, EU, etc
+  final String? defaultCountryCode;
+  final String? prefixAsset;
+  final String? suffixAsset;
+
+  const TextFieldWidget({
     super.key,
     this.controller,
     this.isEnabled = true,
@@ -91,20 +101,25 @@ class TextFieldWidget extends StatelessWidget {
     this.height,
     this.counterColor,
     this.counterStyle,
-  })  : obscureText = null,
-        hasCountryPicker = false,
+    this.onFieldSubmitted,
+    this.prefixAsset,
+    this.suffixAsset,
+  })  : hasCountryPicker = false,
         inputFormatters = null,
         countryDividerColor = null,
         pickerRightMargin = null,
         countrySearchTextStyle = null,
         countryTextStyle = null,
+        defaultCountryCode = null,
         countryWidgetTextStyle = null,
         countryWidgetWidth = null,
         countryPickerType = null,
         countryDropDownIconSize = null,
         phoneCodeTextStyle = null,
+        countryPickerDecorationStyle = null,
         countryDropDownIconColor = null,
         modalTitleTextStyle = null,
+        isPassword = false,
         onCountrySelected = null,
         countrySearchHintText = null,
         countryWidgetHintText = null,
@@ -148,17 +163,24 @@ class TextFieldWidget extends StatelessWidget {
     this.textInputAction,
     this.focusNode,
     this.height,
+    this.defaultCountryCode,
     this.phoneCodeTextStyle,
+    this.countryPickerDecorationStyle,
     this.countryPickerType,
     this.prefixIcon,
     this.counterColor,
-    this.counterStyle, this.countryDividerColor,
-  })  : obscureText = null,
-        keyboardType = TextInputType.phone,
+    this.counterStyle,
+    this.countryDividerColor,
+    this.onFieldSubmitted,
+    this.prefixAsset,
+    this.suffixAsset,
+  })  : keyboardType = TextInputType.phone,
+        textCapitalization = TextCapitalization.none,
+        isPassword = false,
         inputFormatters = [FilteringTextInputFormatter.digitsOnly],
         obscuringCharacter = "*";
 
-  TextFieldWidget.withPassword({
+  const TextFieldWidget.withPassword({
     super.key,
     this.controller,
     this.isEnabled = true,
@@ -187,15 +209,22 @@ class TextFieldWidget extends StatelessWidget {
     this.height,
     this.counterColor,
     this.counterStyle,
-  })  : obscuringCharacter = "*",
+    this.onFieldSubmitted,
+    this.obscuringCharacter = "*",
+    this.prefixAsset,
+    this.suffixAsset,
+  })  : isPassword = true,
         keyboardType = TextInputType.visiblePassword,
+        textCapitalization = TextCapitalization.none,
         hasCountryPicker = false,
         inputFormatters = null,
         pickerRightMargin = null,
+        defaultCountryCode = null,
         modalTitleTextStyle = null,
         countryDropDownIconSize = null,
         countryDropDownIconColor = null,
         phoneCodeTextStyle = null,
+        countryPickerDecorationStyle = null,
         countryWidgetWidth = null,
         countryDividerColor = null,
         countrySearchHintText = null,
@@ -204,238 +233,353 @@ class TextFieldWidget extends StatelessWidget {
         countryPickerType = null,
         onCountrySelected = null,
         countryTextStyle = null,
-        countryWidgetHintText = null,
-        obscureText = true.obs;
+        countryWidgetHintText = null;
+
+  @override
+  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+}
+
+class _TextFieldWidgetState extends State<TextFieldWidget> {
+  late RxBool obscureText;
+  final Rx<CountryModel> _selectedCountry = const CountryModel().obs;
+  Widget? prefixIcon;
+  Widget? suffixIcon;
+
+  @override
+  void initState() {
+    super.initState();
+
+    assert(
+        !((widget.prefixAsset ?? '').isNotEmpty && widget.prefixIcon != null),
+        'Both prefixAsset and prefixIcon cannot be present at the same time');
+
+    assert(
+        !((widget.suffixAsset ?? '').isNotEmpty && widget.suffixIcon != null),
+        'Both suffixAsset and suffixIcon cannot be present at the same time');
+
+    obscureText = widget.isPassword ? true.obs : false.obs;
+
+    prefixIcon = widget.prefixIcon;
+    suffixIcon = widget.suffixIcon;
+
+    if (widget.isPassword) {
+      prefixIcon = widget.prefixIcon ??
+          AssetImageWidget(
+            asset: widget.prefixAsset ?? icPassword,
+            width: appDimen.dimen(14),
+            height: appDimen.dimen(14),
+          );
+    }
+
+    if (widget.keyboardType == TextInputType.phone) {
+      prefixIcon = widget.prefixIcon ??
+          AssetImageWidget(
+            asset: widget.prefixAsset ?? icMobile,
+            width: appDimen.dimen(14),
+            height: appDimen.dimen(14),
+          );
+    }
+
+    if (widget.prefixAsset != null && widget.prefixAsset!.isNotEmpty) {
+      prefixIcon = AssetImageWidget(
+        asset: widget.prefixAsset!,
+        width: appDimen.dimen(14),
+        height: appDimen.dimen(14),
+      );
+    }
+
+    if (widget.suffixAsset != null && widget.suffixAsset!.isNotEmpty) {
+      suffixIcon = AssetImageWidget(
+        asset: widget.suffixAsset!,
+        width: appDimen.dimen(14),
+        height: appDimen.dimen(14),
+      );
+    }
+
+    prefixIcon = widget.prefixIcon is SizedBox ? null : prefixIcon;
+
+    debugPrint("suffix -> $suffixIcon");
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (obscureText != null) {
-      prefixIcon = prefixIcon ??
-          AssetImageWidget(
-            asset: icPassword,
-            width: appDimen.dimen(14),
-            height: appDimen.dimen(14),
-          );
-    }
-
-    if (keyboardType == TextInputType.phone) {
-      prefixIcon = prefixIcon ??
-          AssetImageWidget(
-            asset: icMobile,
-            width: appDimen.dimen(14),
-            height: appDimen.dimen(14),
-          );
-    }
-
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (labelText.isNotEmpty)
-          Text(labelText,
-              style: labelStyle ??
-                  textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: colorScheme.inverseSurface,
-                  )),
-        if (labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
+        if (widget.labelText.isNotEmpty)
+          Text(
+            widget.labelText,
+            style: widget.labelStyle ??
+                textTheme.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: colorScheme.inverseSurface,
+                ),
+          ),
+        if (widget.labelText.isNotEmpty) SizedBox(height: appDimen.dimen(3.0)),
         SizedBox(
-          width: width ?? appDimen.screenWidth,
-          height: height ?? appDimen.dimen(60),
-          child: obscureText != null
-              ? Obx(() => _textField(context))
-              : hasCountryPicker
-                  ? _textFieldWithCountryPicker(context)
-                  : _textField(context),
+          width: widget.width ?? appDimen.screenWidth,
+          height: widget.height ?? appDimen.dimen(60),
+          child: widget.isPassword
+              ? Obx(() => _buildTextField(context))
+              : widget.hasCountryPicker
+                  ? _buildTextFieldWithCountryPicker(context)
+                  : _buildTextField(context),
         ),
       ],
     );
   }
 
-  Widget _textField(BuildContext context) {
+  Widget _buildTextField(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return InkWell(
-      onTap: onTap,
-      child: TextFormField(
-        enabled: isEnabled,
-        focusNode: focusNode,
-        controller: controller,
-        textAlign: textAlign ?? TextAlign.left,
-        obscureText: obscureText != null && obscureText!.value,
-        style: style ?? textTheme.labelMedium?.copyWith(color: colorScheme.inverseSurface),
-        textInputAction: textInputAction ?? TextInputAction.go,
-        decoration: InputDecoration(
-          prefixIcon: prefixIcon != null
-              ? Padding(
-                  padding: EdgeInsets.all(appDimen.dimen(8)),
-                  child: prefixIcon,
-                )
-              : prefixIcon,
-          suffixIcon: obscureText != null
-              ? Padding(
-                  padding: EdgeInsets.all(appDimen.dimen(8)),
+    return TextFormField(
+      enabled: widget.isEnabled,
+      focusNode: widget.focusNode,
+      controller: widget.controller,
+      textAlign: widget.textAlign ?? TextAlign.left,
+      obscureText: widget.isPassword ? obscureText.value : false,
+      style: widget.style ??
+          textTheme.labelMedium?.copyWith(color: colorScheme.inverseSurface),
+      textInputAction: widget.textInputAction ?? TextInputAction.go,
+      decoration: InputDecoration(
+        prefixIcon: prefixIcon != null
+            ? Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 8.dp(), vertical: 6.dp()),
+                child: prefixIcon,
+              )
+            : null,
+        suffixIcon: widget.isPassword && suffixIcon == null
+            ? GestureDetector(
+                onTap: () => obscureText.value = !obscureText.value,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 8.dp(), vertical: 6.dp()),
                   child: AssetImageWidget(
-                    height: appDimen.dimen(6),
-                    width: appDimen.dimen(6),
-                    asset: obscureText!.value ? icEyeSvg : icEyeClosedSvg,
+                    height: 10.dp(),
+                    width: 10.dp(),
+                    asset: obscureText.value ? icEyeSvg : icEyeClosedSvg,
                     assetColor: colorScheme.inverseSurface,
-                    onTap: () {
-                      if (obscureText != null) {
-                        obscureText!.value = !(obscureText!.value);
-                      }
-                    },
                   ),
-                )
-              : suffixIcon,
-          hintText: hintText,
-          hintStyle: hintStyle ?? textTheme.labelSmall?.copyWith(color: colorScheme.inverseSurface),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: BorderSide(
-              color: borderColor ?? colorScheme.primary,
-              width: 1,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: disabledColor ?? colorScheme.secondary,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: unFocusColor ?? colorScheme.primary,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: focusColor ?? colorScheme.primary,
-              width: 1,
-            ),
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          filled: true,
-          fillColor: backgroundColor ?? colorScheme.surface,
-          counterStyle: counterStyle ??
-              textTheme.bodyMedium
-                  ?.copyWith(color: counterColor ?? colorScheme.primary),
+                ),
+              )
+            : suffixIcon != null && suffixIcon is! SizedBox
+                ? Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 8.dp(), vertical: 6.dp()),
+                    child: suffixIcon,
+                  )
+                : null,
+        hintText: widget.hintText,
+        hintStyle: widget.hintStyle ??
+            textTheme.labelSmall?.copyWith(color: colorScheme.inverseSurface),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide:
+              BorderSide(color: widget.borderColor ?? colorScheme.primary),
         ),
-        keyboardType: keyboardType,
-        inputFormatters: inputFormatters,
-        textCapitalization: textCapitalization ?? TextCapitalization.words,
-        maxLines: maxLines ?? 1,
-        maxLength: maxLength,
-        onChanged: onChanged,
-        onFieldSubmitted: onFieldSubmitted,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide:
+              BorderSide(color: widget.unFocusColor ?? colorScheme.primary),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide:
+              BorderSide(color: widget.focusColor ?? colorScheme.primary),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderSide:
+              BorderSide(color: widget.disabledColor ?? colorScheme.secondary),
+        ),
+        filled: true,
+        fillColor: widget.backgroundColor ?? colorScheme.surface,
+        counterStyle: widget.counterStyle ??
+            textTheme.bodyMedium
+                ?.copyWith(color: widget.counterColor ?? colorScheme.primary),
       ),
+      keyboardType: widget.keyboardType,
+      inputFormatters: widget.inputFormatters,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.words,
+      maxLines: widget.maxLines ?? 1,
+      maxLength: widget.maxLength,
+      onChanged: widget.onChanged,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onTap: widget.onTap,
     );
   }
 
-  final Rx<CountryModel> _selectedCountry = const CountryModel().obs;
+  ///Check if default country code is set and apply it to the selected country
+  Future<CountryModel?> _initDefaultCountry() async {
+    final countryList = await FileUtils().fetchListWithPreList<CountryModel>(
+      listMap: countryCodes,
+      parser: (json) {
+        return CountryModel.fromJson(json);
+      },
+    );
+    return countryList.firstWhereOrNull(
+        (element) => element.countryCode == widget.defaultCountryCode);
+  }
 
-  Widget _textFieldWithCountryPicker(BuildContext context) {
+  Widget _buildTextFieldWithCountryPicker(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final bool isRtl = Directionality.of(context) == TextDirection.rtl;
+
+    if (widget.defaultCountryCode != null) {
+      _initDefaultCountry().then((country) {
+        if (country != null) {
+          _selectedCountry.value = country;
+          widget.onCountrySelected?.call(country);
+        }
+      });
+    }
+
+    if (widget.countryPickerDecorationStyle ==
+        CountryPickerDecorationStyle.continuous) {
+      prefixIcon = SizedBox(
+        width: 110.dp(),
+        child: Obx(
+          () => InkWell(
+            onTap: () async {
+              CountryPicker(
+                context,
+                onCountrySelected: (country) {
+                  _selectedCountry.value = country ?? const CountryModel();
+                  widget.onCountrySelected?.call(country);
+                },
+                searchTextStyle: widget.countrySearchTextStyle,
+                textStyle: widget.countryTextStyle,
+                countryPickerType:
+                    widget.countryPickerType ?? CountryPickerType.modalStyle,
+                searchHint: widget.countrySearchHintText,
+                dividerColor: widget.countryDividerColor,
+                phoneCodeTextStyle: widget.phoneCodeTextStyle,
+                modalTitleTextStyle: widget.modalTitleTextStyle,
+              );
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  // the conditional 50 prevents irregularities caused by the flags in RTL mode
+                  width: 85.dp(),
+                  child: FutureBuilder(
+                    future: FileUtils.countryCodeToEmoji(
+                        _selectedCountry.value.countryCode),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      String data = snapshot.hasData
+                          ? snapshot.data!
+                          : CountryModel.worldWide.countryCode;
+                      return Row(
+                        children: [
+                          Text(
+                            data == CountryModel.worldWide.countryCode
+                                ? '\uD83C\uDF0D'
+                                : data,
+                            style: textTheme.bodyMedium,
+                          ),
+                          Gap(5.dp()),
+                          if (_selectedCountry.value.phoneCode.isNotEmpty)
+                            Text(
+                              '${isRtl ? '' : '+'}${_selectedCountry.value.phoneCode}${isRtl ? '+' : ''}',
+                              style: widget.style ?? textTheme.bodyMedium,
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_drop_down_outlined,
+                  size: widget.countryDropDownIconSize ?? 30.dp(),
+                  color: widget.countryDropDownIconColor ??
+                      colorScheme.surfaceBright,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      return _buildTextField(context);
+    }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          flex: 0,
-          child: Obx(
-            () => SizedBox(
-              width: countryWidgetWidth ?? 105.dp(),
-              child: InkWell(
-                onTap: () async {
-                  CountryPicker(
-                    context,
-                    onCountrySelected: (country) {
-                      _selectedCountry.value = country ?? const CountryModel();
-                      onCountrySelected?.call(country);
-                    },
-                    searchTextStyle: countrySearchTextStyle,
-                    textStyle: countryTextStyle,
-                    countryPickerType:
-                        countryPickerType ?? CountryPickerType.modalStyle,
-                    searchHint: countrySearchHintText,
-                    dividerColor: countryDividerColor,
-                    phoneCodeTextStyle: phoneCodeTextStyle,
-                    modalTitleTextStyle: modalTitleTextStyle,
-                  );
-                },
-                child: TextFormField(
-                  enabled: false,
-                  textAlign: textAlign ?? TextAlign.center,
-                  style: countryWidgetTextStyle ??
-                      textTheme.labelMedium
-                          ?.copyWith(color: colorScheme.inverseSurface),
-                  controller: TextEditingController(
-                      text: _selectedCountry.value.phoneCode.isNotEmpty
-                          ? "+${_selectedCountry.value.phoneCode}"
-                          : ''),
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.arrow_drop_down_outlined,
-                      size: countryDropDownIconSize ?? 30.dp(),
-                      color:
-                          countryDropDownIconColor ?? colorScheme.surfaceBright,
-                    ),
-                    hintStyle: hintStyle ??
-                        textTheme.labelSmall
-                            ?.copyWith(color: colorScheme.surfaceBright),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(borderRadius),
-                      borderSide: BorderSide(
-                        color: borderColor ?? colorScheme.primary,
-                        width: 1,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: disabledColor ?? colorScheme.primary,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: unFocusColor ?? colorScheme.primary,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: focusColor ?? colorScheme.primary,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(borderRadius),
-                    ),
-                    filled: true,
-                    fillColor: backgroundColor ?? colorScheme.surface,
-                    counterStyle: counterStyle ??
-                        textTheme.bodyMedium?.copyWith(
-                            color: counterColor ?? colorScheme.primary),
+        Obx(
+          () => SizedBox(
+            width: widget.countryWidgetWidth ?? 105.dp(),
+            child: InkWell(
+              onTap: () async {
+                CountryPicker(
+                  context,
+                  onCountrySelected: (country) {
+                    _selectedCountry.value = country ?? const CountryModel();
+                    widget.onCountrySelected?.call(country);
+                  },
+                  searchTextStyle: widget.countrySearchTextStyle,
+                  textStyle: widget.countryTextStyle,
+                  countryPickerType:
+                      widget.countryPickerType ?? CountryPickerType.modalStyle,
+                  searchHint: widget.countrySearchHintText,
+                  dividerColor: widget.countryDividerColor,
+                  phoneCodeTextStyle: widget.phoneCodeTextStyle,
+                  modalTitleTextStyle: widget.modalTitleTextStyle,
+                );
+              },
+              child: TextFormField(
+                enabled: false,
+                textAlign: widget.textAlign ?? TextAlign.center,
+                style: widget.countryWidgetTextStyle ??
+                    textTheme.labelMedium
+                        ?.copyWith(color: colorScheme.inverseSurface),
+                controller: TextEditingController(
+                  text: _selectedCountry.value.phoneCode.isNotEmpty
+                      ? "+${_selectedCountry.value.phoneCode}"
+                      : '',
+                ),
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down_outlined,
+                    size: widget.countryDropDownIconSize ?? 30.dp(),
+                    color: widget.countryDropDownIconColor ??
+                        colorScheme.surfaceBright,
                   ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    borderSide: BorderSide(
+                        color: widget.borderColor ?? colorScheme.primary),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    borderSide: BorderSide(
+                        color: widget.unFocusColor ?? colorScheme.primary),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    borderSide: BorderSide(
+                        color: widget.focusColor ?? colorScheme.primary),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    borderSide: BorderSide(
+                        color: widget.disabledColor ?? colorScheme.primary),
+                  ),
+                  filled: true,
+                  fillColor: widget.backgroundColor ?? colorScheme.surface,
                 ),
               ),
             ),
           ),
         ),
-        SizedBox(width: pickerRightMargin ?? 6.dp()),
-        Flexible(
-          flex: 1,
-          child: _textField(context),
-        ),
+        SizedBox(width: widget.pickerRightMargin ?? 6.dp()),
+        Expanded(child: _buildTextField(context)),
       ],
     );
   }

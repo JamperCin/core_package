@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:core_module/core/model/remote/location_search_model.dart';
 import 'package:core_module/core/utils/map_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,24 +44,27 @@ class AppDbPreference {
     return "Bearer ${getString(TOKEN)}";
   }
 
-  Future<void> saveListOfLocations(List<LocationSearchModel> list) async {
-    HashMap<String, Object> loc = HashMap();
-    loc.putIfAbsent("list", () => list);
-    String place = MapUtils().convertEncode(loc);
-    setString(PREF_LOCATION_LIST, place);
+  Future<void> saveListOfItems<T>({
+    required List<T> list,
+    required String key,
+  }) async {
+    HashMap<String, Object> map = HashMap();
+    map.putIfAbsent("list", () => list);
+    String place = MapUtils().convertEncode(map);
+    setString(key, place);
   }
 
-  List<LocationSearchModel> getListOfLocations() {
-    List<LocationSearchModel> list = [];
+  List<T> getListOfItems<T>({
+    required String key,
+    required T Function(dynamic) parser,
+  }) {
+    List<T> list = [];
     try {
-      list = MapUtils().stringToObject<List<LocationSearchModel>>(
-            getString(PREF_LOCATION_LIST),
+      list = MapUtils().stringToObject<List<T>>(
+            getString(key),
             (json) {
               var j = json["list"] as List<dynamic>;
-              return j
-                  .map<LocationSearchModel>((p) =>
-                      LocationSearchModel.fromJson(p as Map<String, dynamic>))
-                  .toList();
+              return j.map<T>((p) => parser(p)).toList();
             },
           ) ??
           [];
@@ -73,21 +75,22 @@ class AppDbPreference {
     return list;
   }
 
-  void saveLocation(LocationSearchModel sug) {
-    String place = MapUtils().convertEncode(sug);
-    setString(PREF_LOCATION, place);
+  void saveItem<T extends Object>({required T item, required String key}) {
+    String place = MapUtils().convertEncode(item);
+    setString(key, place);
   }
 
-  Future<LocationSearchModel> getLocation() async {
+  T getItem<T>({
+    required String key,
+    required T Function(dynamic) parser,
+    required T defaultValue,
+  })  {
     try {
-      return MapUtils().stringToObject(getString(PREF_LOCATION), (json) {
-            return LocationSearchModel.fromJson(json);
-          }) ??
-          LocationSearchModel();
+      return MapUtils().stringToObject<T>(getString(key), parser) ?? defaultValue;
     } catch (e) {
       debugPrint("Error $e");
     }
-    return LocationSearchModel();
+    return defaultValue;
   }
 
   void setToken(String token) {

@@ -21,20 +21,72 @@ import 'package:core_module/core_ui/widgets/textfield_widget.dart';
 import 'package:core_module_package/intro_screen.dart';
 import 'package:flutter/material.dart';
 
+
 class NewScreen extends BaseScreenStandard {
-  @override
-  bool showAppBar() {
-    return true;
-  }
+
 
   @override
-  Color appBarBackgroundColor(BuildContext context) {
-    return Colors.green;
+  Widget body(BuildContext context) {
+
+    return Obx(() {
+      BottomBarModel model = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+
+      switch (model.text) {
+        case "Apple":
+          return AppleScreen();
+        case "Bag":
+          return BagScreen();
+        case "PickUp":
+          return PickUpScreen();
+        case "Books":
+          return LoginScreen();
+        default:
+          return LoginScreen();
+      }
+    });
   }
 
-  @override
-  String appBarTitle() {
-    return "New Screen Tested Here";
+
+
+  ///List of menu for the bottom navigation bar
+  RxList<BottomBarModel> bottomBarMenuList = [
+    BottomBarModel(
+      asset: icApple,
+      text: 'Apple',
+      isSelected: true,
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icBag,
+      text: 'Bag',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icPickUp,
+      text: 'PickUp',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+    BottomBarModel(
+      asset: icProfileCircle,
+      text: 'Books',
+      iconSize: 26.dp(),
+      key: GlobalKey<AnimatorWidgetState>(),
+    ),
+  ].obs;
+
+  void onBottomMenuOnClick(BottomBarModel model) {
+    var mod = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+    if(mod == model) return;
+
+    bottomBarMenuList.value = bottomBarMenuList.value
+        .map((e) => e.copyWith(isSelected: e.text == model.text))
+        .toList();
+
+    mod = bottomBarMenuList.firstWhere((e) => e.isSelected == true);
+    mod.key?.currentState?.forward();
   }
 
   @override
@@ -130,10 +182,4 @@ class NewScreen extends BaseScreenStandard {
       ),
     );
   }
-
-  final list = [
-    IntroModel(mainText: "2025"),
-    IntroModel(mainText: "2024"),
-    IntroModel(mainText: "2023"),
-  ];
 }

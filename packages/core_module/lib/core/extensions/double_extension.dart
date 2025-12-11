@@ -1,6 +1,6 @@
 import 'package:core_module/core/def/global_def.dart';
 
-extension DoubleExtension on double {
+extension DoubleExt on double {
   String toDecimalPlaces({int dec = 2}) {
     return toStringAsFixed(dec);
   }

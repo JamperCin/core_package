@@ -23,7 +23,7 @@ abstract class BaseScreen extends StatelessWidget {
   /// To obtain the current icon theme, use [IconTheme.of]. To convert an icon
   /// theme to a version with all the fields filled in, use [new
   /// IconThemeData.fallback].
-  // IconThemeData iconThemeData();
+  IconThemeData? iconThemeData();
 
   /// {@template flutter.material.appbar.actions}
   /// A list of Widgets to display in a row after the [title] widget.
@@ -59,6 +59,7 @@ abstract class BaseScreen extends StatelessWidget {
   Color appBarTitleColor(BuildContext context);
   void setContext(BuildContext context);
   bool showAppBar();
+  bool? resizeToAvoidBottomInset();
   bool safeArea();
   bool shouldDismissKeyboard();
   Widget floatingActionButton(BuildContext context);
@@ -79,7 +80,7 @@ abstract class BaseScreen extends StatelessWidget {
     textTheme = Theme.of(context).textTheme;
     colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset(),
       appBar: showAppBar() ? appBar(context) : null,
       backgroundColor: backgroundColor(context),
       drawer: drawer(context),

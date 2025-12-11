@@ -13,8 +13,10 @@ import 'package:image_picker/image_picker.dart';
 import '../../widgets/container_widget.dart';
 
 class FileImagePickerWidget extends StatelessWidget {
-  RxBool isFileUploading = false.obs;
+  final RxBool _isFileUploading = false.obs;
   String? url;
+  String? api;
+  String? host;
   String? cameraAsset;
   double? radius;
   double? containerSize;
@@ -23,12 +25,76 @@ class FileImagePickerWidget extends StatelessWidget {
   Color? buttonBackgroundColor;
   Color? borderColor;
   Color? iconColor;
-  Future<String> Function(File)? parser;
-  Function(String)? onFileUploaded;
+
+  /// Use this param to build your own request builder to prepare the api that
+  /// uploads the file and returns a String as the url.
+  /// To use this param, you need not to set the [apiParser] param.
+  /// You can make use of the [FileUploadApiService.uploadFile] method;
+  /// This is an upload service to upload files to the server.
+  /// You need to make sure in your [env.json] file you set the api for uploading files using the key [fileUploadApi].
+  /// An example  is below:
+  /// ```dart
+  /// {
+  ///  ... other settings or configurations goes here
+  ///
+  ///  "fileUploadApi" : "prime.sika/v1/upload-file?"
+  ///
+  ///  }
+  ///  ```
+  ///                    OR
+  /// You can also explicitly set the api using the [api] parameter in the [uploadFile] method of [FileUploadApiService] method.
+  /// Example below:
+  /// ```dart
+  /// parser : (file) async{
+  ///    final upload =  FileUploadApiService().uploadFile<String>(
+  ///     file,
+  ///     parser: (json) {
+  ///       return json['data']["url"] as String;
+  ///    },
+  ///   );
+  ///
+  ///  return upload;
+  /// },
+  /// ```
+  final Future<String?> Function(File)? parser;
+
+  /// Use this param to handle the response that comes from your api after file upload to return the url of the file uploaded to the server.
+  /// To use this param, you need not to set the [parser] param. You can use this straight away and return the url.
+  /// This by default uses the [FileUploadApiService.uploadFile] method to upload the file to the server.
+  /// You need to make sure in your [env.json] file you set the api for uploading files using the key [fileUploadApi].
+  /// An example  is below:
+  /// ```dart
+  /// {
+  ///  ... other settings or configurations goes here
+  ///
+  ///  "fileUploadApi" : "prime.sika/v1/upload-file?"
+  ///
+  ///  }
+  ///  ```
+  ///                OR
+  ///
+  /// You can also explicitly set the api using the [api] parameter in the constructor.
+  /// ```dart
+  /// apiParser : (json) {
+  ///       return json['data']["url"] as String;
+  ///    },
+  ///    ```
+  ///
+  final String Function(dynamic)? apiParser;
+
+  ///When a file is uploaded to the server and url is returned, use this param [onFileUploaded] to handle the url.
+  final Function(String)? onFileUploaded;
+  final String? placeholder;
+  final String? heroTag;
+  final BoxFit? fit;
+  final Widget? childOnOverlay;
+  final Widget? placeHolderWidget;
+  final bool setOverlay;
 
   FileImagePickerWidget({
     super.key,
     this.url,
+    this.api,
     this.radius,
     this.cameraAsset,
     this.iconColor,
@@ -39,11 +105,21 @@ class FileImagePickerWidget extends StatelessWidget {
     this.parser,
     this.containerSize,
     this.onFileUploaded,
+    this.apiParser,
+    this.placeholder,
+    this.heroTag,
+    this.fit,
+    this.childOnOverlay,
+    this.placeHolderWidget,
+    this.setOverlay = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => isFileUploading.value
+    assert(!(parser != null && apiParser != null),
+    'Both parser and apiParser cannot be present at the same time');
+
+    return Obx(() => _isFileUploading.value
         ? LoaderWidget.withCircularIndicator(radius: radius ?? 60.dp())
         : _imageWidget(context));
   }
@@ -65,6 +141,12 @@ class FileImagePickerWidget extends StatelessWidget {
             child: NetworkImageWidget.withCircular(
               url: url,
               radius: radius ?? 60.dp(),
+              placeholder: placeholder,
+              heroTag: heroTag,
+              fit: fit,
+              placeHolderWidget: placeHolderWidget,
+              childOnOverlay: childOnOverlay,
+              setOverlay: setOverlay,
             ),
           ),
           Align(
@@ -166,11 +248,17 @@ class FileImagePickerWidget extends StatelessWidget {
     }
 
     debugPrint("File == ${file.path}");
-    isFileUploading.value = true;
+    _isFileUploading.value = true;
     File newFile = File(file.path);
-    url = parser != null  ? await parser!(newFile) : await FileUploadApiService().uploadFile(newFile);
-    isFileUploading.value = false;
-    if(onFileUploaded != null && url != null && url!.isNotEmpty) {
+    url = parser != null
+        ? await parser!(newFile)
+        : await FileUploadApiService().uploadFile<String>(
+            newFile,
+            parser: apiParser,
+            api: api,
+          );
+    _isFileUploading.value = false;
+    if (onFileUploaded != null && url != null && url!.isNotEmpty) {
       onFileUploaded!(url ?? '');
     }
   }

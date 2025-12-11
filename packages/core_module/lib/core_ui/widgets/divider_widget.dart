@@ -54,7 +54,7 @@ class DividerWidget extends StatelessWidget {
   Widget _divider(ColorScheme colorScheme) {
     return ContainerWidget(
       color: color ?? colorScheme.surfaceDim,
-      height: height ?? 1,
+      height: height ?? 1.2,
       width: width ?? appDimen.screenWidth,
     );
   }

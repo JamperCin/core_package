@@ -11,14 +11,18 @@ import 'package:core_module/core_ui/widgets/button_switch_widget.dart';
 import 'package:core_module/core_ui/widgets/button_widget.dart';
 import 'package:core_module/core_ui/widgets/shimmer_widget.dart';
 import 'package:core_module_package/login_screen.dart';
+import 'package:core_module_package/res/app_theme.dart';
+import 'package:core_module_package/res/res_path.dart';
 import 'package:flutter/material.dart';
 
 import 'new_screen.dart';
 
+RxBool isDarkMode = false.obs;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.delayed(const Duration(seconds: 1));
-  await  CoreModule().init(
+  await CoreModule().init(
     envPath: 'assets/data/env.json',
     homePageScreen: 'NewScreen',
     loginScreen: 'LoginScreen',
@@ -33,19 +37,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-   appDimen = AppDimens(context);
+    appDimen = AppDimens(context, constantMultiplier: 1.75);
 
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: lightMode,
-      darkTheme: darkMode,
-      initialRoute: '/',
-      getPages: [
-        GetPage(name: '/LoginScreen', page: ()=> LoginScreen()),
-        GetPage(name: '/NewScreen', page: ()=> NewScreen()),
-      ],
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return Obx(
+      ()=> GetMaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: isDarkMode.value ? darkMode : lightMode,
+       // darkTheme: darkMode,
+        initialRoute: '/',
+        getPages: [
+          GetPage(name: '/LoginScreen', page: () => LoginScreen()),
+          GetPage(name: '/NewScreen', page: () => NewScreen()),
+        ],
+        home: NewScreen(),
+      ),
     );
   }
 }
@@ -69,37 +75,58 @@ class _MyHomePageState extends State<MyHomePage> {
   ].obs;
 
   void _incrementCounter() {
-    // PlacesPickerWidget.searchPlaces(
-    //   onSearch: (onSearch) {
-    //     print("Place: $onSearch");
-    //   },
-    //   context: context,
-    // );
-    String counter = config.fetchData(key: "appStoreLink");
-    final counter2 = config.getAppStoreId();
-    print("PRINT --> $counter2 ---> $counter");
+    // setState(() {
+    //   _counter++;
+    //  Get.to(()=> NewScreen());
+    // });
+    navUtils.fireTarget(NewScreen(), model: "New Screen");
+  }
 
-    setState(() {
-      _counter++;
-    });
+  RxBool isLoadingMore = false.obs;
+  List<BottomBarModel> bottomBarItems = [
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+    BottomBarModel(text: 'Hello Im here', asset: icApple),
+  ];
+
+  Future<List<BottomBarModel>> _loadMore() async {
+    await Future.delayed(const Duration(seconds: 2));
+    List<BottomBarModel> bottomBarItems = [
+      BottomBarModel(text: 'Hello Im new in here - 1', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 2', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 3', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 4', asset: icSuccess),
+      BottomBarModel(text: 'Hello Im new in here - 5', asset: icSuccess),
+    ];
+    return bottomBarItems;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
@@ -135,8 +162,51 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ],
+            onTap: (index) {
+              isLoadingMore.value = index == 0;
+            },
           ),
-        ),
+          Expanded(
+            child: Obx(
+              () => isLoadingMore.value
+                  ? ListViewWidget<BottomBarModel>(
+                      list: bottomBarItems,
+                      onLoadMore: _loadMore,
+                      listItemWidget: (item) {
+                        return Column(
+                          children: [
+                            Text(item.text ?? ''),
+                            Gap(20.dp()),
+                            AssetImageWidget(
+                              asset: item.asset ?? '',
+                              height: 40.dp(),
+                              width: 40.dp(),
+                            )
+                          ],
+                        );
+                      },
+                    )
+                  : ListViewWidget<BottomBarModel>.withGridView(
+                      list: bottomBarItems,
+                      onLoadMore: _loadMore,
+                      listItemWidget: (item) {
+                        return Column(
+                          children: [
+                            Text(item.text ?? ''),
+                            Gap(20.dp()),
+                            AssetImageWidget(
+                              asset: item.asset ?? '',
+                              height: 40.dp(),
+                              width: 40.dp(),
+                            )
+                          ],
+                        );
+                      },
+
+                    ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

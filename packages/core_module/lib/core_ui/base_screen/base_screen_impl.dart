@@ -24,6 +24,11 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   }
 
   @override
+  bool? resizeToAvoidBottomInset() {
+   return  null;
+  }
+
+  @override
   TextStyle? appBarTitleStyle(BuildContext context) {
     return textTheme.bodyMedium?.copyWith(
       color: colorScheme.inverseSurface,
@@ -41,6 +46,11 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
   @override
   bool safeArea() {
     return true;
+  }
+
+  @override
+  IconThemeData? iconThemeData() {
+    return null;
   }
 
   @override
@@ -161,14 +171,27 @@ abstract class BaseScreenImpl extends BaseScreen implements BaseImpl {
     return const SizedBox.shrink();
   }
 
+  PreferredSizeWidget? appBarBottomWidget(BuildContext context) {
+    return null;
+  }
+
+  bool centerTitle() {
+    return true;
+  }
+
+
+
   @override
   PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
       elevation: appBarElevation(),
       toolbarHeight: appBarHeight(),
+      iconTheme: iconThemeData(),
       backgroundColor: appBarBackgroundColor(context),
       leading: Navigator.canPop(context) ? appBarLeadingIcon(context) : null,
       surfaceTintColor: appBarBackgroundColor(context),
+      centerTitle: centerTitle(),
+      bottom: appBarBottomWidget(context),
       title: appBarTitleWidget(context) ??
           Text(
             appBarTitle(),

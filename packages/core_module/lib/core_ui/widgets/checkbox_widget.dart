@@ -1,4 +1,3 @@
-import 'package:core_module/core/extensions/int_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +14,7 @@ class CheckboxWidget extends StatelessWidget {
   final Color? checkedValue;
   final Color? unCheckedValue;
   final Function(bool) onChange;
-  final GestureDetector? onTextClick;
+  final GestureTapCallback? onTextClick;
 
   const CheckboxWidget({
     super.key,
@@ -30,7 +29,8 @@ class CheckboxWidget extends StatelessWidget {
     this.checkColor,
     this.focusColor,
     this.checkedValue,
-    this.unCheckedValue, this.scaleSize,
+    this.unCheckedValue,
+    this.scaleSize,
   });
 
   @override
@@ -49,7 +49,7 @@ class CheckboxWidget extends StatelessWidget {
           Flexible(
             flex: 0,
             child: Transform.scale(
-              scale: scaleSize ?? 1.5,
+              scale: scaleSize ?? 1.2,
               child: Checkbox.adaptive(
                 activeColor: activeColor ?? colorScheme.primary,
                 checkColor: checkColor ?? colorScheme.tertiary,
@@ -74,18 +74,8 @@ class CheckboxWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: GestureDetector(
-                onTap: () {
-                  if (onTextClick != null) onTextClick!;
-                },
-                child: Text(
-                  text,
-                  style: style ??
-                      textTheme.labelMedium?.copyWith(
-                        color: isChecked.value
-                            ? (checkedValue ?? colorScheme.primary)
-                            : (unCheckedValue ?? colorScheme.inverseSurface),
-                      ),
-                ),
+                onTap: onTextClick,
+                child: Text(text, style: style ?? textTheme.labelMedium),
               ),
             ),
           if (textWidget != null)

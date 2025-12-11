@@ -38,6 +38,7 @@ class AppDimens {
   //y=0.1x+0.4 Linear quadratic formula : Assume
   // y=mx+c (a linear relationship).
   double _getMultiplier(double value) {
+    double ratio = screenWidth / screenHeight;  
     double addValue = 0.5;
     if(value <= 20){
       addValue = 0.5;
@@ -67,7 +68,7 @@ class AppDimens {
 
   double dimen(double value) {
     double multiplier = _getMultiplier(value);
-    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * (_constantMultiplier ?? 1.9));
+    double h = _scaleFactor == 0.0 ? _responsiveSize(value) : (_scaleFactor * multiplier * (_constantMultiplier ?? 1.8));
    // debugPrint("Value ==> $value # Mulitplier ==> $multiplier # Results ==> $h");
     return h;
   }

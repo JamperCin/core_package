@@ -161,19 +161,27 @@ class BaseApiService {
       dynamic json = {};
       if (response is String) {
         json = MapUtils().convertDecode(response);
+      } else if (response is http.StreamedResponse) {
+        final respStr = await response.stream.bytesToString();
+        json = MapUtils().convertDecode(respStr);
       } else {
         json = MapUtils().convertDecode(response.body);
       }
 
       if (print) {
-        debugPrint(
-            "Response : $json\n --> Status Code : ${response.statusCode}");
+        try {
+          debugPrint(
+            "Response : $json\n --> Status Code : ${response.statusCode}",
+          );
+        } catch (e) {
+          debugPrint("Error : $e");
+        }
       }
 
       bool success =
           json.containsKey('success') ? json['success'] as bool : false;
 
-      if (response.statusCode == 200 || success) {
+      if (success || response.statusCode == 200 || response.statusCode == 201) {
         if (parser != null) {
           return parser(json);
         }
@@ -193,7 +201,13 @@ class BaseApiService {
           snackBarSnippet.snackBarError(error);
         }
 
-        return null;
+        return json is Map
+            ? parser != null
+                ? parser(json as Map<String, dynamic>)
+                : json as Map<String, dynamic>
+            : parser != null
+                ? parser(json)
+                : json;
       }
     } catch (e) {
       debugPrint("Error $e");
@@ -223,21 +237,39 @@ class BaseApiService {
   ///and retrieving the list from the 'data' param
   Future<List<T>> getListRequest<T>({
     required String api,
-    required String key,
-    String? objectKey,
+    String key = 'data',
+    String? secondaryKey,
     bool showToast = false,
     bool print = true,
-    required T Function(Map<String, dynamic>) fromJson,
+    required T Function(Map<String, dynamic>) parser,
     Map<String, dynamic>? param,
+    Map<String, String>? headers,
   }) async {
     final results = await getRequest<List<T>>(
             api: api,
             param: param,
             print: print,
             showToast: showToast,
+            headers: headers,
             parser: (json) {
-              final listMap = json[objectKey ?? 'data'][key] as List;
-              return [...listMap.map((e) => fromJson(e))];
+              final objectWithList = (json[key] != null && json[key] is List)
+                  ? json[key] as List
+                  : null;
+              if (objectWithList != null) {
+                return [...objectWithList.map((e) => parser(e))];
+              }
+
+              if (secondaryKey != null &&
+                  json[key] != null &&
+                  json[key][secondaryKey] != null) {
+                final inDepthObjectWithList = json[key][secondaryKey] is List
+                    ? json[key][secondaryKey] as List
+                    : null;
+                return (inDepthObjectWithList != null)
+                    ? [...inDepthObjectWithList.map((e) => parser(e))]
+                    : [];
+              }
+              return [];
             }) ??
         [];
     return results;
@@ -345,13 +377,19 @@ class BaseApiService {
     bool print = true,
     String? host,
     Map<String, String>? headers,
+    MediaType? mediaType,
     T Function(dynamic)? parser,
   }) async {
     final uri = await _buildUrl(api, host: host);
-    var response = await _postMultipart(file: file, uri: uri, headers: headers);
-    final respStr = await response.stream.bytesToString();
+    var response = await _postMultipart(
+      file: file,
+      uri: uri,
+      headers: headers,
+      mediaType: mediaType,
+    );
+
     return _serialiseResponse<T>(
-      response: respStr,
+      response: response,
       parser: parser,
       print: print,
       showToast: showToast,
