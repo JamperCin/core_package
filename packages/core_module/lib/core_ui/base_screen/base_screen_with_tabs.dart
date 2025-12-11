@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
   late TabController tabController;
-  late PageController pageController;
-  bool _tabsInitialized = false;
+  //late PageController pageController;
+  //bool _tabsInitialized = false;
 
   int initialIndex() {
     return 0;
   }
-
 
   List<Widget> tabs();
 
@@ -63,6 +62,14 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
     return EdgeInsets.zero;
   }
 
+  Color tabBarBackgroundColor(BuildContext context) {
+    return Theme.of(context).colorScheme.surface;
+  }
+
+  Size tabBarHeight() {
+    return Size.fromHeight(48.dp());
+  }
+
   @override
   bool showAppBar() {
     return true;
@@ -71,69 +78,77 @@ abstract class BaseScreenWithTabs extends BaseScreenStatefulStandard {
   @override
   PreferredSizeWidget? appBarBottomWidget(BuildContext context) {
     // ✅ Prevent crash if tabs are not ready yet
-    if (!_tabsInitialized){
-     return null;
-    }
+    // if (!_tabsInitialized) {
+    //   return null;
+    // }
 
-    return TabBar(
-      physics: isTabScrollable() ? null : const NeverScrollableScrollPhysics(),
-      controller: tabController,
-      onTap: (index) {
-        pageController.animateToPage(
-          index,
-          duration: const Duration(milliseconds: 360),
-          curve: Curves.easeInOut,
-        );
-        onTap(index);
-      },
-      tabs: tabs(),
-      isScrollable: isTabScrollable(),
-      indicatorColor: indicatorColor(),
-      dividerColor: dividerColor(),
-      labelColor: labelColor(),
-      labelStyle: labelStyle(),
-      unselectedLabelColor: unselectedLabelColor(),
-      unselectedLabelStyle: unselectedLabelStyle(),
-      padding: padding(),
-      dividerHeight: dividerHeight(),
-      indicatorPadding: indicatorPadding(),
-      indicatorWeight: indicatorWeight(),
+    return PreferredSize(
+      preferredSize: tabBarHeight(),
+      child: Material(
+        color: tabBarBackgroundColor(context),
+        child: TabBar(
+          physics:
+              isTabScrollable() ? null : const NeverScrollableScrollPhysics(),
+          controller: tabController,
+          onTap: (index) {
+            // pageController.animateToPage(
+            //   index,
+            //   duration: const Duration(milliseconds: 360),
+            //   curve: Curves.easeInOut,
+            // );
+            onTap(index);
+          },
+          tabs: tabs(),
+          isScrollable: isTabScrollable(),
+          indicatorColor: indicatorColor(),
+          dividerColor: dividerColor(),
+          labelColor: labelColor(),
+          labelStyle: labelStyle(),
+          unselectedLabelColor: unselectedLabelColor(),
+          unselectedLabelStyle: unselectedLabelStyle(),
+          padding: padding(),
+          dividerHeight: dividerHeight(),
+          indicatorPadding: indicatorPadding(),
+          indicatorWeight: indicatorWeight(),
+        ),
+      ),
     );
   }
 
   @override
   void initState(SingleTickerProviderStateMixin<StatefulWidget> vsync) {
     super.initState(vsync);
-    pageController = PageController(initialPage: initialIndex());
+    //pageController = PageController(initialPage: initialIndex());
 
     tabController = TabController(
       length: tabs().length,
       vsync: vsync,
       initialIndex: initialIndex(),
     );
-    _tabsInitialized = true;
+    // _tabsInitialized = true;
   }
 
-
-  @override
-  void dispose(SingleTickerProviderStateMixin<StatefulWidget> vsync) {
-    super.dispose(vsync);
-    tabController.dispose();
-  }
+  // @override
+  // void dispose(SingleTickerProviderStateMixin<StatefulWidget> vsync) {
+  //   super.dispose(vsync);
+  //   tabController.dispose();
+  // }
 
   @override
   Widget body(BuildContext context) {
-    if(!_tabsInitialized){
-      return const SizedBox.shrink();
-    }
+    // if(!_tabsInitialized){
+    //   return const SizedBox.shrink();
+    // }
 
-    return PageView(
-      controller: pageController,
-      onPageChanged: (index) {
-        tabController.animateTo(index);
-        onPageSwiped(index);
-      },
-      children: tabsViews(),
-    );
+    return TabBarView(controller: tabController, children: tabsViews());
+
+    // return PageView(
+    //   controller: pageController,
+    //   onPageChanged: (index) {
+    //     tabController.animateTo(index);
+    //     onPageSwiped(index);
+    //   },
+    //   children: tabsViews(),
+    // );
   }
 }
