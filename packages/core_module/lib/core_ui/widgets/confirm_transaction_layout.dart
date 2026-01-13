@@ -18,6 +18,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
   final GestureTapCallback? onTap;
   final Widget? child;
   final bool displayCancelButton;
+  final double? bottomPadding;
   final Widget? cancelWidget;
   final Widget? preWidget;
   final TextStyle? titleStyle;
@@ -46,6 +47,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
     this.titleTextAlignment,
     this.subTitleTextAlignment,
     this.preWidget,
+    this.bottomPadding,
   });
 
   @override
@@ -119,7 +121,7 @@ class ConfirmTransactionLayout extends StatelessWidget {
               height: 45.dp(),
             ),
           ),
-        Gap(25.dp()),
+        Gap(bottomPadding ?? 40.dp()),
       ],
     );
   }

@@ -1,16 +1,7 @@
 import 'dart:io';
-import 'package:core_module/core/def/global_def.dart';
-import 'package:core_module/core/extensions/int_extension.dart';
-import 'package:core_module/core/services/file_upload_service/file_upload_api_services.dart';
 import 'package:core_module/core_module.dart';
-import 'package:core_module/core_ui/widgets/asset_image_widget.dart';
-import 'package:core_module/core_ui/widgets/bottom_sheet_widget.dart';
-import 'package:core_module/core_ui/widgets/loader_widget.dart';
-import 'package:core_module/core_ui/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../widgets/container_widget.dart';
 
 class FileImagePickerWidget extends StatelessWidget {
   final RxBool _isFileUploading = false.obs;
@@ -25,6 +16,7 @@ class FileImagePickerWidget extends StatelessWidget {
   Color? buttonBackgroundColor;
   Color? borderColor;
   Color? iconColor;
+  bool showImagePickerError = false;
 
   /// Use this param to build your own request builder to prepare the api that
   /// uploads the file and returns a String as the url.
@@ -112,12 +104,13 @@ class FileImagePickerWidget extends StatelessWidget {
     this.childOnOverlay,
     this.placeHolderWidget,
     this.setOverlay = false,
+    this.showImagePickerError = false,
   });
 
   @override
   Widget build(BuildContext context) {
     assert(!(parser != null && apiParser != null),
-    'Both parser and apiParser cannot be present at the same time');
+        'Both parser and apiParser cannot be present at the same time');
 
     return Obx(() => _isFileUploading.value
         ? LoaderWidget.withCircularIndicator(radius: radius ?? 60.dp())
@@ -243,7 +236,9 @@ class FileImagePickerWidget extends StatelessWidget {
     final picker = ImagePicker();
     final file = await picker.pickImage(source: src);
     if (file == null || file.name.isEmpty || file.path.isEmpty) {
-      snackBarSnippet.snackBarError("Failed to handle file upload");
+      if (showImagePickerError) {
+        snackBarSnippet.snackBarError("No file selected");
+      }
       return;
     }
 
