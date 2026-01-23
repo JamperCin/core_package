@@ -38,6 +38,8 @@ class TextFieldWidget extends StatefulWidget {
   final Color? counterColor;
   final Color? unFocusColor;
   final Color? disabledColor;
+  final Color? suffixIconColor;
+  final Color? prefixIconColor;
   final String? hintText;
   final CountryPickerType? countryPickerType;
   final CountryPickerDecorationStyle? countryPickerDecorationStyle;
@@ -103,6 +105,8 @@ class TextFieldWidget extends StatefulWidget {
     this.counterStyle,
     this.onFieldSubmitted,
     this.prefixAsset,
+    this.suffixIconColor,
+    this.prefixIconColor,
     this.suffixAsset,
   })  : hasCountryPicker = false,
         inputFormatters = null,
@@ -153,6 +157,8 @@ class TextFieldWidget extends StatefulWidget {
     this.disabledColor,
     this.maxLength,
     this.onChanged,
+    this.suffixIconColor,
+    this.prefixIconColor,
     this.countryWidgetTextStyle,
     this.maxLines,
     this.countrySearchHintText,
@@ -202,6 +208,8 @@ class TextFieldWidget extends StatefulWidget {
     this.disabledColor,
     this.maxLength,
     this.onChanged,
+    this.suffixIconColor,
+    this.prefixIconColor,
     this.maxLines,
     this.textAlign,
     this.textInputAction,
@@ -268,6 +276,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             asset: widget.prefixAsset ?? icPassword,
             width: appDimen.dimen(14),
             height: appDimen.dimen(14),
+            assetColor: widget.prefixIconColor,
           );
     }
 
@@ -277,6 +286,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             asset: widget.prefixAsset ?? icMobile,
             width: appDimen.dimen(14),
             height: appDimen.dimen(14),
+            assetColor: widget.prefixIconColor,
           );
     }
 
@@ -285,6 +295,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         asset: widget.prefixAsset!,
         width: appDimen.dimen(14),
         height: appDimen.dimen(14),
+        assetColor: widget.prefixIconColor,
       );
     }
 
@@ -293,6 +304,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         asset: widget.suffixAsset!,
         width: appDimen.dimen(14),
         height: appDimen.dimen(14),
+        assetColor: widget.suffixIconColor,
       );
     }
 
@@ -364,7 +376,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                     height: 10.dp(),
                     width: 10.dp(),
                     asset: obscureText.value ? icEyeSvg : icEyeClosedSvg,
-                    assetColor: colorScheme.inverseSurface,
+                    assetColor: widget.suffixIconColor ?? colorScheme.inverseSurface,
                   ),
                 ),
               )
